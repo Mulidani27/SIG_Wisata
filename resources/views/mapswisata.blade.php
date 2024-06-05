@@ -192,8 +192,6 @@ document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('chan
 });
 
 
-<p>agshajsdajndajnsdjdj</p>
-<p>asuuuuu</p>
 </script>
 <button></button>
 
