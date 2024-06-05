@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\CardWisata;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\WisataController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,7 @@ use App\Http\Controllers\WisataController;
 
 Route::get('/', function () {
     return view('dashboard');
-});
+})->name('dashboard');
 
 Route::get('/wisataa', function () {
     return view('mapswisata');
@@ -45,3 +47,5 @@ route::delete('wisata/{crud}', [WisataController::class,'destroy'])->name("crud.
 route::get('wisata/{crud}', [WisataController::class,'show'])->name("crud.show");
 
 
+
+Route::get('/card/{map}', [CardWisata::class, 'index'])->name('card.index');

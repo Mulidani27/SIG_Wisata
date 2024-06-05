@@ -41,6 +41,11 @@
         border-radius: 4px;
         padding: 2px 6px;
         top: 45px;
+        
+    }
+    .card-img-top {
+        height: 200px; /* Atur tinggi gambar sesuai kebutuhan */
+        object-fit: cover; /* Pastikan gambar mengisi seluruh area */
     }
 </style>
 </head>

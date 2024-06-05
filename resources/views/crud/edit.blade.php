@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Data Wisata</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@section('title', 'Data Wisata')
 
-<body>
+@section('content')
+
     <div class="container">
+    <br>
         <h1>Edit Data Wisata</h1>
         <form id="formWisata" action="{{ route('crud.update', $wisata->id) }}" method="POST">
             @csrf
@@ -65,6 +60,4 @@
     </script>
 
 
-</body>
-
-</html>
+@endsection
