@@ -69,6 +69,8 @@
             </div>
         </div>
     </nav>
+    <br>
+    <br>
 
     <div class="container">
         @yield('content')
@@ -76,6 +78,8 @@
 
 
 <!-- Footer -->
+<br>
+<br>
 <footer class="bg-primary-gradient">
     <div class="container py-4 py-lg-5">
         <div class="row justify-content-center">

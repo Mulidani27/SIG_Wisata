@@ -6,7 +6,6 @@
 
 
     <div class="container">
-        <br>
         <h1>Tambah Data Wisata</h1>
         <form id="formWisata" action="{{ route('crud.store') }}" method="POST">
             @csrf

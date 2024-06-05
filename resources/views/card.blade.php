@@ -3,6 +3,7 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach($wisata as $wisataItem)
             <div class="col">
@@ -22,6 +23,8 @@
                     </div>
                 </div>
             </div>
+            
         @endforeach
     </div>
+
 @endsection

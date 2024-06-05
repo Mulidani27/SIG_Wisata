@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CardWisata extends Controller
 {
-    public function index ($map){
+    public function index(){
         $wisata = DB::table('wisatas')->get();
         return view('card',compact('wisata'));
     }

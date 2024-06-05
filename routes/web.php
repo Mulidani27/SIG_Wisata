@@ -48,4 +48,4 @@ route::get('wisata/{crud}', [WisataController::class,'show'])->name("crud.show")
 
 
 
-Route::get('/card/{map}', [CardWisata::class, 'index'])->name('card.index');
+Route::get('/card', [CardWisata::class, 'index'])->name('card.index');
