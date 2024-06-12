@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Wisata;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class WisataController extends Controller
 {
@@ -16,71 +17,100 @@ class WisataController extends Controller
 
     public function create()
     {
-        $wisata = Wisata::all();
-        return view('crud.create', compact('wisata'));
+        return view('crud.create');
     }
+
     public function store(Request $request)
     {
-        $wisata = Wisata::create($request->all()); // Definisikan $wisata dengan hasil create
-    
+        $validatedData = Validator::make($request->all(), [
+            'Nama_Wisata' => 'required',
+            'lokasi' => 'required',
+            'Detail' => 'required',
+            'Jenis_Wisata' => 'required',
+            'Gambar' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar360' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($validatedData->fails()) {
+            return back()->withErrors($validatedData)->withInput();
+        }
+
+        $data = $request->all();
+
+        // Handle file uploads
+        if ($request->hasFile('Gambar')) {
+            $gambarFile = $request->file('Gambar');
+            $gambarName = Str::random(10) . '.' . $gambarFile->getClientOriginalExtension();
+            $gambarFile->move(public_path('uploads'), $gambarName);
+            $data['Gambar'] = $gambarName;
+        }
+
+        if ($request->hasFile('gambar360')) {
+            $gambar360File = $request->file('gambar360');
+            $gambar360Name = Str::random(10) . '.' . $gambar360File->getClientOriginalExtension();
+            $gambar360File->move(public_path('uploads'), $gambar360Name);
+            $data['gambar360'] = $gambar360Name;
+        }
+
+        $wisata = Wisata::create($data);
+
         if ($wisata) {
             return redirect()->route('data.show')->with('success', 'Data berhasil ditambahkan');
         } else {
             return back()->withInput()->with('failed', 'Gagal menambahkan data. Silakan coba lagi');
         }
     }
-    
 
     public function edit($id)
     {
         $wisata = Wisata::findOrFail($id);
         return view('crud.edit', compact('wisata'));
     }
-    
 
-    public function update(Request $request, string $id) // Updated signature
+    public function update(Request $request, string $id)
     {
         $wisata = Wisata::findOrFail($id);
 
-        $validatedData = Validator::make($request->all(), [ // Use Validator for validation
+        $validatedData = Validator::make($request->all(), [
             'Nama_Wisata' => 'required',
             'lokasi' => 'required',
             'Detail' => 'required',
             'Jenis_Wisata' => 'required',
-            'Gambar' => 'required', // Update validation rules based on your model
-            'gambar360' => 'required',
+            'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($validatedData->fails()) { // Handle validation errors
+        if ($validatedData->fails()) {
             return back()->withErrors($validatedData)->withInput();
         }
 
-        $wisata->update($validatedData->validated()); // Update with validated data
+        $data = $request->all();
+
+        // Handle file uploads
+        if ($request->hasFile('Gambar')) {
+            $gambarFile = $request->file('Gambar');
+            $gambarName = Str::random(10) . '.' . $gambarFile->getClientOriginalExtension();
+            $gambarFile->move(public_path('uploads'), $gambarName);
+            $data['Gambar'] = $gambarName;
+        }
+
+        if ($request->hasFile('gambar360')) {
+            $gambar360File = $request->file('gambar360');
+            $gambar360Name = Str::random(10) . '.' . $gambar360File->getClientOriginalExtension();
+            $gambar360File->move(public_path('uploads'), $gambar360Name);
+            $data['gambar360'] = $gambar360Name;
+        }
+
+        $wisata->update($data);
 
         return redirect()->route('data.show')->with('success', 'Data berhasil diubah!');
-        
-    }
-
-
-    public function createPost(Request $request) // Renamed method
-    {
-        $validatedData = $request->validate([
-            'Nama_Wisata' => 'required', // Might need adjustments depending on Post model
-            'lokasi' => 'required',
-            'Detail' => 'required',
-            'Jenis_Wisata' => 'required',
-            'Gambar' => 'required',
-            'gambar360' => 'required',
-        ]);
-
-        Post::create($validatedData);
-        return redirect('/posts')->with('success', 'Post berhasil ditambahkan!');
     }
 
     public function destroy($id)
     {
         $wisata = Wisata::findOrFail($id);
         $deleted = $wisata->delete();
+
         if ($deleted) {
             return redirect()->route('data.show')->with('success', 'Data berhasil dihapus');
         } else {

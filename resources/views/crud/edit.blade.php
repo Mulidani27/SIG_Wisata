@@ -6,7 +6,7 @@
 
 <div class="container">
     <h1>Edit Data Wisata</h1>
-    <form id="formWisata" action="{{ route('crud.update', $wisata->id) }}" method="POST">
+    <form id="formWisata" action="{{ route('crud.update', $wisata->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
         <div class="mb-3">
@@ -17,7 +17,6 @@
             <label for="lokasi" class="form-label">Lokasi:</label>
             <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Tambahkan jika ingin merubah lokasi" >
             <small id="lokasiHelp" class="form-text text-muted">Masukkan lokasi dalam format [latitude, longitude]. Misal: -3.3147664431834007, 114.59666970396356</small>
-            <!-- value="{{ trim($wisata->lokasi, '[]') }}" -->
         </div>
         <div class="mb-3">
             <label for="Detail" class="form-label">Detail:</label>
@@ -37,11 +36,13 @@
         </div>
         <div class="mb-3">
             <label for="Gambar" class="form-label">Gambar:</label>
-            <input type="text" class="form-control" id="Gambar" name="Gambar" value="{{ $wisata->Gambar }}">
+            <input type="file" class="form-control" id="Gambar" name="Gambar">
+            <img src="{{ asset('uploads/' . $wisata->Gambar) }}" alt="{{ $wisata->Nama_Wisata }}" style="max-width: 100px; max-height: 100px;">
         </div>
         <div class="mb-3">
             <label for="gambar360" class="form-label">Gambar 360:</label>
-            <input type="text" class="form-control" id="gambar360" name="gambar360" value="{{ $wisata->gambar360 }}">
+            <input type="file" class="form-control" id="gambar360" name="gambar360">
+            <img src="{{ asset('uploads/' . $wisata->gambar360) }}" alt="{{ $wisata->Nama_Wisata }}" style="max-width: 100px; max-height: 100px;">
         </div>
         <button type="button" class="btn btn-primary" onclick="submitForm()">Simpan</button>
     </form>
@@ -72,6 +73,5 @@ function submitForm() {
 }
 
 </script>
-
 
 @endsection

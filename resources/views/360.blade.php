@@ -13,7 +13,7 @@
             
         panorama = pannellum.viewer('panorama', {
             "type": "equirectangular",
-            "panorama": "{{ asset('assets/images/'.$wisata->gambar360)}}",
+            "panorama": "{{ asset('uploads/' . $wisata->gambar360) }}",
             "autoLoad": true
         });
 
@@ -22,4 +22,4 @@
         }
     </script>
 
-    @endsection
+@endsection
