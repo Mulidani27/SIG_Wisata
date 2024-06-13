@@ -15,9 +15,24 @@
         </div>
         <div class="mb-3">
             <label for="lokasi" class="form-label">Lokasi:</label>
-            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Tambahkan jika ingin merubah lokasi" >
+            <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Tambahkan jika ingin merubah lokasi">
             <small id="lokasiHelp" class="form-text text-muted">Masukkan lokasi dalam format [latitude, longitude]. Misal: -3.3147664431834007, 114.59666970396356</small>
         </div>
+        <div class="mb-3">
+            <label for="Alamat" class="form-label">Alamat:</label>
+            <textarea class="form-control" id="Alamat" name="Alamat">{{ $wisata->Alamat }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="kecamatan" class="form-label">Kecamatan:</label>
+            <select class="form-select" id="kecamatan" name="kecamatan">
+                <option value="Banjarasin Utara" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Utara' ? 'selected' : '' }}>Banjarasin Utara</option>
+                <option value="Banjarasin Tengah" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Tengah' ? 'selected' : '' }}>Banjarasin Tengah</option>
+                <option value="Banjarasin Barat" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Barat' ? 'selected' : '' }}>Banjarasin Barat</option>
+                <option value="Banjarasin Timur" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Timur' ? 'selected' : '' }}>Banjarasin Timur</option>
+                <option value="Banjarasin Selatan" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Selatan' ? 'selected' : '' }}>Banjarasin Selatan</option>
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="Detail" class="form-label">Detail:</label>
             <textarea class="form-control" id="Detail" name="Detail">{{ $wisata->Detail }}</textarea>
@@ -51,27 +66,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Custom JavaScript -->
 <script>
-
-function submitForm() {
-    var lokasiInput = document.getElementById('lokasi').value.trim(); // Mendapatkan nilai input lokasi dan menghapus spasi di awal dan akhir
-    if (lokasiInput) { // Memeriksa apakah lokasi tidak kosong
-        var lokasiArray = lokasiInput.split(',').map(parseFloat); // Memisahkan nilai lokasi dan mengonversi menjadi float
-        if (lokasiArray.length == 2 && !isNaN(lokasiArray[0]) && !isNaN(lokasiArray[1])) { // Memeriksa apakah lokasi valid
-            var sortedLokasiArray = [lokasiArray[1], lokasiArray[0]]; // Mengurutkan nilai koordinat dengan benar
-            var formattedLokasi = '[' + sortedLokasiArray.join(', ') + ']'; // Mengubah nilai lokasi menjadi string dengan pemisah koma dan spasi, ditambah tanda kurung siku
-            document.getElementById('lokasi').value = formattedLokasi; // Memperbarui nilai input lokasi
+    function submitForm() {
+        var lokasiInput = document.getElementById('lokasi').value.trim(); // Mendapatkan nilai input lokasi dan menghapus spasi di awal dan akhir
+        if (lokasiInput) { // Memeriksa apakah lokasi tidak kosong
+            var lokasiArray = lokasiInput.split(',').map(parseFloat); // Memisahkan nilai lokasi dan mengonversi menjadi float
+            if (lokasiArray.length == 2 && !isNaN(lokasiArray[0]) && !isNaN(lokasiArray[1])) { // Memeriksa apakah lokasi valid
+                var sortedLokasiArray = [lokasiArray[1], lokasiArray[0]]; // Mengurutkan nilai koordinat dengan benar
+                var formattedLokasi = '[' + sortedLokasiArray.join(', ') + ']'; // Mengubah nilai lokasi menjadi string dengan pemisah koma dan spasi, ditambah tanda kurung siku
+                document.getElementById('lokasi').value = formattedLokasi; // Memperbarui nilai input lokasi
+            } else {
+                alert('Format lokasi tidak valid. Pastikan formatnya adalah [latitude, longitude].');
+                return false; // Jangan submit form jika lokasi tidak valid
+            }
         } else {
-            alert('Format lokasi tidak valid. Pastikan formatnya adalah [latitude, longitude].');
-            return false; // Jangan submit form jika lokasi tidak valid
+            // Lokasi kosong, tetap gunakan nilai sebelumnya
+            var previousLocation = '{{ $wisata->lokasi }}'; // Ambil data lokasi sebelumnya dari blade
+            document.getElementById('lokasi').value = previousLocation; // Gunakan nilai lokasi sebelumnya
         }
-    } else {
-        // Lokasi kosong, tetap gunakan nilai sebelumnya
-        var previousLocation = '{{ $wisata->lokasi }}'; // Ambil data lokasi sebelumnya dari blade
-        document.getElementById('lokasi').value = previousLocation; // Gunakan nilai lokasi sebelumnya
+        document.getElementById('formWisata').submit(); // Mengirimkan form
     }
-    document.getElementById('formWisata').submit(); // Mengirimkan form
-}
-
 </script>
 
 @endsection

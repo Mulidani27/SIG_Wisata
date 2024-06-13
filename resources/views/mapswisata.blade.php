@@ -131,18 +131,25 @@
         labels.push(label{{$loop->index}});
 
         marker{{$loop->index}}.getElement().addEventListener('click', function() {
-            document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{$wisata->Nama_Wisata}}";
-            document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-                <img src="{{asset('uploads')}}/{{$wisata->Gambar}}" class="img-fluid mb-3" alt="{{$wisata->Nama_Wisata}}">
-                <h3>{{$wisata->Nama_Wisata}}</h3>
-                <h6>Wisata {{$wisata->Jenis_Wisata}}</h6>
-                <p>{{$wisata->Detail}}</p>
-                <a class="btn btn-primary" href="{{route("map.view",$wisata->id)}}" role="button">Gambar 360</a>
-            `;
-            var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
-            offcanvas.show();
-        });
+    document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{$wisata->Nama_Wisata}}";
+    document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
+        <img src="{{asset('uploads')}}/{{$wisata->Gambar}}" class="img-fluid mb-3" alt="{{$wisata->Nama_Wisata}}">
+        <div class="details">
+            <h2>{{$wisata->Nama_Wisata}}</h2>
+            <h5>Jenis Wisata: {{$wisata->Jenis_Wisata}}</h5>
+            <h6>Alamat: {{$wisata->Alamat}}</h6>
+            <p style="text-align: justify;">{{$wisata->Detail}}</p>
+            <a class="btn btn-primary" href="{{route("map.view",$wisata->id)}}" role="button">Lihat Gambar 360</a>
+        </div>
+        
+    `;
+    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
+    offcanvas.show();
+});
+
     @endforeach
+
+
 
     map.on('zoom', function() {
         var offcanvasElement = document.getElementById('offcanvasWithBothOptions');

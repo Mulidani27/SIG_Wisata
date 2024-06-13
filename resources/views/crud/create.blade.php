@@ -14,9 +14,24 @@
         </div>
         <div class="mb-3">
             <label for="lokasi" class="form-label">Lokasi:</label>
-            <input type="text" class="form-control" id="lokasi" name="lokasi"  >
+            <input type="text" class="form-control" id="lokasi" name="lokasi">
             <small id="lokasiHelp" class="form-text text-muted">Masukkan lokasi dalam format [latitude, longitude]. Misal: -3.3147664431834007, 114.59666970396356</small>
         </div>
+        <div class="mb-3">
+            <label for="Alamat" class="form-label">Alamat:</label>
+            <textarea class="form-control" id="Alamat" name="Alamat"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="kecamatan" class="form-label">Kecamatan:</label>
+            <select class="form-select" id="kecamatan" name="kecamatan">
+                <option value="Banjarasin Utara">Banjarasin Utara</option>
+                <option value="Banjarasin Tengah">Banjarasin Tengah</option>
+                <option value="Banjarasin Barat">Banjarasin Barat</option>
+                <option value="Banjarasin Timur">Banjarasin Timur</option>
+                <option value="Banjarasin Selatan">Banjarasin Selatan</option>
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="Detail" class="form-label">Detail:</label>
             <textarea class="form-control" id="Detail" name="Detail"></textarea>
@@ -33,6 +48,7 @@
                 <option value="kuliner">Kuliner</option>
             </select>
         </div>
+
         <div class="mb-3">
             <label for="Gambar" class="form-label">Gambar:</label>
             <input type="file" class="form-control" id="Gambar" name="Gambar">

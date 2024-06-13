@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('Nama_Wisata');
             $table->string('lokasi');
+            $table->text('Alamat');
+            $table->string('kecamatan');
             $table->text('Detail');
             $table->enum('Jenis_Wisata', ['olahraga', 'religi', 'agro', 'gua', 'belanja', 'ekologi', 'kuliner']);
             $table->string('Gambar');

@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Wisata extends Model
+class Komentar extends Model
 {
     use HasFactory;
+
     public $timestamps = false;
 
     protected $fillable = [
         
-        'Nama_Wisata',
-        'lokasi',
-        'Alamat',
-        'kecamatan', // Pastikan kecamatan ada di sini
-        'Detail',
-        'Jenis_Wisata',
-        'Gambar',
-        'gambar360', 
+        'nama',
+        'komentar', 
     ];
 }
+

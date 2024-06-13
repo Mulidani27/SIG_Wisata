@@ -25,10 +25,12 @@ class WisataController extends Controller
         $validatedData = Validator::make($request->all(), [
             'Nama_Wisata' => 'required',
             'lokasi' => 'required',
+            'Alamat' => 'required',
+            'kecamatan' => 'required',
             'Detail' => 'required',
             'Jenis_Wisata' => 'required',
-            'Gambar' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar360' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validatedData->fails()) {
@@ -67,13 +69,15 @@ class WisataController extends Controller
         return view('crud.edit', compact('wisata'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $wisata = Wisata::findOrFail($id);
 
         $validatedData = Validator::make($request->all(), [
             'Nama_Wisata' => 'required',
             'lokasi' => 'required',
+            'Alamat' => 'required',
+            'kecamatan' => 'required',
             'Detail' => 'required',
             'Jenis_Wisata' => 'required',
             'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
