@@ -1,4 +1,4 @@
-@extends('app')
+ @extends('app')
 
 @section('title', 'Data Wisata')
 
@@ -14,9 +14,13 @@
             <input type="text" class="form-control" id="Nama_Wisata" name="Nama_Wisata" value="{{ $wisata->Nama_Wisata }}">
         </div>
         <div class="mb-3">
-            <label for="lokasi" class="form-label">Lokasi:</label>
+            <label for="lokasi" class="form-label">Koordinat:</label>
             <input type="text" class="form-control" id="lokasi" name="lokasi" placeholder="Tambahkan jika ingin merubah lokasi">
-            <small id="lokasiHelp" class="form-text text-muted">Masukkan lokasi dalam format [latitude, longitude]. Misal: -3.3147664431834007, 114.59666970396356</small>
+            <small id="lokasiHelp" class="form-text text-muted">Masukkan Koordinat dalam format [latitude, longitude]. Misal: -3.3147664431834007, 114.59666970396356</small>
+        </div>
+        <div class="mb-3">
+            <label for="map">Pilih Lokasi pada Peta:</label>
+            <div id="map" style="height: 400px;"></div>
         </div>
         <div class="mb-3">
             <label for="Alamat" class="form-label">Alamat:</label>
@@ -85,6 +89,36 @@
         }
         document.getElementById('formWisata').submit(); // Mengirimkan form
     }
+        
+    mapboxgl.accessToken = 'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11', // Ganti dengan gaya peta yang Anda inginkan
+        center: [114.59666970396356, -3.3147664431834007], // Koordinat default
+        zoom: 15 // Zoom level default
+    });
+
+    var marker = new mapboxgl.Marker({
+        draggable: true
+    })
+    .setLngLat([114.59666970396356, -3.3147664431834007]) // Koordinat default
+    .addTo(map);
+
+    function onDragEnd() {
+        var lngLat = marker.getLngLat();
+        updateInputField(lngLat.lng, lngLat.lat);
+    }
+
+    function updateInputField(lng, lat) {
+        document.getElementById('lokasi').value = lat.toFixed(7) + ',' + lng.toFixed(7);
+    }
+
+    marker.on('dragend', onDragEnd);
+
+    map.on('click', function(e) {
+        marker.setLngLat(e.lngLat).addTo(map);
+        onDragEnd();
+    });
 </script>
 
 @endsection

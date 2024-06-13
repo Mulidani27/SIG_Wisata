@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>Nama Wisata</th>
-                <th>Lokasi</th>
+                <th>Koordinat</th>
                 <th>Alamat</th>
                 <th>Jenis Wisata</th>
                 <th>Detail</th>

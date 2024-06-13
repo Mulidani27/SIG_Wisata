@@ -150,16 +150,6 @@
     @endforeach
 
 
-
-    map.on('zoom', function() {
-        var offcanvasElement = document.getElementById('offcanvasWithBothOptions');
-        var offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-        if (!offcanvas) {
-            offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-        }
-        offcanvas.show();
-    });
-
     function toggleMarkersAndLabels(checked) {
         if (checked) {
             markers.forEach(marker => marker.addTo(map));

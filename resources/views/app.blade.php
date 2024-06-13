@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css">
     <style>
@@ -92,6 +94,7 @@
             z-index: 500;
 
         }
+
         .toggle-link {
             color: blue;
             cursor: pointer;
@@ -129,9 +132,10 @@
             height: 150px;
             object-fit: cover;
         }
-        .gambarcard{
+
+        .gambarcard {
             height: 300px;
-            object-fit: cover; 
+            object-fit: cover;
         }
 
         .map-mode-buttons {
@@ -232,8 +236,8 @@
     <!-- Additional scripts -->
     <script src="{{asset('')}}assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{asset('')}}assets/js/script.min.js"></script>
-                    
-    
+
+
 </body>
 
 </html>
