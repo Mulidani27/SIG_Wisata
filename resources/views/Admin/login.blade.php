@@ -1,33 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin</title>
 </head>
 <body>
-    <h1>Login Admin</h1>
-    <form action="{{ route('admin.login') }}" method="POST">
+    <form action="{{ url('/admin/login') }}" method="POST">
         @csrf
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-        </div>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
         <button type="submit">Login</button>
-    </form>
-
-    @if ($errors->any())
-        <div>
-            <ul>
+        @if ($errors->any())
+            <div>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <p>{{ $error }}</p>
                 @endforeach
-            </ul>
-        </div>
-    @endif
+            </div>
+        @endif
+    </form>
 </body>
 </html>

@@ -41,13 +41,20 @@ Route::get('wisata/view/{map}', [MapController::class, 'viewlokasi'])->name('map
 
     
 
-route::get('crud-wisata', [WisataController::class,'index'])->name("data.show");
-route::get('create-wisata', [WisataController::class,'create'])->name("crud.create");
-route::post('wisata', [WisataController::class,'store'])->name("crud.store");
-route::get('wisata/{crud}/edit', [WisataController::class,'edit'])->name("crud.edit");
-route::patch('wisata/{crud}/update', [WisataController::class,'update'])->name("crud.update");
-route::delete('wisata/{crud}', [WisataController::class,'destroy'])->name("crud.destroy");
-route::get('wisata/{crud}', [WisataController::class,'show'])->name("crud.show");
+// routes/web.php
+
+
+
+Route::middleware('auth:admin')->group(function() {
+    Route::get('crud-wisata', [WisataController::class, 'index'])->name('data.show');
+    Route::get('create-wisata', [WisataController::class, 'create'])->name('crud.create');
+    Route::post('wisata', [WisataController::class, 'store'])->name('crud.store');
+    Route::get('wisata/{crud}/edit', [WisataController::class, 'edit'])->name('crud.edit');
+    Route::patch('wisata/{crud}/update', [WisataController::class, 'update'])->name('crud.update');
+    Route::delete('wisata/{crud}', [WisataController::class, 'destroy'])->name('crud.destroy');
+    Route::get('wisata/{crud}', [WisataController::class, 'show'])->name('crud.show');
+});
+Route::get('/data/show', [WisataController::class, 'show'])->name('data.show')->middleware('admin');
 
 Route::get('/card', [CardWisata::class, 'index'])->name('card.index');
 Route::get('/wisata', [CardWisata::class, 'index'])->name('wisata.index');
@@ -60,12 +67,12 @@ Route::post('/komentar/kirim', [KomentarController::class, 'kirimKomentar'])->na
 
 
 
-// Route yang hanya bisa diakses admin
-Route::group(['middleware' => 'admin'], function () {
-    Route::get('admin/dashboard', function() {
-        return 'Ini adalah dashboard admin';
-    });
-});
+Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login']);
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth:admin')->name('admin.dashboard');
+
+
 
 
 
