@@ -154,6 +154,19 @@
             display: inline-block;
             margin-bottom: 10px;
         }
+
+        .search-container {
+            position: absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 1;
+            width: 300px;
+        }
+
+        .form-control {
+            padding: 5px;
+            font-size: 16px;
+        }
     </style>
 </head>
 
@@ -168,7 +181,9 @@
                     <li class="nav-item"><a class="nav-link active" href="{{route('dashboard')}}">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{route('map.show','normal')}}">Peta</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ route('card.index', ['map' => 'normal']) }}">Data Wisata</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{route('data.show')}}">Ubah Data</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('data.show') }}">Ubah Data</a>
+                    </li>
                 </ul><a class="btn btn-primary shadow" role="button" href="signup.html">Masuk</a>
             </div>
         </div>

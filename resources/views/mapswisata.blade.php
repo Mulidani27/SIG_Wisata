@@ -3,8 +3,13 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+
 <div id="map">
     
+<div class="search-container">
+    <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
+</div>
+
     <div class="toggle-button controlsembunyi card card-body">
         <img src="{{ asset('assets/images/logo_sembunyi.png')}}" alt="Toggle Card" id="toggleButton" style="width: 20px; height: 100%;">
     </div>
@@ -254,6 +259,29 @@
                 directionsPanel.classList.add('visible');
             });
     }
+
+
+    // Ambil referensi elemen input
+const searchInput = document.getElementById('searchInput');
+
+// Tambahkan event listener untuk mendeteksi perubahan pada input pencarian
+searchInput.addEventListener('input', function() {
+    const query = searchInput.value.toLowerCase();
+
+    // Loop melalui semua marker dan label untuk menyembunyikan atau menampilkan berdasarkan pencarian
+    markers.forEach((marker, index) => {
+        const wisataName = labels[index].getElement().textContent.toLowerCase();
+
+        if (wisataName.includes(query)) {
+            marker.getElement().style.display = 'block';
+            labels[index].getElement().style.display = 'block';
+        } else {
+            marker.getElement().style.display = 'none';
+            labels[index].getElement().style.display = 'none';
+        }
+    });
+});
+
 </script>
 
 @endsection

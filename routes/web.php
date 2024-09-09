@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\WisataController;
 use App\Http\Controllers\KomentarController;
-
+use App\Http\Controllers\AdminController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -39,10 +39,8 @@ Route::get('wisata/map/{map}', [MapController::class, 'index'])->name('map.show'
 Route::get('wisata/view/{map}', [MapController::class, 'viewlokasi'])->name('map.view');
 
 
+    
 
-
-
-Route::middleware(['web'])->group(function () {
 route::get('crud-wisata', [WisataController::class,'index'])->name("data.show");
 route::get('create-wisata', [WisataController::class,'create'])->name("crud.create");
 route::post('wisata', [WisataController::class,'store'])->name("crud.store");
@@ -51,12 +49,23 @@ route::patch('wisata/{crud}/update', [WisataController::class,'update'])->name("
 route::delete('wisata/{crud}', [WisataController::class,'destroy'])->name("crud.destroy");
 route::get('wisata/{crud}', [WisataController::class,'show'])->name("crud.show");
 
-});
-
 Route::get('/card', [CardWisata::class, 'index'])->name('card.index');
 Route::get('/wisata', [CardWisata::class, 'index'])->name('wisata.index');
 
 
 Route::get('/komentar', [KomentarController::class, 'index'])->name('komentar.index');
 Route::post('/komentar/kirim', [KomentarController::class, 'kirimKomentar'])->name('komentar.kirim');
+
+
+
+
+
+// Route yang hanya bisa diakses admin
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('admin/dashboard', function() {
+        return 'Ini adalah dashboard admin';
+    });
+});
+
+
 
