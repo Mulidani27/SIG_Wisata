@@ -39,6 +39,9 @@ Route::get('wisata/map/{map}', [MapController::class, 'index'])->name('map.show'
 Route::get('wisata/view/{map}', [MapController::class, 'viewlokasi'])->name('map.view');
 
 
+
+
+
 Route::middleware(['web'])->group(function () {
 route::get('crud-wisata', [WisataController::class,'index'])->name("data.show");
 route::get('create-wisata', [WisataController::class,'create'])->name("crud.create");
@@ -51,6 +54,7 @@ route::get('wisata/{crud}', [WisataController::class,'show'])->name("crud.show")
 });
 
 Route::get('/card', [CardWisata::class, 'index'])->name('card.index');
+Route::get('/wisata', [CardWisata::class, 'index'])->name('wisata.index');
 
 
 Route::get('/komentar', [KomentarController::class, 'index'])->name('komentar.index');

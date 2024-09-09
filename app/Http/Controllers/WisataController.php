@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,14 +22,14 @@ class WisataController extends Controller
     public function store(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
-            'Nama_Wisata' => 'required',
-            'lokasi' => 'required',
-            'Alamat' => 'required',
-            'kecamatan' => 'required',
-            'Detail' => 'required',
-            'Jenis_Wisata' => 'required',
-            'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'Nama_Wisata' => 'nullable',
+            'lokasi' => 'nullable',
+            'Alamat' => 'nullable',
+            'kecamatan' => 'nullable',
+            'Detail' => 'nullable',
+            'Jenis_Wisata' => 'nullable',
+            'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif',
+            'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validatedData->fails()) {
@@ -74,14 +73,14 @@ class WisataController extends Controller
         $wisata = Wisata::findOrFail($id);
 
         $validatedData = Validator::make($request->all(), [
-            'Nama_Wisata' => 'required',
-            'lokasi' => 'required',
-            'Alamat' => 'required',
-            'kecamatan' => 'required',
-            'Detail' => 'required',
-            'Jenis_Wisata' => 'required',
-            'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
-            'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
+            'Nama_Wisata' => 'nullable',
+            'lokasi' => 'nullable',
+            'Alamat' => 'nullable',
+            'kecamatan' => 'nullable',
+            'Detail' => 'nullable',
+            'Jenis_Wisata' => 'nullable',
+            'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif',
+            'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif',
         ]);
 
         if ($validatedData->fails()) {
@@ -127,4 +126,6 @@ class WisataController extends Controller
         $wisata = Wisata::findOrFail($id);
         return view('crud.detail', compact('wisata'));
     }
+
+    
 }

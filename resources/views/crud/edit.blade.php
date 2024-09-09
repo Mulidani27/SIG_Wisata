@@ -1,4 +1,4 @@
- @extends('app')
+@extends('app')
 
 @section('title', 'Data Wisata')
 
@@ -6,6 +6,20 @@
 
 <div class="container">
     <h1>Edit Data Wisata</h1>
+
+    @if(session('success'))
+    
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('failed'))
+        <div class="alert alert-danger">
+            {{ session('failed') }}
+        </div>
+    @endif
+
     <form id="formWisata" action="{{ route('crud.update', $wisata->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
@@ -29,14 +43,13 @@
         <div class="mb-3">
             <label for="kecamatan" class="form-label">Kecamatan:</label>
             <select class="form-select" id="kecamatan" name="kecamatan">
-                <option value="Banjarasin Utara" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Utara' ? 'selected' : '' }}>Banjarasin Utara</option>
-                <option value="Banjarasin Tengah" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Tengah' ? 'selected' : '' }}>Banjarasin Tengah</option>
-                <option value="Banjarasin Barat" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Barat' ? 'selected' : '' }}>Banjarasin Barat</option>
-                <option value="Banjarasin Timur" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Timur' ? 'selected' : '' }}>Banjarasin Timur</option>
-                <option value="Banjarasin Selatan" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarasin Selatan' ? 'selected' : '' }}>Banjarasin Selatan</option>
+                <option value="Banjarmasin Utara" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Utara' ? 'selected' : '' }}>Banjarmasin Utara</option>
+                <option value="Banjarmasin Tengah" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Tengah' ? 'selected' : '' }}>Banjarmasin Tengah</option>
+                <option value="Banjarmasin Barat" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Barat' ? 'selected' : '' }}>Banjarmasin Barat</option>
+                <option value="Banjarmasin Timur" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Timur' ? 'selected' : '' }}>Banjarmasin Timur</option>
+                <option value="Banjarmasin Selatan" {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Selatan' ? 'selected' : '' }}>Banjarmasin Selatan</option>
             </select>
         </div>
-
         <div class="mb-3">
             <label for="Detail" class="form-label">Detail:</label>
             <textarea class="form-control" id="Detail" name="Detail">{{ $wisata->Detail }}</textarea>
@@ -63,6 +76,7 @@
             <input type="file" class="form-control" id="gambar360" name="gambar360">
             <img src="{{ asset('uploads/' . $wisata->gambar360) }}" alt="{{ $wisata->Nama_Wisata }}" style="max-width: 100px; max-height: 100px;">
         </div>
+        <br>
         <button type="button" class="btn btn-primary" onclick="submitForm()">Simpan</button>
     </form>
 </div>
@@ -95,14 +109,13 @@
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v11', // Ganti dengan gaya peta yang Anda inginkan
         center: [114.59666970396356, -3.3147664431834007], // Koordinat default
-        zoom: 15 // Zoom level default
+        zoom: 12 // Zoom level default
     });
 
     var marker = new mapboxgl.Marker({
         draggable: true
     })
-    .setLngLat([114.59666970396356, -3.3147664431834007]) // Koordinat default
-    .addTo(map);
+
 
     function onDragEnd() {
         var lngLat = marker.getLngLat();

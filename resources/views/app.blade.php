@@ -34,8 +34,14 @@
             padding: 0;
         }
 
-        .marker-label,
 
+
+        /* Style untuk garis pemisah antar kecamatan */
+        .kecamatan-divider {
+            border-top: 1px solid #ccc;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
 
         .marker-label {
             color: black;

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('komentars', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->foreignId('id_wisata');
             $table->text('komentar');
             $table->timestamps();
         });

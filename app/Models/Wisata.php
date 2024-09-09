@@ -15,7 +15,7 @@ class Wisata extends Model
         'Nama_Wisata',
         'lokasi',
         'Alamat',
-        'kecamatan', // Pastikan kecamatan ada di sini
+        'kecamatan', 
         'Detail',
         'Jenis_Wisata',
         'Gambar',
