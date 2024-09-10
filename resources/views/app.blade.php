@@ -167,6 +167,15 @@
             padding: 5px;
             font-size: 16px;
         }
+
+
+        .directions-panel{
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 1;
+            width: 300px;
+        }
     </style>
 </head>
 

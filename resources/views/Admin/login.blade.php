@@ -6,6 +6,24 @@
     <title>Login Admin</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailInput = document.getElementById('email');
+
+            emailInput.addEventListener('input', function() {
+                const value = emailInput.value;
+                const atIndex = value.indexOf('@');
+
+                if (atIndex !== -1) {
+                    // Tambahkan domain @gmail.com jika belum ada
+                    if (!value.endsWith('@gmail.com')) {
+                        emailInput.value = value.substring(0, atIndex + 1) + 'gmail.com';
+                    }
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -53,5 +71,6 @@
 
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

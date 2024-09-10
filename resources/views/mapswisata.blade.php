@@ -10,6 +10,12 @@
     <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
 </div>
 
+<div class="directions-panel card card-body hidden" id="directionsPanel">
+    <h5>Petunjuk Arah</h5>
+    <ol id="directionsList"></ol>
+</div>
+
+
     <div class="toggle-button controlsembunyi card card-body">
         <img src="{{ asset('assets/images/logo_sembunyi.png')}}" alt="Toggle Card" id="toggleButton" style="width: 20px; height: 100%;">
     </div>
@@ -46,10 +52,7 @@
     </div>
 </div>
 
-<div class="directions-panel card card-body hidden" id="directionsPanel">
-    <h5>Petunjuk Arah</h5>
-    <ol id="directionsList"></ol>
-</div>
+
 
 <script>
     mapboxgl.accessToken = 'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
@@ -154,11 +157,9 @@
                     <p style="text-align: justify;">{{$wisata->Detail}}</p>
                     <a class="btn btn-primary" href="{{route("map.view",$wisata->id)}}" role="button">Lihat Gambar 360</a>
                     <button class="btn btn-secondary mt-2" onclick="getRoute([114.5914681, -3.3154437], JSON.parse('{{$wisata->lokasi}}'))">Dapatkan Rute</button>
-                    
-                    
-                    </div>`;
+                </div>`;
             var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
-            offcanvas.s1how();
+            offcanvas.show();
         });
 
     @endforeach
