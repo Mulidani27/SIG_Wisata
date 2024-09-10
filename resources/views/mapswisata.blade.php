@@ -154,10 +154,11 @@
                     <p style="text-align: justify;">{{$wisata->Detail}}</p>
                     <a class="btn btn-primary" href="{{route("map.view",$wisata->id)}}" role="button">Lihat Gambar 360</a>
                     <button class="btn btn-secondary mt-2" onclick="getRoute([114.5914681, -3.3154437], JSON.parse('{{$wisata->lokasi}}'))">Dapatkan Rute</button>
-                </div>
-            `;
+                    
+                    
+                    </div>`;
             var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
-            offcanvas.show();
+            offcanvas.s1how();
         });
 
     @endforeach

@@ -181,10 +181,22 @@
                     <li class="nav-item"><a class="nav-link active" href="{{route('dashboard')}}">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{route('map.show','normal')}}">Peta</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ route('card.index', ['map' => 'normal']) }}">Data Wisata</a></li>
+                    @if (Auth::guard('admin')->check())
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('data.show') }}">Ubah Data</a>
                     </li>
-                </ul><a class="btn btn-primary shadow" role="button" href="signup.html">Masuk</a>
+                    <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                    @endif
+
+                    @guest('admin')
+                    <a class="btn btn-primary shadow" role="button" href="{{ route('admin.login') }}">Masuk</a>
+                    @endguest
+
+
+
             </div>
         </div>
     </nav>

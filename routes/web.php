@@ -70,9 +70,7 @@ Route::post('/komentar/kirim', [KomentarController::class, 'kirimKomentar'])->na
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth:admin')->name('admin.dashboard');
-
-
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth:admin')->name('dashboard');
 
 
 

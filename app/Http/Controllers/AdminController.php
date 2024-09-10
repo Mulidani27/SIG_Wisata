@@ -18,7 +18,7 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('dashboard');
         }
 
         return redirect()->back()->withErrors([
@@ -26,15 +26,18 @@ class AdminController extends Controller
         ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
-        return redirect()->route('admin.login');
+        Auth::guard('admin')->logout();  // Logout admin
+        $request->session()->invalidate();  // Menghapus semua sesi
+        $request->session()->regenerateToken();  // Regenerasi token CSRF
+
+        return redirect('/');  // Redirect ke halaman dashboard setelah logout
     }
 
     public function dashboard()
     {
-        return view('admin.dashboard');
+        return view('dashboard');
     }
 }
 

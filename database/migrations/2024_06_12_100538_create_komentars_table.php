@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama');
             $table->foreignId('id_wisata');
             $table->text('komentar');
+            $table->integer('rating');
             $table->timestamps();
         });
     }
