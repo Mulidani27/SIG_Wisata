@@ -6,6 +6,7 @@ use App\Http\Controllers\MapController;
 use App\Http\Controllers\WisataController;
 use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StatistikController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -54,7 +55,7 @@ Route::middleware('auth:admin')->group(function() {
     Route::delete('wisata/{crud}', [WisataController::class, 'destroy'])->name('crud.destroy');
     Route::get('wisata/{crud}', [WisataController::class, 'show'])->name('crud.show');
 });
-Route::get('/data/show', [WisataController::class, 'show'])->name('data.show')->middleware('admin');
+
 
 Route::get('/card', [CardWisata::class, 'index'])->name('card.index');
 Route::get('/wisata', [CardWisata::class, 'index'])->name('wisata.index');
@@ -72,5 +73,5 @@ Route::post('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth:admin')->name('dashboard');
 
-
+Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
 

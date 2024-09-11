@@ -190,6 +190,9 @@
                     <li class="nav-item"><a class="nav-link active" href="{{route('dashboard')}}">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{route('map.show','normal')}}">Peta</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ route('card.index', ['map' => 'normal']) }}">Data Wisata</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('statistik') }}">Statistik Wisata</a>
+                    </li>
                     @if (Auth::guard('admin')->check())
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('data.show') }}">Ubah Data</a>

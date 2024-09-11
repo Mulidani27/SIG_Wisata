@@ -29,5 +29,4 @@ class Komentar extends Model
     //     'komentar',
     //     'rating' 
     // ];
-}
 
