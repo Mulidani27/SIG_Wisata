@@ -197,6 +197,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('data.show') }}">Ubah Data</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('geojson.index') }}">Kelola Batas Wilayah</a>
+                    </li>
                     <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
                         @csrf
                         <button type="submit" class="btn btn-danger">Logout</button>

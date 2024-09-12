@@ -8,6 +8,7 @@ use App\Http\Controllers\KomentarController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StatistikController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\GeojsonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,9 +62,9 @@ Route::get('/card', [CardWisata::class, 'index'])->name('card.index');
 Route::get('/wisata', [CardWisata::class, 'index'])->name('wisata.index');
 
 
-Route::get('/komentar', [KomentarController::class, 'index'])->name('komentar.index');
-Route::post('/komentar/kirim', [KomentarController::class, 'kirimKomentar'])->name('komentar.kirim');
 
+Route::post('/wisata/{id_wisata}/komentars', [KomentarController::class, 'store'])->name('komentars.store');
+Route::get('/wisata/{id_wisata}/komentars', [KomentarController::class, 'index'])->name('komentars.index');
 
 
 
@@ -71,7 +72,19 @@ Route::post('/komentar/kirim', [KomentarController::class, 'kirimKomentar'])->na
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login']);
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('auth:admin')->name('dashboard');
+
 
 Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
+
+
+
+
+Route::middleware('auth:admin')->group(function() {
+Route::get('/geojson', [GeojsonController::class, 'index'])->name('geojson.index');
+Route::post('/geojson/upload', [GeojsonController::class, 'upload'])->name('geojson.upload');
+Route::delete('/geojson/delete/{id}', [GeojsonController::class, 'delete'])->name('geojson.delete');
+});
+
+
+
 

@@ -2,34 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Komentar;
+use App\Models\Wisata;
+use Illuminate\Http\Request;
 
 class KomentarController extends Controller
 {
-    public function index()
+    // Fungsi untuk menyimpan komentar
+    public function store(Request $request, $id_wisata)
     {
-        $komentars = Komentar::all();
-        return view('komentar', compact('komentars'));
+        // Validasi input
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'komentar' => 'required|string|max:1000',
+        ]);
+
+        // Menyimpan komentar ke database
+        Komentar::create([
+            'nama' => $request->input('nama'),
+            'id_wisata' => $id_wisata,
+            'rating' => $request->input('rating'),
+            'komentar' => $request->input('komentar'),
+        ]);
+
+        return redirect()->back()->with('success', 'Komentar dan rating berhasil ditambahkan.');
     }
 
-    
-
-    public function kirimKomentar(Request $request)
+    // Fungsi untuk menampilkan komentar
+    public function index($id_wisata)
     {
-        // Validasi data yang diterima dari formulir
-        $request->validate([
-            'nama' => 'required',
-            'komentar' => 'required',
-        ]);
+        // Mengambil komentar berdasarkan ID Wisata
+        $komentars = Komentar::where('id_wisata', $id_wisata)->get();
 
-        // Simpan komentar ke dalam database
-        Komentar::create([
-            'nama' => $request->nama,
-            'komentar' => $request->komentar,
-        ]);
-
-        // Redirect kembali ke halaman sebelumnya dengan pesan sukses
-        return redirect()->back()->with('success', 'Komentar berhasil dikirim.');
+        // Menampilkan view dengan komentar
+        return view('wisata.comments', compact('komentars'));
     }
 }
+
