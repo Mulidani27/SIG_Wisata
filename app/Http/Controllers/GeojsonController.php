@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Geojson;
+use Illuminate\Support\Facades\DB;
 
 class GeojsonController extends Controller
 {
@@ -61,5 +62,12 @@ class GeojsonController extends Controller
         $geojson->delete();
 
         return redirect()->back()->with('success', 'Batas wilayah berhasil dihapus.');
+    
     }
+
+
+
+
+
+
 }

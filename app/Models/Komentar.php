@@ -9,14 +9,19 @@ class Komentar extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'id_wisata', 'komentar', 'rating'];
+    protected $fillable = [
+        'nama', 
+        'id_wisata', 
+        'komentar', 
+        'rating',
+    ];
 
-    // Relasi ke model Wisata
     public function wisata()
     {
         return $this->belongsTo(Wisata::class, 'id_wisata');
     }
 }
+
 
 
 

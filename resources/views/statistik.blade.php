@@ -34,6 +34,33 @@
             </div>
         </div>
     </div>
+
+    <!-- Statistik Jumlah Tiap Jenis Wisata di Kecamatan -->
+    @foreach ($dataByKecamatan as $kecamatan => $data)
+        <div class="card mb-4">
+            <div class="card-header bg-info text-white">
+                Statistik Jenis Wisata di Kecamatan {{ $kecamatan }}
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Jenis Wisata</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{ $item->Jenis_Wisata }}</td>
+                                <td>{{ $item->count }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endforeach
 </div>
 
 <!-- Bootstrap JS Bundle with Popper -->
@@ -73,6 +100,5 @@
         data: kecamatanData,
     });
 </script>
-
 
 @endsection

@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Wisata extends Model
 {
     use HasFactory;
+
+    public function komentars()
+    {
+        return $this->hasMany(Komentar::class, 'id_wisata');
+    }
     public $timestamps = false;
 
     protected $fillable = [

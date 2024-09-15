@@ -1,39 +1,36 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\Wisata;
 use App\Models\Geojson;
 use App\Models\Komentar;
 
 class MapController extends Controller
 {
-
     public function index($map)
     {
-        $wisata = DB::table('wisatas')->get();
-        $geojsons = geojson::all();
-        $komentars = Komentar::all();
+        // Menggunakan Eloquent untuk mengambil data wisata beserta komentarnya
+        $wisata = Wisata::with('komentars')->get();
+        $geojsons = Geojson::all(); 
 
-        // dd($geojsons);
         return view('mapswisata', compact('wisata', 'map', 'geojsons'));
-        
     }
     
-    
-    public function viewlokasi ($lokasi){
-        $wisata = DB::table('wisatas')->where("id",$lokasi)->first();
-        return view ('360', compact('wisata'));
+    public function viewlokasi($lokasi)
+    {
+        // Menggunakan Eloquent untuk mengambil satu data wisata
+        $wisata = Wisata::with('komentars')->where('id', $lokasi)->firstOrFail();
+        return view('360', compact('wisata'));
     }
+
     public function view($id)
     {
-        $wisata = DB::table('wisatas')->find($id);
-        if (!$wisata) {
-            abort(404); // Handle jika wisata dengan ID tertentu tidak ditemukan
-        }
-        return view('mapswisata', compact('wisata')); // Sesuaikan dengan nama view yang digunakan
+        // Menggunakan Eloquent agar bisa memuat relasi komentars
+        $wisata = Wisata::with('komentars')->findOrFail($id);
+        return view('mapswisata', compact('wisata')); 
     }
-    
+
+
     
 }
