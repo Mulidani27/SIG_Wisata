@@ -35,6 +35,15 @@
             padding: 0;
         }
 
+        .hidden {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+
+
 
 
         /* Style untuk garis pemisah antar kecamatan */
@@ -172,24 +181,34 @@
 
         .directions-panel {
             position: absolute;
-            top: 20px;
+            top: 200px;
             left: 50px;
             z-index: 1;
             width: 30 0px;
         }
 
-        .zoom-controls {
-    position: absolute;
-    z-index: 1000; /* Tetap di atas layer lainnya */
-    top: 60px;    /* Posisi top */
-    left: 50px;   /* Posisi dari kanan */
-    background-color: white;
-    padding: 5px;  /* Padding lebih kecil */
-    border-radius: 3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    width: 300px;  /* Lebar lebih kecil */
-}
+        /* Sembunyikan konten secara default */
+        .content.hidden {
+            display: none;
+        }
 
+
+        .zoom-controls {
+            position: absolute;
+            z-index: 1000;
+            /* Tetap di atas layer lainnya */
+            top: 60px;
+            /* Posisi top */
+            left: 50px;
+            /* Posisi dari kanan */
+            background-color: white;
+            padding: 5px;
+            /* Padding lebih kecil */
+            border-radius: 3px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            /* Lebar lebih kecil */
+        }
     </style>
 </head>
 

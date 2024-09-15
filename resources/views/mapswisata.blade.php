@@ -285,6 +285,140 @@ const marker{{$loop->index}} = new mapboxgl.Marker()
 
 @endforeach
 
+function toggleDetail() {
+        var moreText = document.getElementById("more");
+        var dots = document.getElementById("dots");
+        var button = document.getElementById("toggleDetailButton");
+
+        if (moreText.style.display === "none") {
+            dots.style.display = "none";
+            moreText.style.display = "inline";
+            button.innerText = "Tampilkan lebih sedikit";
+        } else {
+            dots.style.display = "inline";
+            moreText.style.display = "none";
+            button.innerText = "Tampilkan lebih banyak";
+        }
+    }
+
+
+    function toggleMarkersAndLabels(checked) {
+        if (checked) {
+            markers.forEach(marker => marker.addTo(map));
+            labels.forEach(label => label.getElement().style.display = 'block');
+        } else {
+            markers.forEach(marker => marker.remove());
+            labels.forEach(label => label.getElement().style.display = 'none');
+        }
+    }
+
+    document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
+        toggleMarkersAndLabels(this.checked);
+    });
+
+    document.getElementById('toggleButton').addEventListener('click', function() {
+        var card = document.getElementById('toggleCard');
+        if (card.classList.contains('hidden')) {
+            card.classList.remove('hidden');
+            card.classList.add('visible');
+        } else {
+            card.classList.remove('visible');
+            card.classList.add('hidden');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleLabelsCheckbox = document.getElementById('toggleLabelsCheckbox');
+        const labels = document.querySelectorAll('.marker-label');
+
+        const visibility = toggleLabelsCheckbox.checked ? 'block' : 'none';
+        labels.forEach(label => {
+            label.style.display = visibility;
+        });
+
+        toggleLabelsCheckbox.addEventListener('change', function() {
+            const visibility = this.checked ? 'block' : 'none';
+            labels.forEach(label => {
+                label.style.display = visibility;
+            });
+        });
+    });
+
+    function getRoute(start, end) {
+        const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&language=id&access_token=${mapboxgl.accessToken}`;
+
+fetch(directionsRequest)
+    .then(response => response.json())
+    .then(data => {
+        const route = data.routes[0].geometry.coordinates;
+        const geojson = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates: route
+            }
+        };
+
+        if (map.getSource('route')) {
+            map.getSource('route').setData(geojson);
+        } else {
+            map.addLayer({
+                id: 'route',
+                type: 'line',
+                source: {
+                    type: 'geojson',
+                    data: geojson
+                },
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#3887be',
+                    'line-width': 5,
+                    'line-opacity': 0.75
+                }
+            });
+        }
+
+        const steps = data.routes[0].legs[0].steps;
+        const directionsList = document.getElementById('directionsList');
+        directionsList.innerHTML = '';
+        steps.forEach(step => {
+            const li = document.createElement('li');
+            li.textContent = step.maneuver.instruction;
+            directionsList.appendChild(li);
+        });
+
+        const directionsPanel = document.getElementById('directionsPanel');
+        directionsPanel.classList.remove('hidden');
+        directionsPanel.classList.add('visible');
+    });
+}
+
+// Ambil referensi elemen input
+const searchInput = document.getElementById('searchInput');
+
+// Tambahkan event listener untuk mendeteksi perubahan pada input pencarian
+searchInput.addEventListener('input', function() {
+const query = searchInput.value.toLowerCase();
+
+// Loop melalui semua marker dan label untuk menyembunyikan atau menampilkan berdasarkan pencarian
+markers.forEach((marker, index) => {
+    const wisataName = labels[index].getElement().textContent.toLowerCase();
+
+    if (wisataName.includes(query)) {
+        marker.getElement().style.display = 'block';
+        labels[index].getElement().style.display = 'block';
+    } else {
+        marker.getElement().style.display = 'none';
+        labels[index].getElement().style.display = 'none';
+    }
+});
+});
+
+
 document.getElementById('toggleButton').addEventListener('click', function() {
     const toggleCard = document.getElementById('toggleCard');
     if (toggleCard.classList.contains('hidden')) {
@@ -304,6 +438,19 @@ document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('chan
 document.getElementById('toggleLabelsCheckbox').addEventListener('change', function() {
     labels.forEach(label => label.getElement().style.display = this.checked ? 'block' : 'none');
 });
+
+
+document.getElementById('toggleButton').addEventListener('click', function() {
+    var card = document.getElementById('toggleCard');
+    if (card.classList.contains('hidden')) {
+        card.classList.remove('hidden');
+        card.classList.add('visible');
+    } else {
+        card.classList.remove('visible');
+        card.classList.add('hidden');
+    }
+});
+
 </script>
 
 
