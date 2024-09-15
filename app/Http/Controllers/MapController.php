@@ -13,6 +13,7 @@ class MapController extends Controller
         // Menggunakan Eloquent untuk mengambil data wisata beserta komentarnya
         $wisata = Wisata::with('komentars')->get();
         $geojsons = Geojson::all(); 
+        
 
         return view('mapswisata', compact('wisata', 'map', 'geojsons'));
     }

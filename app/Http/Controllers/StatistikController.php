@@ -24,9 +24,12 @@ class StatistikController extends Controller
         ->get();
 
     // Data for Statistik Jumlah Tiap Jenis Wisata di Kecamatan
-    $jenisWisataPerKecamatan = Wisata::select('kecamatan', 'Jenis_Wisata', DB::raw('count(*) as count'))
+    $jenisWisataPerKecamatanRaw = Wisata::select('kecamatan', 'Jenis_Wisata', DB::raw('count(*) as count'))
         ->groupBy('kecamatan', 'Jenis_Wisata')
         ->get();
+
+    // Format data by kecamatan
+    $jenisWisataPerKecamatan = $jenisWisataPerKecamatanRaw->groupBy('kecamatan');
 
     return view('statistik', [
         'jenisWisataCounts' => $jenisWisataCounts,
@@ -34,5 +37,6 @@ class StatistikController extends Controller
         'jenisWisataPerKecamatan' => $jenisWisataPerKecamatan,
     ]);
 }
+
 
 }

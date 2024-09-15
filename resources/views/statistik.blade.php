@@ -3,7 +3,7 @@
 @section('title', 'Data Wisata')
 
 @section('content')
-
+<div class="container">
 <div class="container mt-5">
     <h1 class="text-center mb-4">Statistik Wisata</h1>
 
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Statistik Jumlah Tiap Jenis Wisata di Kecamatan -->
-    @foreach ($dataByKecamatan as $kecamatan => $data)
+    @foreach ($jenisWisataPerKecamatan as $kecamatan => $data)
         <div class="card mb-4">
             <div class="card-header bg-info text-white">
                 Statistik Jenis Wisata di Kecamatan {{ $kecamatan }}
@@ -62,7 +62,7 @@
         </div>
     @endforeach
 </div>
-
+</div>
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Chart.js -->

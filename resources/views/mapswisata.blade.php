@@ -3,8 +3,10 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+<div class="container-fluid d-flex justify-content-center">
 
-<div id="map" style="height: 100vh; width: 100%;">
+
+<div id="map"  style="height: 85vh; width: 95%;">
 
     <div class="search-container">
         <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
@@ -47,7 +49,7 @@
                 <label for="toggleMarkersAndLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">Tampilkan Wisata</label>
             </div>
             <div class="form-check">
-                <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input">
+                <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input" checked>
                 <label for="toggleLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">Tampilkan Label Nama</label>
             </div>
         </div>
@@ -72,7 +74,7 @@
         <p>Memuat informasi...</p>
     </div>
 </div>
-
+</div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
 const map = new mapboxgl.Map({
@@ -199,29 +201,88 @@ const markers = [];
 const labels = [];
 
 @foreach($wisata as $wisata)
-    const marker{{$loop->index}} = new mapboxgl.Marker()
-        .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-        .addTo(map);
+const marker{{$loop->index}} = new mapboxgl.Marker()
+            .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+            .addTo(map);
 
-    markers.push(marker{{$loop->index}});
+        markers.push(marker{{$loop->index}});
 
-    const labelDiv{{$loop->index}} = document.createElement('div');
-    labelDiv{{$loop->index}}.className = 'marker-label';
-    labelDiv{{$loop->index}}.textContent = '{{ $wisata->Nama_Wisata }}';
-    const label{{$loop->index}} = new mapboxgl.Marker(labelDiv{{$loop->index}}, {offset: [0, -30]})
-        .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-        .addTo(map);
+        const labelDiv{{$loop->index}} = document.createElement('div');
+        labelDiv{{$loop->index}}.className = 'marker-label';
+        labelDiv{{$loop->index}}.textContent = '{{ $wisata->Nama_Wisata }}';
+        const label{{$loop->index}} = new mapboxgl.Marker(labelDiv{{$loop->index}}, {offset: [0, -30]})
+            .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+            .addTo(map);
 
-    labels.push(label{{$loop->index}});
+        labels.push(label{{$loop->index}});
 
-    marker{{$loop->index}}.getElement().addEventListener('click', function() {
-        document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
-        document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-        <img src="{{ asset('uploads') }}/{{$wisata->Gambar}}" class="img-fluid mb-2" alt="Image">
-        <p>{{ $wisata->Deskripsi }}</p>`;
-        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
-        offcanvas.show();
-    });
+        marker{{$loop->index}}.getElement().addEventListener('click', function() {
+    document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
+    document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
+    <img src="{{ asset('uploads') }}/{{$wisata->Gambar}}" class="img-fluid mb-3" alt="{{$wisata->Nama_Wisata}}">
+<div class="details">
+    <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
+    <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
+    <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
+    
+    <!-- Detail Wisata dengan Show More/Less -->
+    <p id="detail-text" class="text-justify">
+        {{ Str::limit($wisata->Detail, 150) }}
+        <span id="dots">...</span>
+        <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
+    </p>
+    <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
+
+    <!-- Tombol Gambar 360 dan Rute -->
+    <div class="mt-3">
+        <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
+        <button class="btn btn-secondary mt-2" onclick="getRoute([114.5914681, -3.3154437], JSON.parse('{{ $wisata->lokasi }}'))">Dapatkan Rute</button>
+    </div>
+</div>
+
+<!-- Bagian Komentar dan Rating -->
+<div class="komentar-rating mt-5">
+    <h4 class="fw-bold">Komentar dan Rating</h4>
+
+    <!-- Form untuk menambah komentar dan rating -->
+    <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
+        @csrf
+        <div class="mb-3">
+            <label for="nama" class="form-label">Nama</label>
+            <input type="text" name="nama" id="nama" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating (1-5)</label>
+            <input type="number" name="rating" id="rating" class="form-control" min="1" max="5" required>
+        </div>
+        <div class="mb-3">
+            <label for="komentar" class="form-label">Komentar</label>
+            <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Kirim Komentar</button>
+    </form>
+
+    <!-- Daftar Komentar -->
+    <div class="daftar-komentar mt-4">
+        <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
+        @foreach($wisata->komentars as $komentar)
+            <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong>{{ $komentar->nama }}</strong>
+                    <span class="badge bg-info text-dark">{{ $komentar->rating }} / 5</span>
+                </div>
+                <p class="mb-1">{{ $komentar->komentar }}</p>
+                <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
+            </div>
+        @endforeach
+    </div>
+</div>
+    `;
+    
+    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
+    offcanvas.show();
+});
+
 @endforeach
 
 document.getElementById('toggleButton').addEventListener('click', function() {

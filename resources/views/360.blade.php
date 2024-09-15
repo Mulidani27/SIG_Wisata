@@ -3,6 +3,7 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+
     <div class="container my-4">
         <!-- Kontainer untuk panorama -->
         <div id="panorama" class="rounded shadow" style="width: 100%; height: 700px;"></div>

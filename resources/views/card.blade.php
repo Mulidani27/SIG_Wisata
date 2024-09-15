@@ -3,6 +3,7 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+<div class="container">
     <div class="mb-3">
         <form action="{{ route('wisata.index') }}" method="GET">
             <div class="input-group">
@@ -42,6 +43,7 @@
                     </div>
                 @endforeach
             </div>
+        </div>
         </div>
     @endforeach
 
