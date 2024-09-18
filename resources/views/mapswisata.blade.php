@@ -32,15 +32,19 @@
     <div class="container mt-5">
         <h4 class="mb-4">Peta Batas Wilayah</h4>
 
-        <!-- Checkbox untuk menampilkan batas wilayah -->
         <div class="mb-4">
+    @foreach($geojsonGrouped as $kecamatan => $geojsons)
+        <div class="mb-2">
+            <h5>{{ $kecamatan }}</h5>
             @foreach($geojsons as $geojson)
-                <div class="form-check">
+                <div class="form-check" style="margin-left: 20px;">
                     <input type="checkbox" id="layer-{{ $geojson->id }}" class="form-check-input layer-checkbox" data-geojson="{{ asset('uploads/' . $geojson->geojson) }}">
                     <label for="layer-{{ $geojson->id }}" class="form-check-label" style="font-size: 1.2rem;">{{ $geojson->nama_wilayah }}</label>
                 </div>
             @endforeach
         </div>
+    @endforeach
+</div>
 
         <!-- Checkbox untuk menampilkan wisata dan label -->
         <div class="mb-4">
@@ -450,6 +454,10 @@ document.getElementById('toggleButton').addEventListener('click', function() {
         card.classList.add('hidden');
     }
 });
+
+
+
+
 
 </script>
 

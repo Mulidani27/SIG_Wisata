@@ -10,13 +10,29 @@ class MapController extends Controller
 {
     public function index($map)
     {
-        // Menggunakan Eloquent untuk mengambil data wisata beserta komentarnya
         $wisata = Wisata::with('komentars')->get();
         $geojsons = Geojson::all(); 
-        
-
-        return view('mapswisata', compact('wisata', 'map', 'geojsons'));
+    
+        $kelurahan = [ 
+            'Banjarmasin Barat' => ['Basirih', 'Belitung Selatan', 'Belitung Utara', 'Kuin Cerucuk', 'Kuin Selatan', 'Pelambuan', 'Telaga Biru', 'Telawang', 'Teluk Tiram'],
+            'Banjarmasin Selatan' => ['Basirih Selatan', 'Kelayan Barat', 'Kelayan Dalam', 'Kelayan Tengah', 'Kelayan Timur', 'Kelayan Selatan', 'Mantuil', 'Murung Raya', 'Pekauman', 'Pemurus Baru', 'Pemurus Dalam', 'Tanjung Pagar'],
+            'Banjarmasin Tengah' => ['Antasan Besar', 'Gadang', 'Kertak Baru Ilir', 'Kertak Baru Ulu', 'Kelayan Luar', 'Mawar', 'Melayu', 'Pasar Lama', 'Pekapuran Laut', 'Seberang Mesjid', 'Sungai Baru', 'Teluk Dalam'],
+            'Banjarmasin Timur' => ['Benua Anyar', 'Karang Mekar', 'Kebun Bunga', 'Kuripan', 'Pekapuran Raya', 'Pemurus Luar', 'Pengambangan', 'Sungai Bilu', 'Sungai Lulut'],
+            'Banjarmasin Utara' => ['Alalak Utara', 'Alalak Tengah', 'Alalak Selatan', 'Antasan Kecil Timur', 'Kuin Utara', 'Pangeran', 'Sungai Andai', 'Sungai Jingah', 'Sungai Miai', 'Sungai Mufti']
+        ];
+    
+        // Kelompokkan geojsons berdasarkan kecamatan
+        $geojsonGrouped = $geojsons->groupBy(function($item) use ($kelurahan) {
+            foreach ($kelurahan as $kecamatan => $daerahs) {
+                if (in_array($item->nama_wilayah, $daerahs)) {
+                    return $kecamatan;
+                }
+            }
+        });
+    
+        return view('mapswisata', compact('wisata', 'map', 'geojsons', 'kelurahan', 'geojsonGrouped'));
     }
+    
     
     public function viewlokasi($lokasi)
     {
