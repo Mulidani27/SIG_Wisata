@@ -3,6 +3,7 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+<h1 style="text-align: center"> SIG Pemetaan Wisata Kota Banjarmasin</h1>
 <div class="container-fluid d-flex justify-content-center">
 
 
@@ -203,234 +204,172 @@ document.querySelectorAll('.layer-checkbox').forEach(checkbox => {
 
 const markers = [];
 const labels = [];
-
 @foreach($wisata as $wisata)
-const marker{{$loop->index}} = new mapboxgl.Marker()
-            .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-            .addTo(map);
+    const marker{{$loop->index}} = new mapboxgl.Marker()
+        .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+        .addTo(map);
 
-        markers.push(marker{{$loop->index}});
+    markers.push(marker{{$loop->index}});
 
-        const labelDiv{{$loop->index}} = document.createElement('div');
-        labelDiv{{$loop->index}}.className = 'marker-label';
-        labelDiv{{$loop->index}}.textContent = '{{ $wisata->Nama_Wisata }}';
-        const label{{$loop->index}} = new mapboxgl.Marker(labelDiv{{$loop->index}}, {offset: [0, -30]})
-            .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-            .addTo(map);
+    const labelDiv{{$loop->index}} = document.createElement('div');
+    labelDiv{{$loop->index}}.className = 'marker-label';
+    labelDiv{{$loop->index}}.textContent = '{{ $wisata->Nama_Wisata }}';
+    const label{{$loop->index}} = new mapboxgl.Marker(labelDiv{{$loop->index}}, {offset: [0, -30]})
+        .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+        .addTo(map);
 
-        labels.push(label{{$loop->index}});
+    labels.push(label{{$loop->index}});
 
-        marker{{$loop->index}}.getElement().addEventListener('click', function() {
-    document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
-    document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-    <img src="{{ asset('uploads') }}/{{$wisata->Gambar}}" class="img-fluid mb-3" alt="{{$wisata->Nama_Wisata}}">
-<div class="details">
-    <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
-    <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
-    <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
-    
-    <!-- Detail Wisata dengan Show More/Less -->
-    <p id="detail-text" class="text-justify">
-        {{ Str::limit($wisata->Detail, 150) }}
-        <span id="dots">...</span>
-        <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
-    </p>
-    <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
-
-    <!-- Tombol Gambar 360 dan Rute -->
-    <div class="mt-3">
-        <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
-        <button class="btn btn-secondary mt-2" onclick="getRoute([114.5914681, -3.3154437], JSON.parse('{{ $wisata->lokasi }}'))">Dapatkan Rute</button>
-    </div>
-</div>
-
-<!-- Bagian Komentar dan Rating -->
-<div class="komentar-rating mt-5">
-    <h4 class="fw-bold">Komentar dan Rating</h4>
-
-    <!-- Form untuk menambah komentar dan rating -->
-    <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
-        @csrf
-        <div class="mb-3">
-            <label for="nama" class="form-label">Nama</label>
-            <input type="text" name="nama" id="nama" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="rating" class="form-label">Rating (1-5)</label>
-            <input type="number" name="rating" id="rating" class="form-control" min="1" max="5" required>
-        </div>
-        <div class="mb-3">
-            <label for="komentar" class="form-label">Komentar</label>
-            <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Kirim Komentar</button>
-    </form>
-
-    <!-- Daftar Komentar -->
-    <div class="daftar-komentar mt-4">
-        <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
-        @foreach($wisata->komentars as $komentar)
-            <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong>{{ $komentar->nama }}</strong>
-                    <span class="badge bg-info text-dark">{{ $komentar->rating }} / 5</span>
+    marker{{$loop->index}}.getElement().addEventListener('click', function() {
+        document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
+        document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
+            <img src="{{ asset('uploads') }}/{{$wisata->Gambar}}" class="img-fluid mb-3" alt="{{$wisata->Nama_Wisata}}">
+            <div class="details">
+                <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
+                <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
+                <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
+                <p id="detail-text" class="text-justify">
+                    {{ Str::limit($wisata->Detail, 150) }}
+                    <span id="dots">...</span>
+                    <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
+                </p>
+                <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
+                <div class="mt-3">
+                    <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
+                    <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
                 </div>
-                <p class="mb-1">{{ $komentar->komentar }}</p>
-                <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
             </div>
-        @endforeach
-    </div>
-</div>
-    `;
-    
-    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
-    offcanvas.show();
-});
 
+            <div class="komentar-rating mt-5">
+                <h4 class="fw-bold">Komentar dan Rating</h4>
+                <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="nama" class="form-label">Nama</label>
+                        <input type="text" name="nama" id="nama" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="rating" class="form-label">Rating (1-5)</label>
+                        <input type="number" name="rating" id="rating" class="form-control" min="1" max="5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="komentar" class="form-label">Komentar</label>
+                        <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Kirim Komentar</button>
+                </form>
+
+                <div class="daftar-komentar mt-4">
+                    <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
+                    @foreach($wisata->komentars as $komentar)
+                        <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <strong>{{ $komentar->nama }}</strong>
+                                <span class="badge bg-info text-dark">{{ $komentar->rating }} / 5</span>
+                            </div>
+                            <p class="mb-1">{{ $komentar->komentar }}</p>
+                            <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        `;
+
+        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
+        offcanvas.show();
+    });
 @endforeach
 
-function toggleDetail() {
-        var moreText = document.getElementById("more");
-        var dots = document.getElementById("dots");
-        var button = document.getElementById("toggleDetailButton");
-
-        if (moreText.style.display === "none") {
-            dots.style.display = "none";
-            moreText.style.display = "inline";
-            button.innerText = "Tampilkan lebih sedikit";
-        } else {
-            dots.style.display = "inline";
-            moreText.style.display = "none";
-            button.innerText = "Tampilkan lebih banyak";
-        }
-    }
-
-
-    function toggleMarkersAndLabels(checked) {
-        if (checked) {
-            markers.forEach(marker => marker.addTo(map));
-            labels.forEach(label => label.getElement().style.display = 'block');
-        } else {
-            markers.forEach(marker => marker.remove());
-            labels.forEach(label => label.getElement().style.display = 'none');
-        }
-    }
-
-    document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
-        toggleMarkersAndLabels(this.checked);
-    });
-
-    document.getElementById('toggleButton').addEventListener('click', function() {
-        var card = document.getElementById('toggleCard');
-        if (card.classList.contains('hidden')) {
-            card.classList.remove('hidden');
-            card.classList.add('visible');
-        } else {
-            card.classList.remove('visible');
-            card.classList.add('hidden');
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleLabelsCheckbox = document.getElementById('toggleLabelsCheckbox');
-        const labels = document.querySelectorAll('.marker-label');
-
-        const visibility = toggleLabelsCheckbox.checked ? 'block' : 'none';
-        labels.forEach(label => {
-            label.style.display = visibility;
-        });
-
-        toggleLabelsCheckbox.addEventListener('change', function() {
-            const visibility = this.checked ? 'block' : 'none';
-            labels.forEach(label => {
-                label.style.display = visibility;
+function promptForStartingPoint(destination) {
+    const useGeolocation = confirm("Apakah Anda ingin menggunakan lokasi Anda saat ini sebagai titik awal?");
+    
+    if (useGeolocation) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const start = [position.coords.longitude, position.coords.latitude];
+                const end = JSON.parse(destination);
+                getRoute(start, end);
+            }, function(error) {
+                alert("Tidak dapat mengakses lokasi Anda. Silakan masukkan koordinat secara manual.");
+                promptForCoordinates(destination);
             });
-        });
-    });
-
-    function getRoute(start, end) {
-        const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&language=id&access_token=${mapboxgl.accessToken}`;
-
-fetch(directionsRequest)
-    .then(response => response.json())
-    .then(data => {
-        const route = data.routes[0].geometry.coordinates;
-        const geojson = {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-                type: 'LineString',
-                coordinates: route
-            }
-        };
-
-        if (map.getSource('route')) {
-            map.getSource('route').setData(geojson);
         } else {
-            map.addLayer({
-                id: 'route',
-                type: 'line',
-                source: {
-                    type: 'geojson',
-                    data: geojson
-                },
-                layout: {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                },
-                paint: {
-                    'line-color': '#3887be',
-                    'line-width': 5,
-                    'line-opacity': 0.75
-                }
-            });
+            alert("Browser Anda tidak mendukung geolokasi.");
+            promptForCoordinates(destination);
         }
-
-        const steps = data.routes[0].legs[0].steps;
-        const directionsList = document.getElementById('directionsList');
-        directionsList.innerHTML = '';
-        steps.forEach(step => {
-            const li = document.createElement('li');
-            li.textContent = step.maneuver.instruction;
-            directionsList.appendChild(li);
-        });
-
-        const directionsPanel = document.getElementById('directionsPanel');
-        directionsPanel.classList.remove('hidden');
-        directionsPanel.classList.add('visible');
-    });
+    } else {
+        promptForCoordinates(destination);
+    }
 }
 
-// Ambil referensi elemen input
-const searchInput = document.getElementById('searchInput');
-
-// Tambahkan event listener untuk mendeteksi perubahan pada input pencarian
-searchInput.addEventListener('input', function() {
-const query = searchInput.value.toLowerCase();
-
-// Loop melalui semua marker dan label untuk menyembunyikan atau menampilkan berdasarkan pencarian
-markers.forEach((marker, index) => {
-    const wisataName = labels[index].getElement().textContent.toLowerCase();
-
-    if (wisataName.includes(query)) {
-        marker.getElement().style.display = 'block';
-        labels[index].getElement().style.display = 'block';
+function promptForCoordinates(destination) {
+    const startLat = prompt("Masukkan latitude titik awal:");
+    const startLng = prompt("Masukkan longitude titik awal:");
+    
+    if (startLat && startLng) {
+        const start = [parseFloat(startLng), parseFloat(startLat)];
+        const end = JSON.parse(destination);
+        getRoute(start, end);
     } else {
-        marker.getElement().style.display = 'none';
-        labels[index].getElement().style.display = 'none';
+        alert("Koordinat tidak valid.");
     }
-});
-});
+}
+
+function getRoute(start, end) {
+    const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&language=id&access_token=${mapboxgl.accessToken}`;
+
+    fetch(directionsRequest)
+        .then(response => response.json())
+        .then(data => {
+            const route = data.routes[0].geometry.coordinates;
+            const geojson = {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: route
+                }
+            };
+
+            if (map.getSource('route')) {
+                map.getSource('route').setData(geojson);
+            } else {
+                map.addLayer({
+                    id: 'route',
+                    type: 'line',
+                    source: {
+                        type: 'geojson',
+                        data: geojson
+                    },
+                    layout: {
+                        'line-join': 'round',
+                        'line-cap': 'round'
+                    },
+                    paint: {
+                        'line-color': '#3887be',
+                        'line-width': 5,
+                        'line-opacity': 0.75
+                    }
+                });
+            }
+
+            const steps = data.routes[0].legs[0].steps;
+            const directionsList = document.getElementById('directionsList');
+            directionsList.innerHTML = '';
+            steps.forEach(step => {
+                const li = document.createElement('li');
+                li.textContent = step.maneuver.instruction;
+                directionsList.appendChild(li);
+            });
+
+            const directionsPanel = document.getElementById('directionsPanel');
+            directionsPanel.classList.remove('hidden');
+            directionsPanel.classList.add('visible');
+        });
+}
 
 
-document.getElementById('toggleButton').addEventListener('click', function() {
-    const toggleCard = document.getElementById('toggleCard');
-    if (toggleCard.classList.contains('hidden')) {
-        toggleCard.classList.remove('hidden');
-    } else {
-        toggleCard.classList.add('hidden');
-    }
-});
+
 
 // Event listener untuk checkbox yang menampilkan wisata dan label
 document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
@@ -457,8 +396,20 @@ document.getElementById('toggleButton').addEventListener('click', function() {
 
 
 
+// map.on('load', () => {
+//     // Tambahkan Geolocate control ke peta
+//     map.addControl(new mapboxgl.GeolocateControl({
+//         positionOptions: {
+//             enableHighAccuracy: true
+//         },
+//         trackUserLocation: true
+//     }));
 
-
+//     // Tambahkan event listener untuk Geolocate control jika diperlukan
+//     map.on('geolocate', (e) => {
+//         console.log('Posisi saat ini:', e.coords.longitude, e.coords.latitude);
+//     });
+// });
 </script>
 
 

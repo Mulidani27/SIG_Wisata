@@ -19,7 +19,8 @@
 
     @foreach($groupedWisata as $kecamatan => $wisataGroup)
         <div class="kecamatan-divider">
-            <h2>{{ $kecamatan }}</h2>
+            <h1 style="text-align: center">{{ $kecamatan }}</h1>
+            <br>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 @foreach($wisataGroup as $index => $wisataItem)
                     <div class="col">
@@ -44,7 +45,7 @@
                 @endforeach
             </div>
         </div>
-        </div>
+    
     @endforeach
 
     <script>
@@ -64,4 +65,6 @@
             }
         }
     </script>
+
+</div> 
 @endsection
