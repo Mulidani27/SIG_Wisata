@@ -12,7 +12,20 @@
 
     <div class="search-container">
         <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
+        
     </div>
+    <div id="filter-buttons">
+    <button class="btn-filter" data-category="Olahraga">Olahraga</button>
+    <button class="btn-filter" data-category="Religi">Religi</button>
+    <button class="btn-filter" data-category="Agro">Agro</button>
+    <button class="btn-filter" data-category="Gua">Gua</button>
+    <button class="btn-filter" data-category="Belanja">Belanja</button>
+    <button class="btn-filter" data-category="Ekologi">Ekologi</button>
+    <button class="btn-filter" data-category="Kuliner">Kuliner</button>
+    <button class="btn-filter" data-category="All">Semua</button>
+</div>
+
+
 
     <!-- Zoom Controls -->
     <div class="zoom-controls card card-body">
@@ -215,6 +228,7 @@ document.querySelectorAll('.layer-checkbox').forEach(checkbox => {
 
 const markers = [];
 const labels = [];
+
 @foreach($wisata as $wisata)
     const marker{{$loop->index}} = new mapboxgl.Marker()
         .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))

@@ -4,6 +4,9 @@
 
 @section('content')
 <div class="container">
+    <br>
+    <br>
+    
     <h1>Daftar Wisata</h1>
     <br>
     <a href="{{ route('crud.create') }}" class="btn btn-success">Tambah Wisata</a>

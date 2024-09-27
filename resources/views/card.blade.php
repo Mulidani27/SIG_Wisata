@@ -5,6 +5,8 @@
 @section('content')
 <div class="container">
     <div class="mb-3">
+        <br>
+        <br>
         <form action="{{ route('wisata.index') }}" method="GET">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Cari Nama Wisata..." name="query" value="{{ request('query') }}">

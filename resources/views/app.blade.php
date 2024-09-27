@@ -16,13 +16,18 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
 
+    <!-- Link CSS Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Link JS Bootstrap (Sebelum penutupan tag body) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css">
     <style>
         #map {
             position: relative;
-            height: 85vh; 
+            height: 85vh;
             width: 95%;
 
         }
@@ -279,10 +284,6 @@
             }
         }
 
-
-
-
-
         /* Tombol minimize atau hide panel */
         /* Sembunyikan tombol secara default */
         #toggleDirections {
@@ -313,10 +314,36 @@
                 display: none;
             }
         }
+
+
+        #filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            
+        }
+
+        .btn-filter {
+            position: relative;
+            padding: 8px 12px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            left:  370px;
+            top: 10px;
+            z-index: 1000 !important;
+        }
+
+        .btn-filter:hover {
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 
 <body style="background-color: #FAF7F0p">
+
     <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3" style="background-color: #15B392;"
         id="mainNav">
         <div class="container"> <a class="navbar-brand d-flex align-items-center" href="/">
@@ -326,6 +353,11 @@
                 </span>
                 <span>SIG Wisata Banjarmasin</span>
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-1"
+                aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link active" href="{{ route('dashboard') }}">Home</a></li>
@@ -352,8 +384,6 @@
                     @guest('admin')
                         <a class="btn btn-primary shadow" role="button" href="{{ route('admin.login') }}">Masuk</a>
                     @endguest
-
-
 
             </div>
         </div>
@@ -415,8 +445,8 @@
             <div class="text-muted d-flex justify-content-between align-items-center pt-3">
                 <p class="mb-0">Copyright © 2024 Brand</p>
                 <ul class="list-inline mb-0">
-                    <li class="list-inline-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                            fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
+                    <li class="list-inline-item"><svg xmlns="http://www.w3.org/2000/svg" width="1em"
+                            height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-facebook">
                             <path
                                 d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z">
                             </path>
@@ -443,6 +473,16 @@
     <!-- Additional scripts -->
     <script src="{{ asset('') }}assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ asset('') }}assets/js/script.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('#navcol-1');
+
+            toggler.addEventListener('click', function() {
+                navbarCollapse.classList.toggle('show');
+            });
+        });
+    </script>
 
 
 </body>
