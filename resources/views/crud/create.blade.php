@@ -73,6 +73,7 @@
                 <option value="ekologi" {{ old('Jenis_Wisata') == 'ekologi' ? 'selected' : '' }}>Ekologi</option>
                 <option value="kuliner" {{ old('Jenis_Wisata') == 'kuliner' ? 'selected' : '' }}>Kuliner</option>
             </select>
+            Olahraga,religi,agro,gua,belanja,ekologi,kuliner
         </div>
         <div class="mb-3">
             <label for="Gambar" class="form-label">Gambar:</label>

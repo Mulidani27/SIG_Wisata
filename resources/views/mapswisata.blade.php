@@ -3,12 +3,12 @@
 @section('title', 'Data Wisata')
 
 @section('content')
-<h1 style="text-align: center"> SIG Pemetaan Wisata Kota Banjarmasin</h1>
+
 <br>
 <div class="container-fluid d-flex justify-content-center">
 
 
-<div id="map"  style="height: 75vh; width: 95%;">
+<div id="map"  >
 
     <div class="search-container">
         <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
@@ -18,8 +18,17 @@
     <div class="zoom-controls card card-body">
         <h5>Zoom Peta</h5>
         <input type="range" id="zoomSlider" min="0" max="22" step="0.1" value="15" class="form-range">
-        <input type="number" id="zoomInput" min="0" max="22" step="0.1" value="15" class="form-control mt-2">
+        <input type="number" id="zoomInput" min="0" max="22" step="0.1" value="15" class="form-control">
     </div>
+    
+
+    <div id="directionsPanel" class="hidden">
+        <ul id="directionsList"></ul>
+    </div>
+
+    
+    <button id="toggleDirections">Sembunyikan Petunjuk</button>
+    
 
     <div class="directions-panel card card-body hidden" id="directionsPanel">
         <h5>Petunjuk Arah</h5>
@@ -82,6 +91,7 @@
 </div>
 </div>
 <script>
+    
 mapboxgl.accessToken = 'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
 const map = new mapboxgl.Map({
     container: 'map',
@@ -238,7 +248,8 @@ const labels = [];
                 <div class="mt-3">
                     <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
                     <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
-                </div>
+                    
+                    </div>
             </div>
 
             <div class="komentar-rating mt-5">
@@ -355,18 +366,24 @@ function getRoute(start, end) {
                 });
             }
 
+            // Tampilkan petunjuk arah
             const steps = data.routes[0].legs[0].steps;
             const directionsList = document.getElementById('directionsList');
-            directionsList.innerHTML = '';
+            directionsList.innerHTML = ''; // Kosongkan daftar sebelumnya
             steps.forEach(step => {
                 const li = document.createElement('li');
                 li.textContent = step.maneuver.instruction;
                 directionsList.appendChild(li);
             });
 
+            // Tampilkan panel petunjuk dan tombol
             const directionsPanel = document.getElementById('directionsPanel');
             directionsPanel.classList.remove('hidden');
             directionsPanel.classList.add('visible');
+
+            // Tampilkan tombol hanya jika ada rute
+            const toggleButton = document.getElementById('toggleDirections');
+            toggleButton.style.display = 'block'; // Menampilkan tombol setelah rute dibuat
         });
 }
 
@@ -503,6 +520,25 @@ map.on('load', () => {
         console.log('Posisi saat ini:', e.coords.longitude, e.coords.latitude);
     });
 });
+
+
+const toggleButton = document.getElementById('toggleDirections');
+const directionsPanel = document.getElementById('directionsPanel');
+
+toggleButton.addEventListener('click', function() {
+    if (directionsPanel.classList.contains('hidden-panel')) {
+        // Tampilkan panel petunjuk jika tersembunyi
+        directionsPanel.classList.remove('hidden-panel');
+        toggleButton.textContent = 'Sembunyikan Petunjuk';
+    } else {
+        // Sembunyikan panel petunjuk
+        directionsPanel.classList.add('hidden-panel');
+        toggleButton.textContent = 'Tampilkan Petunjuk';
+    }
+});
+
+
+
 </script>
 
 
