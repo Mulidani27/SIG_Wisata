@@ -4,251 +4,292 @@
 
 @section('content')
 
-<br>
-<div class="container-fluid d-flex justify-content-center">
+    <br>
+    <div class="container-fluid d-flex justify-content-center">
 
 
-<div id="map"  >
+        <div id="map">
 
-    <div class="search-container">
-        <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
-        
-    </div>
-    <div id="filter-buttons">
-    <button class="btn-filter" data-category="Olahraga">Olahraga</button>
-    <button class="btn-filter" data-category="Religi">Religi</button>
-    <button class="btn-filter" data-category="Agro">Agro</button>
-    <button class="btn-filter" data-category="Gua">Gua</button>
-    <button class="btn-filter" data-category="Belanja">Belanja</button>
-    <button class="btn-filter" data-category="Ekologi">Ekologi</button>
-    <button class="btn-filter" data-category="Kuliner">Kuliner</button>
-    <button class="btn-filter" data-category="All">Semua</button>
-</div>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
+
+            </div>
+            <div id="filter-buttons">
+                <button class="btn-filter " data-category="olahraga">Olahraga</button>
+                <button class="btn-filter" data-category="religi">Religi</button>
+                <button class="btn-filter" data-category="agro">Agro</button>
+                <button class="btn-filter" data-category="gua">Gua</button>
+                <button class="btn-filter" data-category="belanja">Belanja</button>
+                <button class="btn-filter" data-category="ekologi">Ekologi</button>
+                <button class="btn-filter" data-category="kuliner">Kuliner</button>
+                <button class="btn-filter" data-category="all">Semua</button>
+            </div>
 
 
 
-    <!-- Zoom Controls -->
-    <div class="zoom-controls card card-body">
-        <h5>Zoom Peta</h5>
-        <input type="range" id="zoomSlider" min="0" max="22" step="0.1" value="15" class="form-range">
-        <input type="number" id="zoomInput" min="0" max="22" step="0.1" value="15" class="form-control">
-    </div>
-    
+            <!-- Zoom Controls -->
+            <div class="zoom-controls card card-body">
+                <h5>Zoom Peta</h5>
+                <input type="range" id="zoomSlider" min="0" max="22" step="0.1" value="15"
+                    class="form-range">
+                <input type="number" id="zoomInput" min="0" max="22" step="0.1" value="15"
+                    class="form-control">
+            </div>
 
-    <div id="directionsPanel" class="hidden">
-        <ul id="directionsList"></ul>
-    </div>
 
-    
-    <button id="toggleDirections">Sembunyikan Petunjuk</button>
-    
+            <div id="directionsPanel" class="hidden">
+                <ul id="directionsList"></ul>
+            </div>
 
-    <div class="directions-panel card card-body hidden" id="directionsPanel">
-        <h5>Petunjuk Arah</h5>
-        <ol id="directionsList"></ol>
-    </div>
 
-    <div class="toggle-button controlsembunyi card card-body">
-        <img src="{{ asset('assets/images/logo_sembunyi.png') }}" alt="Toggle Card" id="toggleButton" style="width: 20px; height: 100%; cursor: pointer;">
-    </div>
+            <button id="toggleDirections">Sembunyikan Petunjuk</button>
 
-<div class="controlmap card card-body hidden" id="toggleCard">
-    <div class="container mt-5">
-        <h4 class="mb-4">Peta Batas Wilayah</h4>
 
-        <div class="mb-4">
-    @foreach($geojsonGrouped as $kecamatan => $geojsons)
-        <div class="mb-2">
-            <h5>{{ $kecamatan }}</h5>
-            @foreach($geojsons as $geojson)
-                <div class="form-check" style="margin-left: 20px;">
-                    <input type="checkbox" id="layer-{{ $geojson->id }}" class="form-check-input layer-checkbox" data-geojson="{{ asset('uploads/' . $geojson->geojson) }}">
-                    <label for="layer-{{ $geojson->id }}" class="form-check-label" style="font-size: 1.2rem;">{{ $geojson->nama_wilayah }}</label>
+            <div class="directions-panel card card-body hidden" id="directionsPanel">
+                <h5>Petunjuk Arah</h5>
+                <ol id="directionsList"></ol>
+            </div>
+
+            <div class="toggle-button controlsembunyi card card-body">
+                <img src="{{ asset('assets/images/logo_sembunyi.png') }}" alt="Toggle Card" id="toggleButton"
+                    style="width: 20px; height: 100%; cursor: pointer;">
+            </div>
+
+            <div class="controlmap card card-body hidden" id="toggleCard">
+                <div class="container mt-5">
+                    <h4 class="mb-4">Peta Batas Wilayah</h4>
+
+                    <div class="mb-4">
+                        @foreach ($geojsonGrouped as $kecamatan => $geojsons)
+                            <div class="mb-2">
+                                <h5>{{ $kecamatan }}</h5>
+                                @foreach ($geojsons as $geojson)
+                                    <div class="form-check" style="margin-left: 20px;">
+                                        <input type="checkbox" id="layer-{{ $geojson->id }}"
+                                            class="form-check-input layer-checkbox"
+                                            data-geojson="{{ asset('uploads/' . $geojson->geojson) }}">
+                                        <label for="layer-{{ $geojson->id }}" class="form-check-label"
+                                            style="font-size: 1.2rem;">{{ $geojson->nama_wilayah }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <!-- Checkbox untuk menampilkan wisata dan label -->
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" id="toggleMarkersAndLabelsCheckbox" class="form-check-input" checked>
+                            <label for="toggleMarkersAndLabelsCheckbox" class="form-check-label"
+                                style="font-size: 1.1rem;">Tampilkan Wisata</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input" checked>
+                            <label for="toggleLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">Tampilkan
+                                Label Nama</label>
+                        </div>
+                    </div>
+
+                    <!-- Pilih Mode Peta -->
+                    <h4 class="mb-3">Pilih Mode Peta:</h4>
+                    <div class="text-center">
+                        <a href="{{ route('map.show', 'satelite') }}" class="btn btn-primary btn-sm mx-2">Satelite</a>
+                        <a href="{{ route('map.show', 'normal') }}" class="btn btn-info btn-sm mx-2">Normal</a>
+                    </div>
                 </div>
-            @endforeach
-        </div>
-    @endforeach
-</div>
-
-        <!-- Checkbox untuk menampilkan wisata dan label -->
-        <div class="mb-4">
-            <div class="form-check">
-                <input type="checkbox" id="toggleMarkersAndLabelsCheckbox" class="form-check-input" checked>
-                <label for="toggleMarkersAndLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">Tampilkan Wisata</label>
             </div>
-            <div class="form-check">
-                <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input" checked>
-                <label for="toggleLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">Tampilkan Label Nama</label>
+
+        </div>
+
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+            aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Informasi Wisata</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p>Memuat informasi...</p>
             </div>
         </div>
-
-        <!-- Pilih Mode Peta -->
-        <h4 class="mb-3">Pilih Mode Peta:</h4>
-        <div class="text-center">
-            <a href="{{ route('map.show', 'satelite') }}" class="btn btn-primary btn-sm mx-2">Satelite</a>
-            <a href="{{ route('map.show', 'normal') }}" class="btn btn-info btn-sm mx-2">Normal</a>
-        </div>
     </div>
-</div>
+    <script>
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            @if ($map == 'satelite')
+                style: 'mapbox://styles/dani2705/clvudqd9601zv01ocb0jbdlif',
+            @else
+                style: 'mapbox://styles/mapbox/streets-v12',
+            @endif
+            center: [114.5914681, -3.3154437],
+            zoom: 15,
+        });
 
-</div>
+        const zoomSlider = document.getElementById('zoomSlider');
+        const zoomInput = document.getElementById('zoomInput');
 
-<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Informasi Wisata</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <p>Memuat informasi...</p>
-    </div>
-</div>
-</div>
-<script>
-    
-mapboxgl.accessToken = 'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
-const map = new mapboxgl.Map({
-    container: 'map',
-    @if($map == "satelite")
-        style: 'mapbox://styles/dani2705/clvudqd9601zv01ocb0jbdlif',
-    @else
-        style: 'mapbox://styles/mapbox/streets-v12',
-    @endif
-    center: [114.5914681, -3.3154437],
-    zoom: 15,
-});
+        // Update zoom when the slider changes
+        zoomSlider.addEventListener('input', function() {
+            map.setZoom(parseFloat(zoomSlider.value));
+            zoomInput.value = zoomSlider.value;
+        });
 
-const zoomSlider = document.getElementById('zoomSlider');
-const zoomInput = document.getElementById('zoomInput');
+        // Update zoom when the input number changes
+        zoomInput.addEventListener('input', function() {
+            map.setZoom(parseFloat(zoomInput.value));
+            zoomSlider.value = zoomInput.value;
+        });
 
-// Update zoom when the slider changes
-zoomSlider.addEventListener('input', function() {
-    map.setZoom(parseFloat(zoomSlider.value));
-    zoomInput.value = zoomSlider.value;
-});
+        // Update slider and input when the map's zoom level changes
+        map.on('zoom', function() {
+            const zoomLevel = map.getZoom().toFixed(1); // Get zoom level and fix to 1 decimal
+            zoomSlider.value = zoomLevel;
+            zoomInput.value = zoomLevel;
+        });
 
-// Update zoom when the input number changes
-zoomInput.addEventListener('input', function() {
-    map.setZoom(parseFloat(zoomInput.value));
-    zoomSlider.value = zoomInput.value;
-});
+        const fullscreenControl = new mapboxgl.FullscreenControl();
+        map.addControl(fullscreenControl, 'top-left');
 
-// Update slider and input when the map's zoom level changes
-map.on('zoom', function() {
-    const zoomLevel = map.getZoom().toFixed(1); // Get zoom level and fix to 1 decimal
-    zoomSlider.value = zoomLevel;
-    zoomInput.value = zoomLevel;
-});
+        // Titik tengah untuk setiap kecamatan
+        const districtCenters = {
 
-const fullscreenControl = new mapboxgl.FullscreenControl();
-map.addControl(fullscreenControl, 'top-left');
+            'layer-2': {
+                lng: 114.56793712912372,
+                lat: -3.3174116761470094
+            }, // Banjarmasin Barat
+            'layer-3': {
+                lng: 114.58672915941145,
+                lat: -3.347363346824667
+            }, // Banjarmasin Selatan
+            'layer-4': {
+                lng: 114.59008075528719,
+                lat: -3.318283048531195
+            }, // Banjarmasin Tengah
+            'layer-5': {
+                lng: 114.62408562486996,
+                lat: -3.327262400469273
+            }, // Banjarmasin Timur
+            'layer-6': {
+                lng: 114.59382795069247,
+                lat: -3.2920977438419676
+            } // Banjarmasin Utara
+        };
 
-// Titik tengah untuk setiap kecamatan
-const districtCenters = {
+        // Fungsi untuk mendapatkan warna acak
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
 
-    'layer-2': { lng: 114.56793712912372, lat: -3.3174116761470094 }, // Banjarmasin Barat
-    'layer-3': { lng: 114.58672915941145, lat: -3.347363346824667 }, // Banjarmasin Selatan
-    'layer-4': { lng: 114.59008075528719, lat: -3.318283048531195 }, // Banjarmasin Tengah
-    'layer-5': { lng: 114.62408562486996, lat: -3.327262400469273 },  // Banjarmasin Timur
-    'layer-6': { lng: 114.59382795069247, lat: -3.2920977438419676 } // Banjarmasin Utara
-};
+        // Fungsi untuk memuat GeoJSON, menambahkannya sebagai layer, dan fokus ke wilayahnya
+        function addGeojsonLayer(url, layerId) {
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (map.getSource(layerId)) {
+                        map.removeLayer(layerId);
+                        map.removeSource(layerId);
+                    }
 
-// Fungsi untuk mendapatkan warna acak
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+                    map.addSource(layerId, {
+                        type: 'geojson',
+                        data: data
+                    });
 
-// Fungsi untuk memuat GeoJSON, menambahkannya sebagai layer, dan fokus ke wilayahnya
-function addGeojsonLayer(url, layerId) {
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
+                    map.addLayer({
+                        'id': layerId,
+                        'type': 'fill',
+                        'source': layerId,
+                        'layout': {},
+                        'paint': {
+                            'fill-color': getRandomColor(), // Warna acak untuk setiap kecamatan
+                            'fill-opacity': 0.4
+                        }
+                    });
+
+                    // Mendapatkan titik tengah dari objek
+                    const center = districtCenters[layerId];
+
+                    if (center) {
+                        console.log(`Fokus ke ${layerId} dengan koordinat ${center.lat}, ${center.lng}`);
+                        // Fokus peta ke titik tengah yang ditentukan
+                        map.flyTo({
+                            center: [center.lng, center.lat],
+                            zoom: 14, // Ubah nilai zoom sesuai kebutuhan
+                            essential: true // Hanya lakukan animasi jika perlu
+                        });
+                    } else {
+                        console.error(`Titik tengah tidak ditemukan untuk layer ${layerId}`);
+                    }
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        // Fungsi untuk menghapus layer GeoJSON
+        function removeGeojsonLayer(layerId) {
             if (map.getSource(layerId)) {
                 map.removeLayer(layerId);
                 map.removeSource(layerId);
             }
+        }
 
-            map.addSource(layerId, {
-                type: 'geojson',
-                data: data
-            });
-
-            map.addLayer({
-                'id': layerId,
-                'type': 'fill',
-                'source': layerId,
-                'layout': {},
-                'paint': {
-                    'fill-color': getRandomColor(), // Warna acak untuk setiap kecamatan
-                    'fill-opacity': 0.4
+        // Event listener untuk checkbox dinamis
+        document.querySelectorAll('.layer-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                var layerId = 'layer-' + this.id.split('-')[1];
+                if (this.checked) {
+                    addGeojsonLayer(this.dataset.geojson, layerId);
+                } else {
+                    removeGeojsonLayer(layerId);
                 }
             });
+        });
 
-            // Mendapatkan titik tengah dari objek
-            const center = districtCenters[layerId];
+        const markers = [];
+        const labels = [];
+        const wisataCategories = [];
+        console.log(wisataCategories);
 
-            if (center) {
-                console.log(`Fokus ke ${layerId} dengan koordinat ${center.lat}, ${center.lng}`);
-                // Fokus peta ke titik tengah yang ditentukan
-                map.flyTo({
-                    center: [center.lng, center.lat],
-                    zoom: 14, // Ubah nilai zoom sesuai kebutuhan
-                    essential: true // Hanya lakukan animasi jika perlu
-                });
-            } else {
-                console.error(`Titik tengah tidak ditemukan untuk layer ${layerId}`);
-            }
-        })
-        .catch(error => console.error('Error loading GeoJSON:', error));
-}
+        // Loop untuk menambahkan marker dan label ke peta
+        @foreach ($wisata as $wisata)
+            wisataCategories.push('{{ $wisata->Jenis_Wisata }}');
 
-// Fungsi untuk menghapus layer GeoJSON
-function removeGeojsonLayer(layerId) {
-    if (map.getSource(layerId)) {
-        map.removeLayer(layerId);
-        map.removeSource(layerId);
-    }
-}
+            // Membuat marker untuk wisata
+            const marker{{ $loop->index }} = new mapboxgl.Marker()
+                .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+                .addTo(map); // Menambahkan marker ke peta secara default
 
-// Event listener untuk checkbox dinamis
-document.querySelectorAll('.layer-checkbox').forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        var layerId = 'layer-' + this.id.split('-')[1];
-        if (this.checked) {
-            addGeojsonLayer(this.dataset.geojson, layerId);
-        } else {
-            removeGeojsonLayer(layerId);
-        }
-    });
-});
+            markers.push({
+                marker: marker{{ $loop->index }},
+                category: '{{ $wisata->Jenis_Wisata }}' // Simpan kategori marker
+            });
 
-const markers = [];
-const labels = [];
+            // Membuat label untuk wisata
+            const labelDiv{{ $loop->index }} = document.createElement('div');
+            labelDiv{{ $loop->index }}.className = 'marker-label';
+            labelDiv{{ $loop->index }}.textContent = '{{ $wisata->Nama_Wisata }}';
 
-@foreach($wisata as $wisata)
-    const marker{{$loop->index}} = new mapboxgl.Marker()
-        .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-        .addTo(map);
+            const label{{ $loop->index }} = new mapboxgl.Marker(labelDiv{{ $loop->index }}, {
+                    offset: [0, -30]
+                })
+                .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+                .addTo(map); // Menambahkan label ke peta secara default
 
-    markers.push(marker{{$loop->index}});
+            labels.push({
+                label: label{{ $loop->index }},
+                category: '{{ $wisata->Jenis_Wisata }}' // Simpan kategori label
+            });
 
-    const labelDiv{{$loop->index}} = document.createElement('div');
-    labelDiv{{$loop->index}}.className = 'marker-label';
-    labelDiv{{$loop->index}}.textContent = '{{ $wisata->Nama_Wisata }}';
-    const label{{$loop->index}} = new mapboxgl.Marker(labelDiv{{$loop->index}}, {offset: [0, -30]})
-        .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-        .addTo(map);
-
-    labels.push(label{{$loop->index}});
-
-    marker{{$loop->index}}.getElement().addEventListener('click', function() {
-        document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
-        document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-            <img src="{{ asset('uploads') }}/{{$wisata->Gambar}}" class="img-fluid mb-3" alt="{{$wisata->Nama_Wisata}}">
+            // Event listener untuk menampilkan detail saat marker diklik
+            marker{{ $loop->index }}.getElement().addEventListener('click', function() {
+                document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
+                document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
+            <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="img-fluid mb-3" alt="{{ $wisata->Nama_Wisata }}">
             <div class="details">
                 <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
                 <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
@@ -262,8 +303,7 @@ const labels = [];
                 <div class="mt-3">
                     <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
                     <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
-                    
-                    </div>
+                </div>
             </div>
 
             <div class="komentar-rating mt-5">
@@ -287,7 +327,7 @@ const labels = [];
 
                 <div class="daftar-komentar mt-4">
                     <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
-                    @foreach($wisata->komentars as $komentar)
+                    @foreach ($wisata->komentars as $komentar)
                         <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <strong>{{ $komentar->nama }}</strong>
@@ -300,260 +340,321 @@ const labels = [];
                 </div>
             </div>
         `;
+                var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
+                offcanvas.show();
+            });
+        @endforeach
 
-        var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
-        offcanvas.show();
+// Fungsi untuk menampilkan atau menyembunyikan marker berdasarkan kategori
+function filterMarkers(category) {
+    markers.forEach((item, index) => {
+        if (item.category == category || category === "all") {
+            item.marker.addTo(map); // Tampilkan marker
+            labels[index].label.addTo(map); // Tampilkan label
+        } else {
+            item.marker.remove(); // Sembunyikan marker
+            labels[index].label.remove(); // Sembunyikan label
+        }
     });
-@endforeach
+}
 
 
-function promptForStartingPoint(destination) {
-    const useGeolocation = confirm("Apakah Anda ingin menggunakan lokasi Anda saat ini sebagai titik awal?");
-    
-    if (useGeolocation) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                const start = [position.coords.longitude, position.coords.latitude];
+
+// Tambahkan event listener ke tombol-tombol filter
+document.querySelectorAll('.btn-filter').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const category = e.target.getAttribute('data-category');
+        filterMarkers(category);
+
+
+    });
+});
+
+
+document.querySelectorAll('.btn-filter').forEach(button => {
+    button.addEventListener('click', function() {
+        // Menghapus kelas 'active' dari semua tombol
+        document.querySelectorAll('.btn-filter').forEach(btn => btn.classList.remove('active'));
+        
+        // Menambahkan kelas 'active' ke tombol yang diklik
+        this.classList.add('active');
+    });
+});
+
+
+
+
+        // Fungsi ini meminta pengguna untuk menentukan titik awal perjalanan, baik menggunakan lokasi saat ini atau memasukkan koordinat secara manual.
+        function promptForStartingPoint(destination) {
+            const useGeolocation = confirm("Apakah Anda ingin menggunakan lokasi Anda saat ini sebagai titik awal?");
+
+            if (useGeolocation) {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const start = [position.coords.longitude, position.coords.latitude];
+                        const end = JSON.parse(destination);
+                        getRoute(start, end);
+                    }, function(error) {
+                        alert("Tidak dapat mengakses lokasi Anda. Silakan masukkan koordinat secara manual.");
+                        promptForCoordinates(destination);
+                    });
+                } else {
+                    alert("Browser Anda tidak mendukung geolokasi.");
+                    promptForCoordinates(destination);
+                }
+            } else {
+                promptForCoordinates(destination);
+            }
+        }
+
+        // Fungsi ini meminta pengguna untuk memasukkan koordinat latitude dan longitude sebagai titik awal perjalanan, kemudian memanggil fungsi getRoute jika koordinat valid.
+        function promptForCoordinates(destination) {
+            const startLat = prompt("Masukkan latitude titik awal:");
+            const startLng = prompt("Masukkan longitude titik awal:");
+
+            if (startLat && startLng) {
+                const start = [parseFloat(startLng), parseFloat(startLat)];
                 const end = JSON.parse(destination);
                 getRoute(start, end);
-            }, function(error) {
-                alert("Tidak dapat mengakses lokasi Anda. Silakan masukkan koordinat secara manual.");
-                promptForCoordinates(destination);
-            });
-        } else {
-            alert("Browser Anda tidak mendukung geolokasi.");
-            promptForCoordinates(destination);
-        }
-    } else {
-        promptForCoordinates(destination);
-    }
-}
-
-function promptForCoordinates(destination) {
-    const startLat = prompt("Masukkan latitude titik awal:");
-    const startLng = prompt("Masukkan longitude titik awal:");
-    
-    if (startLat && startLng) {
-        const start = [parseFloat(startLng), parseFloat(startLat)];
-        const end = JSON.parse(destination);
-        getRoute(start, end);
-    } else {
-        alert("Koordinat tidak valid.");
-    }
-}
-
-function getRoute(start, end) {
-    const directionsRequest = `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&language=id&access_token=${mapboxgl.accessToken}`;
-
-    fetch(directionsRequest)
-        .then(response => response.json())
-        .then(data => {
-            const route = data.routes[0].geometry.coordinates;
-            const geojson = {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                    type: 'LineString',
-                    coordinates: route
-                }
-            };
-
-            if (map.getSource('route')) {
-                map.getSource('route').setData(geojson);
             } else {
-                map.addLayer({
-                    id: 'route',
-                    type: 'line',
-                    source: {
-                        type: 'geojson',
-                        data: geojson
-                    },
-                    layout: {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    paint: {
-                        'line-color': '#3887be',
-                        'line-width': 5,
-                        'line-opacity': 0.75
-                    }
-                });
+                alert("Koordinat tidak valid.");
             }
+        }
 
-            // Tampilkan petunjuk arah
-            const steps = data.routes[0].legs[0].steps;
-            const directionsList = document.getElementById('directionsList');
-            directionsList.innerHTML = ''; // Kosongkan daftar sebelumnya
-            steps.forEach(step => {
-                const li = document.createElement('li');
-                li.textContent = step.maneuver.instruction;
-                directionsList.appendChild(li);
-            });
+        function getRoute(start, end) {
+            const directionsRequest =
+                `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&language=id&access_token=${mapboxgl.accessToken}`;
 
-            // Tampilkan panel petunjuk dan tombol
-            const directionsPanel = document.getElementById('directionsPanel');
-            directionsPanel.classList.remove('hidden');
-            directionsPanel.classList.add('visible');
+            fetch(directionsRequest)
+                .then(response => response.json())
+                .then(data => {
+                    const route = data.routes[0].geometry.coordinates;
+                    const geojson = {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                            type: 'LineString',
+                            coordinates: route
+                        }
+                    };
 
-            // Tampilkan tombol hanya jika ada rute
-            const toggleButton = document.getElementById('toggleDirections');
-            toggleButton.style.display = 'block'; // Menampilkan tombol setelah rute dibuat
+                    if (map.getSource('route')) {
+                        map.getSource('route').setData(geojson);
+                    } else {
+                        map.addLayer({
+                            id: 'route',
+                            type: 'line',
+                            source: {
+                                type: 'geojson',
+                                data: geojson
+                            },
+                            layout: {
+                                'line-join': 'round',
+                                'line-cap': 'round'
+                            },
+                            paint: {
+                                'line-color': '#3887be',
+                                'line-width': 5,
+                                'line-opacity': 0.75
+                            }
+                        });
+                    }
+
+                    // Tampilkan petunjuk arah
+                    const steps = data.routes[0].legs[0].steps;
+                    const directionsList = document.getElementById('directionsList');
+                    directionsList.innerHTML = ''; // Kosongkan daftar sebelumnya
+                    steps.forEach(step => {
+                        const li = document.createElement('li');
+                        li.textContent = step.maneuver.instruction;
+                        directionsList.appendChild(li);
+                    });
+
+                    // Tampilkan panel petunjuk dan tombol
+                    const directionsPanel = document.getElementById('directionsPanel');
+                    directionsPanel.classList.remove('hidden');
+                    directionsPanel.classList.add('visible');
+
+                    // Tampilkan tombol hanya jika ada rute
+                    const toggleButton = document.getElementById('toggleDirections');
+                    toggleButton.style.display = 'block'; // Menampilkan tombol setelah rute dibuat
+                });
+        }
+
+
+
+        // Fungsi ini untuk mengubah tampilan detail teks. 
+        // Ketika dipanggil, ia akan menyembunyikan atau menampilkan teks tambahan, 
+        // serta mengubah teks pada tombol untuk menunjukkan apakah pengguna dapat melihat lebih banyak atau lebih sedikit.
+        function toggleDetail() {
+            var moreText = document.getElementById("more");
+            var dots = document.getElementById("dots");
+            var button = document.getElementById("toggleDetailButton");
+
+            if (moreText.style.display === "none") {
+                dots.style.display = "none";
+                moreText.style.display = "inline";
+                button.innerText = "Tampilkan lebih sedikit";
+            } else {
+                dots.style.display = "inline";
+                moreText.style.display = "none";
+                button.innerText = "Tampilkan lebih banyak";
+            }
+        }
+
+
+        // Fungsi ini untuk mengatur tampilan marker dan label pada peta. 
+        // Jika parameter 'checked' bernilai true, marker ditampilkan di peta dan label diatur untuk terlihat. 
+        // Jika false, marker dihapus dari peta dan label disembunyikan.
+        function toggleMarkersAndLabels(checked) {
+            if (checked) {
+                markers.forEach(marker => marker.addTo(map));
+                labels.forEach(label => label.getElement().style.display = 'block');
+            } else {
+                markers.forEach(marker => marker.remove());
+                labels.forEach(label => label.getElement().style.display = 'none');
+            }
+        }
+
+        // Menambahkan event listener pada checkbox untuk mengatur tampilan marker dan label saat status checkbox berubah.
+        document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
+            toggleMarkersAndLabels(this.checked);
         });
-}
 
-
-
-
-
-function toggleDetail() {
-        var moreText = document.getElementById("more");
-        var dots = document.getElementById("dots");
-        var button = document.getElementById("toggleDetailButton");
-
-        if (moreText.style.display === "none") {
-            dots.style.display = "none";
-            moreText.style.display = "inline";
-            button.innerText = "Tampilkan lebih sedikit";
-        } else {
-            dots.style.display = "inline";
-            moreText.style.display = "none";
-            button.innerText = "Tampilkan lebih banyak";
-        }
-    }
-
-
-    function toggleMarkersAndLabels(checked) {
-        if (checked) {
-            markers.forEach(marker => marker.addTo(map));
-            labels.forEach(label => label.getElement().style.display = 'block');
-        } else {
-            markers.forEach(marker => marker.remove());
-            labels.forEach(label => label.getElement().style.display = 'none');
-        }
-    }
-
-    document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
-        toggleMarkersAndLabels(this.checked);
-    });
-
-    document.getElementById('toggleButton').addEventListener('click', function() {
-        var card = document.getElementById('toggleCard');
-        if (card.classList.contains('hidden')) {
-            card.classList.remove('hidden');
-            card.classList.add('visible');
-        } else {
-            card.classList.remove('visible');
-            card.classList.add('hidden');
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const toggleLabelsCheckbox = document.getElementById('toggleLabelsCheckbox');
-        const labels = document.querySelectorAll('.marker-label');
-
-        const visibility = toggleLabelsCheckbox.checked ? 'block' : 'none';
-        labels.forEach(label => {
-            label.style.display = visibility;
+        // Menambahkan event listener pada tombol untuk menampilkan atau menyembunyikan kartu (card) saat tombol diklik.
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            var card = document.getElementById('toggleCard');
+            if (card.classList.contains('hidden')) {
+                card.classList.remove('hidden'); // Menghapus kelas 'hidden' jika kartu tersembunyi.
+                card.classList.add('visible'); // Menambahkan kelas 'visible' untuk menampilkan kartu.
+            } else {
+                card.classList.remove('visible'); // Menghapus kelas 'visible' jika kartu terlihat.
+                card.classList.add('hidden'); // Menambahkan kelas 'hidden' untuk menyembunyikan kartu.
+            }
         });
 
-        toggleLabelsCheckbox.addEventListener('change', function() {
-            const visibility = this.checked ? 'block' : 'none';
+        // Menunggu sampai seluruh konten halaman dimuat sebelum menjalankan fungsi berikut.
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleLabelsCheckbox = document.getElementById('toggleLabelsCheckbox');
+            const labels = document.querySelectorAll('.marker-label');
+
+            // Mengatur tampilan label berdasarkan status checkbox saat halaman dimuat.
+            const visibility = toggleLabelsCheckbox.checked ? 'block' : 'none';
             labels.forEach(label => {
                 label.style.display = visibility;
             });
+
+            // Menambahkan event listener pada checkbox untuk mengatur tampilan label saat status checkbox berubah.
+            toggleLabelsCheckbox.addEventListener('change', function() {
+                const visibility = this.checked ? 'block' : 'none';
+                labels.forEach(label => {
+                    label.style.display =
+                    visibility; // Mengubah tampilan label berdasarkan status checkbox.
+                });
+            });
         });
-    });
-
-// Ambil referensi elemen input
-const searchInput = document.getElementById('searchInput');
-
-// Tambahkan event listener untuk mendeteksi perubahan pada input pencarian
-searchInput.addEventListener('input', function() {
-const query = searchInput.value.toLowerCase();
-
-// Loop melalui semua marker dan label untuk menyembunyikan atau menampilkan berdasarkan pencarian
-markers.forEach((marker, index) => {
-    const wisataName = labels[index].getElement().textContent.toLowerCase();
-
-    if (wisataName.includes(query)) {
-        marker.getElement().style.display = 'block';
-        labels[index].getElement().style.display = 'block';
-    } else {
-        marker.getElement().style.display = 'none';
-        labels[index].getElement().style.display = 'none';
-    }
-});
-});
 
 
-document.getElementById('toggleButton').addEventListener('click', function() {
-    const toggleCard = document.getElementById('toggleCard');
-    if (toggleCard.classList.contains('hidden')) {
-        toggleCard.classList.remove('hidden');
-    } else {
-        toggleCard.classList.add('hidden');
-    }
-});
+        // Ambil referensi elemen input
+        const searchInput = document.getElementById('searchInput');
 
-// Event listener untuk checkbox yang menampilkan wisata dan label
-document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
-    markers.forEach(marker => marker.getElement().style.display = this.checked ? 'block' : 'none');
-    labels.forEach(label => label.getElement().style.display = this.checked ? 'block' : 'none');
-});
+        // Tambahkan event listener untuk mendeteksi perubahan pada input pencarian
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.toLowerCase();
 
-// Event listener untuk checkbox yang menampilkan label nama
-document.getElementById('toggleLabelsCheckbox').addEventListener('change', function() {
-    labels.forEach(label => label.getElement().style.display = this.checked ? 'block' : 'none');
-});
+            // Loop melalui semua marker dan label untuk menyembunyikan atau menampilkan berdasarkan pencarian
+            markers.forEach((marker, index) => {
+                const wisataName = labels[index].getElement().textContent.toLowerCase();
 
-
-document.getElementById('toggleButton').addEventListener('click', function() {
-    var card = document.getElementById('toggleCard');
-    if (card.classList.contains('hidden')) {
-        card.classList.remove('hidden');
-        card.classList.add('visible');
-    } else {
-        card.classList.remove('visible');
-        card.classList.add('hidden');
-    }
-});
+                if (wisataName.includes(query)) {
+                    marker.getElement().style.display = 'block';
+                    labels[index].getElement().style.display = 'block';
+                } else {
+                    marker.getElement().style.display = 'none';
+                    labels[index].getElement().style.display = 'none';
+                }
+            });
+        });
 
 
+        // Menambahkan event listener pada tombol untuk menampilkan atau menyembunyikan elemen dengan ID 'toggleCard' saat tombol diklik.
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            const toggleCard = document.getElementById('toggleCard'); // Mendapatkan elemen yang ingin di-toggle.
 
-map.on('load', () => {
-    // Tambahkan Geolocate control ke peta
-    map.addControl(new mapboxgl.GeolocateControl({
-        positionOptions: {
-            enableHighAccuracy: true
-        },
-        trackUserLocation: true
-    }));
+            // Memeriksa apakah 'toggleCard' memiliki kelas 'hidden'.
+            if (toggleCard.classList.contains('hidden')) {
+                toggleCard.classList.remove('hidden'); // Menghapus kelas 'hidden' untuk menampilkan kartu.
+            } else {
+                toggleCard.classList.add('hidden'); // Menambahkan kelas 'hidden' untuk menyembunyikan kartu.
+            }
+        });
 
-    // Tambahkan event listener untuk Geolocate control jika diperlukan
-    map.on('geolocate', (e) => {
-        console.log('Posisi saat ini:', e.coords.longitude, e.coords.latitude);
-    });
-});
+        // Event listener untuk checkbox yang menampilkan wisata dan label
+        document.getElementById('toggleMarkersAndLabelsCheckbox').addEventListener('change', function() {
+            markers.forEach(marker => marker.getElement().style.display = this.checked ? 'block' : 'none');
+            labels.forEach(label => label.getElement().style.display = this.checked ? 'block' : 'none');
+        });
 
+        // Event listener untuk checkbox yang menampilkan label nama
+        document.getElementById('toggleLabelsCheckbox').addEventListener('change', function() {
+            labels.forEach(label => label.getElement().style.display = this.checked ? 'block' : 'none');
+        });
 
-const toggleButton = document.getElementById('toggleDirections');
-const directionsPanel = document.getElementById('directionsPanel');
+        // Menambahkan event listener pada tombol dengan ID 'toggleButton' untuk mengatur visibilitas elemen dengan ID 'toggleCard' saat tombol diklik.
+        document.getElementById('toggleButton').addEventListener('click', function() {
+            var card = document.getElementById('toggleCard'); // Mendapatkan elemen yang ingin di-toggle.
 
-toggleButton.addEventListener('click', function() {
-    if (directionsPanel.classList.contains('hidden-panel')) {
-        // Tampilkan panel petunjuk jika tersembunyi
-        directionsPanel.classList.remove('hidden-panel');
-        toggleButton.textContent = 'Sembunyikan Petunjuk';
-    } else {
-        // Sembunyikan panel petunjuk
-        directionsPanel.classList.add('hidden-panel');
-        toggleButton.textContent = 'Tampilkan Petunjuk';
-    }
-});
+            // Memeriksa apakah 'card' memiliki kelas 'hidden'.
+            if (card.classList.contains('hidden')) {
+                card.classList.remove('hidden'); // Menghapus kelas 'hidden' untuk menampilkan kartu.
+                card.classList.add(
+                'visible'); // Menambahkan kelas 'visible' untuk menandai bahwa kartu sekarang terlihat.
+            } else {
+                card.classList.remove('visible'); // Menghapus kelas 'visible' jika kartu sudah terlihat.
+                card.classList.add('hidden'); // Menambahkan kelas 'hidden' untuk menyembunyikan kartu.
+            }
+        });
 
 
 
-</script>
+
+        map.on('load', () => {
+            // Tambahkan Geolocate control ke peta
+            map.addControl(new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+                },
+                trackUserLocation: true
+            }));
+
+            // Tambahkan event listener untuk Geolocate control jika diperlukan
+            map.on('geolocate', (e) => {
+                console.log('Posisi saat ini:', e.coords.longitude, e.coords.latitude);
+            });
+        });
+
+
+        // Mendapatkan elemen tombol untuk toggle dan panel petunjuk.
+        const toggleButton = document.getElementById('toggleDirections');
+        const directionsPanel = document.getElementById('directionsPanel');
+
+        // Menambahkan event listener untuk tombol yang akan mengatur visibilitas panel petunjuk saat tombol diklik.
+        toggleButton.addEventListener('click', function() {
+            if (directionsPanel.classList.contains('hidden-panel')) {
+                // Tampilkan panel petunjuk jika tersembunyi
+                directionsPanel.classList.remove(
+                'hidden-panel'); // Menghapus kelas 'hidden-panel' untuk menampilkan panel.
+                toggleButton.textContent =
+                'Sembunyikan Petunjuk'; // Mengubah teks tombol menjadi 'Sembunyikan Petunjuk'.
+            } else {
+                // Sembunyikan panel petunjuk
+                directionsPanel.classList.add(
+                'hidden-panel'); // Menambahkan kelas 'hidden-panel' untuk menyembunyikan panel.
+                toggleButton.textContent =
+                'Tampilkan Petunjuk'; // Mengubah teks tombol menjadi 'Tampilkan Petunjuk'.
+            }
+        });
+    </script>
 
 
 @endsection

@@ -316,6 +316,13 @@
         }
 
 
+        .btn-filter.active {
+    background-color: blue;
+    color: white;
+}
+
+
+
         #filter-buttons {
             display: flex;
             gap: 10px;
