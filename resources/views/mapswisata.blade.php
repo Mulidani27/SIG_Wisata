@@ -186,7 +186,7 @@
                 lat: -3.2920977438419676
             }, // Banjarmasin Utara
             'layer-14': {
-                lng: 114.5914681, 
+                lng: 114.5914681,
                 lat: -3.3154437
             } // Banjarmasin Kota
         };
@@ -202,79 +202,80 @@
         }
 
         function addGeojsonLayer(url, layerId) {
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                // Menghapus layer dan source jika sudah ada
-                if (map.getSource(layerId)) {
-                    map.removeLayer(layerId);
-                    map.removeSource(layerId);
-                }
-
-                // Menambahkan GeoJSON sebagai source baru
-                map.addSource(layerId, {
-                    type: 'geojson',
-                    data: data
-                });
-
-                // Menambahkan layer batas wilayah (fill layer)
-                map.addLayer({
-                    'id': layerId,
-                    'type': 'fill',
-                    'source': layerId,
-                    'layout': {},
-                    'paint': {
-                        'fill-color': getRandomColor(), // Warna acak untuk setiap kecamatan
-                        'fill-opacity': 0.4
-                    }
-                });
-
-                // Event listener untuk menampilkan nama kecamatan saat diklik
-                map.on('click', layerId, function(e) {
-                    const feature = e.features[0];
-                    console.log(feature); // Cek properti dari GeoJSON
-                    const kecamatan = feature.properties.kecamatan; // Ambil nama kecamatan dari GeoJSON properties
-
-                    // Hapus layer teks jika sudah ada
-                    if (map.getLayer(`${layerId}-label`)) {
-                        map.removeLayer(`${layerId}-label`);
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Menghapus layer dan source jika sudah ada
+                    if (map.getSource(layerId)) {
+                        map.removeLayer(layerId);
+                        map.removeSource(layerId);
                     }
 
-                    // Tambahkan layer teks di atas layer batas wilayah
+                    // Menambahkan GeoJSON sebagai source baru
+                    map.addSource(layerId, {
+                        type: 'geojson',
+                        data: data
+                    });
+
+                    // Menambahkan layer batas wilayah (fill layer)
                     map.addLayer({
-                        'id': `${layerId}-label`,
-                        'type': 'symbol',
+                        'id': layerId,
+                        'type': 'fill',
                         'source': layerId,
-                        'layout': {
-                            'text-field': kecamatan, // Tampilkan nama kecamatan
-                            'text-size': 25, // Ukuran teks
-                            'text-transform': 'uppercase', // Format teks
-                            'text-offset': [0, 1.5], // Jarak teks dari titik pusat
-                            'text-anchor': 'top'
-                        },
+                        'layout': {},
                         'paint': {
-                            'text-color': '#000000' // Warna teks hitam
+                            'fill-color': getRandomColor(), // Warna acak untuk setiap kecamatan
+                            'fill-opacity': 0.4
                         }
                     });
-                });
 
-                // Mendapatkan titik tengah dari objek
-                const center = districtCenters[layerId];
+                    // Event listener untuk menampilkan nama kecamatan saat diklik
+                    map.on('click', layerId, function(e) {
+                        const feature = e.features[0];
+                        console.log(feature); // Cek properti dari GeoJSON
+                        const kecamatan = feature.properties
+                            .kecamatan; // Ambil nama kecamatan dari GeoJSON properties
 
-                if (center) {
-                    console.log(`Fokus ke ${layerId} dengan koordinat ${center.lat}, ${center.lng}`);
-                    // Fokus peta ke titik tengah yang ditentukan
-                    map.flyTo({
-                        center: [center.lng, center.lat],
-                        zoom: 14, // Ubah nilai zoom sesuai kebutuhan
-                        essential: true // Hanya lakukan animasi jika perlu
+                        // Hapus layer teks jika sudah ada
+                        if (map.getLayer(`${layerId}-label`)) {
+                            map.removeLayer(`${layerId}-label`);
+                        }
+
+                        // Tambahkan layer teks di atas layer batas wilayah
+                        map.addLayer({
+                            'id': `${layerId}-label`,
+                            'type': 'symbol',
+                            'source': layerId,
+                            'layout': {
+                                'text-field': kecamatan, // Tampilkan nama kecamatan
+                                'text-size': 25, // Ukuran teks
+                                'text-transform': 'uppercase', // Format teks
+                                'text-offset': [0, 1.5], // Jarak teks dari titik pusat
+                                'text-anchor': 'top'
+                            },
+                            'paint': {
+                                'text-color': '#000000' // Warna teks hitam
+                            }
+                        });
                     });
-                } else {
-                    console.error(`Titik tengah tidak ditemukan untuk layer ${layerId}`);
-                }
-            })
-            .catch(error => console.error('Error loading GeoJSON:', error));
-    }
+
+                    // Mendapatkan titik tengah dari objek
+                    const center = districtCenters[layerId];
+
+                    if (center) {
+                        console.log(`Fokus ke ${layerId} dengan koordinat ${center.lat}, ${center.lng}`);
+                        // Fokus peta ke titik tengah yang ditentukan
+                        map.flyTo({
+                            center: [center.lng, center.lat],
+                            zoom: 14, // Ubah nilai zoom sesuai kebutuhan
+                            essential: true // Hanya lakukan animasi jika perlu
+                        });
+                    } else {
+                        console.error(`Titik tengah tidak ditemukan untuk layer ${layerId}`);
+                    }
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
 
 
         // Fungsi untuk menghapus layer GeoJSON
@@ -305,62 +306,62 @@
 
         // Loop untuk menambahkan marker dan label ke peta
         @foreach ($wisata as $wisata)
-// Function untuk membuat elemen marker kustom berdasarkan jenis wisata
-function createCustomMarker(jenisWisata) {
-    const el = document.createElement('div');
-    el.className = 'custom-marker';
-    
-    el.style.paddingBottom = '55px'; // Atur margin bawah untuk mengangkat marker lebih tinggi
+            // Function untuk membuat elemen marker kustom berdasarkan jenis wisata
+            function createCustomMarker(jenisWisata) {
+                const el = document.createElement('div');
+                el.className = 'custom-marker';
 
-    const icon = document.createElement('img');
-    icon.style.width = '60px';  // Ukuran lebar
-    icon.style.height = '60px'; // Ukuran tinggi
-    icon.style.objectFit = 'contain'; // Pastikan rasio aspek tetap
-   
+                el.style.paddingBottom = '55px'; // Atur margin bawah untuk mengangkat marker lebih tinggi
 
-    // Tentukan gaya marker berdasarkan jenis wisata
-    switch (jenisWisata) {
-        case 'olahraga':
-            icon.src = "{{ asset('assets/images/olahraga.png') }}";
-            break;
-        case 'religi':
-            icon.src = "{{ asset('assets/images/religi.png') }}";
-            break;
-        case 'agro':
-            icon.src = "{{ asset('assets/images/agro.png') }}";
-            break;
-        case 'gua':
-            icon.src = "{{ asset('assets/images/gua.png') }}";
-            break;
-        case 'belanja':
-            icon.src = "{{ asset('assets/images/belanja.png') }}";
-            break;
-        case 'ekologi':
-            icon.src = "{{ asset('assets/images/ekologi.png') }}";
-            break;
-        case 'kuliner':
-            icon.src = "{{ asset('assets/images/kuliner.png') }}";
-            break;
-        default:
-            icon.src = "{{ asset('assets/images/kuliner.png') }}";
+                const icon = document.createElement('img');
+                icon.style.width = '60px'; // Ukuran lebar
+                icon.style.height = '60px'; // Ukuran tinggi
+                icon.style.objectFit = 'contain'; // Pastikan rasio aspek tetap
+
+
+                // Tentukan gaya marker berdasarkan jenis wisata
+                switch (jenisWisata) {
+                    case 'olahraga':
+                        icon.src = "{{ asset('assets/images/olahraga.png') }}";
+                        break;
+                    case 'religi':
+                        icon.src = "{{ asset('assets/images/religi.png') }}";
+                        break;
+                    case 'agro':
+                        icon.src = "{{ asset('assets/images/agro.png') }}";
+                        break;
+                    case 'gua':
+                        icon.src = "{{ asset('assets/images/gua.png') }}";
+                        break;
+                    case 'belanja':
+                        icon.src = "{{ asset('assets/images/belanja.png') }}";
+                        break;
+                    case 'ekologi':
+                        icon.src = "{{ asset('assets/images/ekologi.png') }}";
+                        break;
+                    case 'kuliner':
+                        icon.src = "{{ asset('assets/images/kuliner.png') }}";
+                        break;
+                    default:
+                        icon.src = "{{ asset('assets/images/kuliner.png') }}";
+                }
+
+                el.appendChild(icon);
+
+                return el;
             }
 
-            el.appendChild(icon);
+            // Iterasi marker berdasarkan data wisata
+            const el{{ $loop->index }} = createCustomMarker('{{ $wisata->Jenis_Wisata }}');
 
-    return el;
-}
+            const marker{{ $loop->index }} = new mapboxgl.Marker(el{{ $loop->index }})
+                .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+                .addTo(map); // Menambahkan marker ke peta dengan elemen kustom
 
-// Iterasi marker berdasarkan data wisata
-const el{{ $loop->index }} = createCustomMarker('{{ $wisata->Jenis_Wisata }}');
-
-const marker{{ $loop->index }} = new mapboxgl.Marker(el{{ $loop->index }})
-    .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
-    .addTo(map); // Menambahkan marker ke peta dengan elemen kustom
-
-markers.push({
-    marker: marker{{ $loop->index }},
-    category: '{{ $wisata->Jenis_Wisata }}' // Simpan kategori marker
-});
+            markers.push({
+                marker: marker{{ $loop->index }},
+                category: '{{ $wisata->Jenis_Wisata }}' // Simpan kategori marker
+            });
 
 
             // Membuat label untuk wisata
@@ -379,68 +380,230 @@ markers.push({
                 category: '{{ $wisata->Jenis_Wisata }}' // Simpan kategori label
             });
 
-            // Event listener untuk menampilkan detail saat marker diklik
+
+
+            /// Event listener untuk menampilkan detail saat marker diklik
             marker{{ $loop->index }}.getElement().addEventListener('click', function() {
+
                 document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
                 document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-            <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="img-fluid mb-3" alt="{{ $wisata->Nama_Wisata }}">
-            <div class="details">
-                <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
-                <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
-                <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
-                <p id="detail-text" class="text-justify">
-                    {{ Str::limit($wisata->Detail, 150) }}
-                    <span id="dots">...</span>
-                    <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
-                </p>
-                <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
-                <div class="mt-3">
-                    <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
-                    <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
+        <!-- Carousel untuk gambar utama dan gambar_lain -->
+        <div id="combined-images" class="mb-3 carousel slide" data-bs-ride="carousel">
+            
+            <div class="carousel-inner">
+                <!-- Gambar Utama -->
+                <div class="carousel-item active">
+                    <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
                 </div>
-            </div>
 
-            <div class="komentar-rating mt-5">
-                <h4 class="fw-bold">Komentar dan Rating</h4>
-                <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="nama" class="form-label">Nama</label>
-                        <input type="text" name="nama" id="nama" class="form-control" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rating" class="form-label">Rating (1-5)</label>
-                        <input type="number" name="rating" id="rating" class="form-control" min="1" max="5" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="komentar" class="form-label">Komentar</label>
-                        <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success">Kirim Komentar</button>
-                </form>
-
-                <div class="daftar-komentar mt-4">
-                    <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
-                    @foreach ($wisata->komentars as $komentar)
-                        <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <strong>{{ $komentar->nama }}</strong>
-                                <span class="badge bg-info text-dark">{{ $komentar->rating }} / 5</span>
-                            </div>
-                            <p class="mb-1">{{ $komentar->komentar }}</p>
-                            <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
+                <!-- Gambar Lain -->
+                @if ($wisata->gambar_lain)
+                    @php
+                        $gambarLain = json_decode($wisata->gambar_lain);
+                    @endphp
+                    @foreach ($gambarLain as $key => $gambar)
+                        <div class="carousel-item">
+                            <img src="{{ asset('uploads/gambar_lain') }}/{{ $gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
                         </div>
                     @endforeach
-                </div>
+                @endif
             </div>
-        `;
+            <button class="carousel-control-prev" type="button" data-bs-target="#combined-images" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#combined-images" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="details">
+            <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
+            <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
+            <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
+            <p id="detail-text" class="text-justify">
+                {{ Str::limit($wisata->Detail, 150) }}
+                <span id="dots">...</span>
+                <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
+            </p>
+            <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
+            <div class="mt-3">
+                <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
+                <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
+            </div>
+        </div>
+        
+        <div class="komentar-rating mt-5">
+    <h4 class="fw-bold">Komentar dan Rating</h4>
+    <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
+        @csrf
+        <div class="mb-3">
+            <label for="nama" class="form-label">Nama</label>
+            <input type="text" name="nama" id="nama" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating</label>
+            <div class="star-rating">
+                <input type="radio" name="rating" id="star-5" value="5" required>
+                <label for="star-5" class="star">&#9733;</label>
+                <input type="radio" name="rating" id="star-4" value="4">
+                <label for="star-4" class="star">&#9733;</label>
+                <input type="radio" name="rating" id="star-3" value="3">
+                <label for="star-3" class="star">&#9733;</label>
+                <input type="radio" name="rating" id="star-2" value="2">
+                <label for="star-2" class="star">&#9733;</label>
+                <input type="radio" name="rating" id="star-1" value="1">
+                <label for="star-1" class="star">&#9733;</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="komentar" class="form-label">Komentar</label>
+            <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Kirim Komentar</button>
+    </form>
+
+    
+
+    <div class="daftar-komentar mt-4">
+    <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
+    @foreach ($wisata->komentars as $komentar)
+        <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <strong>{{ $komentar->nama }}</strong>
+                <span class="text-muted ms-2">{{ str_repeat('⭐', $komentar->rating) }} </span>
+            </div>
+            <p class="mb-1">{{ $komentar->komentar }}</p>
+            <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
+        </div>
+    @endforeach
+</div>
+
+    `;
                 var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
                 offcanvas.show();
             });
-        @endforeach
 
-         // Fungsi untuk menampilkan atau menyembunyikan marker berdasarkan kategori
-         function filterMarkers(category) {
+            @if (session('id_wisata'))
+                @if (session('id_wisata') == $wisata->id)
+                    var id = '{{ session('id_wisata') }}'
+                    
+
+                
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Berhasil Komentar dan Rating",
+                        
+                    });
+ 
+                    document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
+                    document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
+                            <!-- Carousel untuk gambar utama dan gambar_lain -->
+                            <div id="combined-images" class="mb-3 carousel slide" data-bs-ride="carousel">
+                                
+                                <div class="carousel-inner">
+                                    <!-- Gambar Utama -->
+                                    <div class="carousel-item active">
+                                        <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
+                                    </div>
+
+                                    <!-- Gambar Lain -->
+                                    @if ($wisata->gambar_lain)
+                                        @php
+                                            $gambarLain = json_decode($wisata->gambar_lain);
+                                        @endphp
+                                        @foreach ($gambarLain as $key => $gambar)
+                                            <div class="carousel-item">
+                                                <img src="{{ asset('uploads/gambar_lain') }}/{{ $gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
+                                            </div>
+                                        @endforeach
+                                    @endif
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#combined-images" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#combined-images" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+
+                            <div class="details">
+                                <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
+                                <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
+                                <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
+                                <p id="detail-text" class="text-justify">
+                                    {{ Str::limit($wisata->Detail, 150) }}
+                                    <span id="dots">...</span>
+                                    <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
+                                </p>
+                                <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
+                                <div class="mt-3">
+                                    <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
+                                    <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
+                                </div>
+                            </div>
+                            
+                            <div class="komentar-rating mt-5">
+                        <h4 class="fw-bold">Komentar dan Rating</h4>
+                        <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama</label>
+                                <input type="text" name="nama" id="nama" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <div class="star-rating">
+                                    <input type="radio" name="rating" id="star-5" value="5" required>
+                                    <label for="star-5" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star-4" value="4">
+                                    <label for="star-4" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star-3" value="3">
+                                    <label for="star-3" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star-2" value="2">
+                                    <label for="star-2" class="star">&#9733;</label>
+                                    <input type="radio" name="rating" id="star-1" value="1">
+                                    <label for="star-1" class="star">&#9733;</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="komentar" class="form-label">Komentar</label>
+                                <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success">Kirim Komentar</button>
+                        </form>
+
+                        
+
+                        <div class="daftar-komentar mt-4">
+                        <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
+                        @foreach ($wisata->komentars as $komentar)
+                            <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong>{{ $komentar->nama }}</strong>
+                                    <span class="text-muted ms-2">{{ str_repeat('⭐', $komentar->rating) }} </span>
+                                </div>
+                                <p class="mb-1">{{ $komentar->komentar }}</p>
+                                <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
+                            </div>
+                        @endforeach
+                    </div>
+
+                        `;
+                    var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
+                    offcanvas.show();
+                @endif
+            @endif
+        @endforeach
+        console.log(markers)
+
+
+        // Fungsi untuk menampilkan atau menyembunyikan marker berdasarkan kategori
+        function filterMarkers(category) {
             markers.forEach((item, index) => {
                 if (item.category == category || category === "all") {
                     item.marker.addTo(map); // Tampilkan marker
@@ -458,11 +621,9 @@ markers.push({
             button.addEventListener('click', (e) => {
                 const category = e.target.getAttribute('data-category');
                 filterMarkers(category);
-
-
             });
         });
-        
+
 
 
         document.querySelectorAll('.btn-filter').forEach(button => {
@@ -480,40 +641,73 @@ markers.push({
 
         // Fungsi ini meminta pengguna untuk menentukan titik awal perjalanan, baik menggunakan lokasi saat ini atau memasukkan koordinat secara manual.
         function promptForStartingPoint(destination) {
-            const useGeolocation = confirm("Apakah Anda ingin menggunakan lokasi Anda saat ini sebagai titik awal?");
-
-            if (useGeolocation) {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        const start = [position.coords.longitude, position.coords.latitude];
-                        const end = JSON.parse(destination);
-                        getRoute(start, end);
-                    }, function(error) {
-                        alert("Tidak dapat mengakses lokasi Anda. Silakan masukkan koordinat secara manual.");
+            // SweetAlert2 for confirmation
+            Swal.fire({
+                title: 'Gunakan lokasi saat ini?',
+                text: "Apakah Anda ingin menggunakan lokasi Anda saat ini sebagai titik awal?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, gunakan',
+                cancelButtonText: 'Tidak, masukkan manual'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika user memilih untuk menggunakan geolokasi
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            const start = [position.coords.longitude, position.coords.latitude];
+                            const end = JSON.parse(destination);
+                            getRoute(start, end);
+                        }, function(error) {
+                            Swal.fire('Error',
+                                'Tidak dapat mengakses lokasi Anda. Silakan masukkan koordinat secara manual.',
+                                'error');
+                            promptForCoordinates(destination); // Panggil fungsi manual jika gagal
+                        });
+                    } else {
+                        Swal.fire('Error', 'Browser Anda tidak mendukung geolokasi.', 'error');
                         promptForCoordinates(destination);
-                    });
+                    }
                 } else {
-                    alert("Browser Anda tidak mendukung geolokasi.");
+                    // Jika user memilih untuk memasukkan koordinat manual
                     promptForCoordinates(destination);
                 }
-            } else {
-                promptForCoordinates(destination);
-            }
+            });
         }
 
-        // Fungsi ini meminta pengguna untuk memasukkan koordinat latitude dan longitude sebagai titik awal perjalanan, kemudian memanggil fungsi getRoute jika koordinat valid.
+
         function promptForCoordinates(destination) {
-            const startLat = prompt("Masukkan latitude titik awal:");
-            const startLng = prompt("Masukkan longitude titik awal:");
+    Swal.fire({
+        title: 'Pilih Titik Awal',
+        text: 'Klik pada peta untuk memilih titik awal perjalanan.',
+        icon: 'info',
+        confirmButtonText: 'Oke'
+    }).then(() => {
+        // Zoom ke level yang lebih detail untuk akurasi lebih baik
+        map.flyTo({
+            center: map.getCenter(),
+            zoom: 15 // Atur zoom level yang lebih dekat
+        });
 
-            if (startLat && startLng) {
-                const start = [parseFloat(startLng), parseFloat(startLat)];
-                const end = JSON.parse(destination);
+        // Menambahkan event listener klik pada peta setelah user menutup alert
+        map.once('click', function(e) {
+            const start = [e.lngLat.lng, e.lngLat.lat]; // Mendapatkan koordinat dari klik pengguna
+            const end = JSON.parse(destination); // Tujuan dari parameter destination
+
+            // Menampilkan koordinat yang dipilih menggunakan SweetAlert2
+            Swal.fire({
+                title: 'Titik Awal Dipilih',
+                html: `Latitude: <b>${e.lngLat.lat}</b><br>Longitude: <b>${e.lngLat.lng}</b>`,
+                icon: 'success',
+                confirmButtonText: 'Lanjutkan'
+            }).then(() => {
+                // Panggil fungsi getRoute dengan koordinat yang dipilih
                 getRoute(start, end);
-            } else {
-                alert("Koordinat tidak valid.");
-            }
-        }
+            });
+        });
+    });
+}
+
+
 
         function getRoute(start, end) {
             const directionsRequest =
@@ -747,6 +941,26 @@ markers.push({
             }
         });
 
+
+        document.querySelectorAll('.star-rating input').forEach((input) => {
+            input.addEventListener('mouseenter', () => {
+                const ratingValue = input.value;
+                document.querySelectorAll('.star-rating .star').forEach((star, index) => {
+                    star.style.color = index < ratingValue ? 'gold' : 'lightgray';
+                });
+            });
+
+            input.addEventListener('mouseleave', () => {
+                document.querySelectorAll('.star-rating input:checked ~ .star').forEach((star) => {
+                    star.style.color = 'gold';
+                });
+                document.querySelectorAll('.star-rating .star').forEach((star, index) => {
+                    if (!star.previousElementSibling.checked) {
+                        star.style.color = 'lightgray';
+                    }
+                });
+            });
+        });
     </script>
 
 

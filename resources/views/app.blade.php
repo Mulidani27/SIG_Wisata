@@ -15,15 +15,27 @@
     </script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Link CSS Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Link JS Bootstrap (Sebelum penutupan tag body) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+    <!-- jQuery -->
+
+
     <style>
         #map {
             position: relative;
@@ -31,6 +43,30 @@
             width: 95%;
 
         }
+
+        .star-rating {
+            direction: rtl;
+            display: inline-block;
+        }
+
+        .star {
+            font-size: 30px;
+            color: lightgray;
+            cursor: pointer;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked~.star {
+            color: gold;
+        }
+
+        input[type="radio"]:hover~.star {
+            color: gold;
+        }
+
 
         .center {
             display: block;
@@ -252,6 +288,27 @@
             transition: max-height 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
+        .navbar-nav .nav-link.active {
+            background-color: #007bff;
+            /* Warna background khusus tombol aktif */
+            color: white;
+            /* Warna teks pada tombol aktif */
+            border-radius: 5px;
+            /* Memberikan sedikit rounded pada tombol aktif */
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #0056b3;
+            /* Warna saat hover */
+            color: white;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #333;
+            /* Warna default tombol lainnya */
+        }
+
         /* Pada layar lebih kecil (HP) */
         @media screen and (max-width: 768px) {
             #directionsPanel {
@@ -317,9 +374,9 @@
 
 
         .btn-filter.active {
-    background-color: blue;
-    color: white;
-}
+            background-color: blue;
+            color: white;
+        }
 
 
 
@@ -327,7 +384,7 @@
             display: flex;
             gap: 10px;
             margin-bottom: 15px;
-            
+
         }
 
         .btn-filter {
@@ -338,7 +395,7 @@
             border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            left:  370px;
+            left: 370px;
             top: 10px;
             z-index: 1000 !important;
         }
@@ -350,6 +407,28 @@
 </head>
 
 <body style="background-color: #FAF7F0p">
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Berhasil",
+                text: "({session('success')}}",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+        </script>
+    @endif
+
+    @if (session('failed'))
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "gagalll",
+                text: "({session('failed')}}",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+        </script>
+    @endif
 
     <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3" style="background-color: #15B392;"
         id="mainNav">
@@ -364,35 +443,55 @@
                 aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="{{ route('map.show', 'normal') }}">Peta</a>
+                    <li class="nav-item mx-1 "  >
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                            <i class="fas fa-home"></i> Home
+                        </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link active"
-                            href="{{ route('card.index', ['map' => 'normal']) }}">Data Wisata</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('statistik') }}">Statistik Wisata</a>
+                    <li class="nav-item mx-1 ">
+                        <a class="nav-link {{ request()->routeIs('map.show', 'normal') ? 'active' : '' }}" href="{{ route('map.show', 'normal') }}">
+                            <i class="fas fa-map"></i> Peta
+                        </a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link {{ request()->routeIs('card.index') ? 'active' : '' }}" href="{{ route('card.index', ['map' => 'normal']) }}">
+                            <i class="fas fa-database"></i> Data Wisata
+                        </a>
+                    </li>
+                    <li class="nav-item mx-1">
+                        <a class="nav-link {{ request()->routeIs('statistik') ? 'active' : '' }}" href="{{ route('statistik') }}">
+                            <i class="fas fa-chart-bar"></i> Statistik Wisata
+                        </a>
                     </li>
                     @if (Auth::guard('admin')->check())
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('data.show') }}">Ubah Data</a>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link {{ request()->routeIs('data.show') ? 'active' : '' }}" href="{{ route('data.show') }}">
+                                <i class="fas fa-edit"></i> Ubah Data
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('geojson.index') }}">Kelola Batas Wilayah</a>
+                        <li class="nav-item mx-1">
+                            <a class="nav-link {{ request()->routeIs('geojson.index') ? 'active' : '' }}" href="{{ route('geojson.index') }}">
+                                <i class="fas fa-draw-polygon"></i> Kelola Batas Wilayah
+                            </a>
                         </li>
                         <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
                             @csrf
-                            <button type="submit" class="btn btn-danger">Logout</button>
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
                         </form>
                     @endif
-
                     @guest('admin')
-                        <a class="btn btn-primary shadow" role="button" href="{{ route('admin.login') }}">Masuk</a>
+                        <a class="btn btn-primary shadow" role="button" href="{{ route('admin.login') }}">
+                            <i class="fas fa-sign-in-alt"></i> Masuk
+                        </a>
                     @endguest
-
+                </ul>
             </div>
+            
+
         </div>
     </nav>
 
@@ -490,6 +589,8 @@
             });
         });
     </script>
+    @yield('scripts')
+
 
 
 </body>

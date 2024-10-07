@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('Jenis_Wisata', ['olahraga', 'religi', 'agro', 'gua', 'belanja', 'ekologi', 'kuliner']);
             $table->string('Gambar');
             $table->string('gambar360');
+            $table->json('gambar_lain')->nullable(); // Menambahkan kolom gambar_lain untuk menyimpan banyak gambar
             $table->timestamps();
         });
     }

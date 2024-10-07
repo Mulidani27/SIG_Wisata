@@ -24,6 +24,7 @@ class Wisata extends Model
         'Detail',
         'Jenis_Wisata',
         'Gambar',
-        'gambar360', 
+        'gambar360',
+        'gambar_lain', 
     ];
 }

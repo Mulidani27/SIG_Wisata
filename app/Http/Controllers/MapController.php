@@ -29,11 +29,17 @@ class MapController extends Controller
                 }
             }
         });
+        // dd($wisata);
     
         return view('mapswisata', compact('wisata', 'map', 'geojsons', 'kelurahan', 'geojsonGrouped'));
     }
+
     
-    
+
+
+
+
+
     public function viewlokasi($lokasi)
     {
         // Menggunakan Eloquent untuk mengambil satu data wisata

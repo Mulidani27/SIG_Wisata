@@ -26,7 +26,7 @@ class KomentarController extends Controller
             'komentar' => $request->input('komentar'),
         ]);
 
-        return redirect()->back()->with('success', 'Komentar dan rating berhasil ditambahkan.');
+        return redirect()->back()->with('id_wisata', $id_wisata);
     }
 
     // Fungsi untuk menampilkan komentar

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -30,6 +31,8 @@ class WisataController extends Controller
             'Jenis_Wisata' => 'nullable',
             'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif',
             'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif',
+            'gambar_lain' => 'nullable|array',
+            'gambar_lain.*' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($validatedData->fails()) {
@@ -51,6 +54,21 @@ class WisataController extends Controller
             $gambar360Name = Str::random(10) . '.' . $gambar360File->getClientOriginalExtension();
             $gambar360File->move(public_path('uploads'), $gambar360Name);
             $data['gambar360'] = $gambar360Name;
+        }
+
+        // Handle gambar_lain
+        if ($request->hasFile('gambar_lain')) {
+            $gambarLain = $request->file('gambar_lain');
+            $uploadedImages = [];
+
+            foreach ($gambarLain as $gambar) {
+                $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
+                $gambar->move(public_path('uploads/gambar_lain'), $gambarName);
+                $uploadedImages[] = $gambarName;
+            }
+
+            // Simpan gambar_lain dalam bentuk JSON
+            $data['gambar_lain'] = json_encode($uploadedImages);
         }
 
         $wisata = Wisata::create($data);
@@ -71,7 +89,7 @@ class WisataController extends Controller
     public function update(Request $request, $id)
     {
         $wisata = Wisata::findOrFail($id);
-
+    
         $validatedData = Validator::make($request->all(), [
             'Nama_Wisata' => 'nullable',
             'lokasi' => 'nullable',
@@ -81,14 +99,17 @@ class WisataController extends Controller
             'Jenis_Wisata' => 'nullable',
             'Gambar' => 'nullable|file|mimes:jpeg,png,jpg,gif',
             'gambar360' => 'nullable|file|mimes:jpeg,png,jpg,gif',
+            'gambar_lain' => 'nullable|array',
+            'gambar_lain.*' => 'file|mimes:jpeg,png,jpg,gif|max:2048',
+            'delete_gambar_lain' => 'nullable|array',
         ]);
-
+    
         if ($validatedData->fails()) {
             return back()->withErrors($validatedData)->withInput();
         }
-
+    
         $data = $request->all();
-
+    
         // Handle file uploads
         if ($request->hasFile('Gambar')) {
             $gambarFile = $request->file('Gambar');
@@ -96,19 +117,51 @@ class WisataController extends Controller
             $gambarFile->move(public_path('uploads'), $gambarName);
             $data['Gambar'] = $gambarName;
         }
-
+    
         if ($request->hasFile('gambar360')) {
             $gambar360File = $request->file('gambar360');
             $gambar360Name = Str::random(10) . '.' . $gambar360File->getClientOriginalExtension();
             $gambar360File->move(public_path('uploads'), $gambar360Name);
             $data['gambar360'] = $gambar360Name;
         }
+    
+        // Handle deleting gambar lain
+        if ($request->has('delete_gambar_lain')) {
+            $gambarLain = json_decode($wisata->gambar_lain, true) ?? [];
+            foreach ($request->delete_gambar_lain as $gambar) {
+                $path = public_path('uploads/gambar_lain/' . $gambar);
+                if (file_exists($path)) {
+                    unlink($path); // Menghapus gambar dari folder
+                }
+            }
 
+            // Update gambar_lain setelah menghapus
+            $gambarLain = array_diff($gambarLain, $request->delete_gambar_lain);
+            $data['gambar_lain'] = json_encode(array_values($gambarLain)); // Menyimpan gambar_lain yang tersisa
+        }
+
+        // Handle gambar_lain upload
+        if ($request->hasFile('gambar_lain')) {
+            $gambarLain = $request->file('gambar_lain');
+            $uploadedImages = [];
+
+            foreach ($gambarLain as $gambar) {
+                $gambarName = Str::random(10) . '.' . $gambar->getClientOriginalExtension();
+                $gambar->move(public_path('uploads/gambar_lain'), $gambarName);
+                $uploadedImages[] = $gambarName;
+            }
+
+            // Gabungkan gambar_lain yang sudah ada dengan yang baru diupload
+            $existingImages = json_decode($wisata->gambar_lain, true) ?? [];
+            $data['gambar_lain'] = json_encode(array_merge($existingImages, $uploadedImages));
+        }
+
+        // Update data wisata dengan data baru
         $wisata->update($data);
-
+    
         return redirect()->route('data.show')->with('success', 'Data berhasil diubah!');
     }
-
+    
     public function destroy($id)
     {
         $wisata = Wisata::findOrFail($id);
@@ -126,6 +179,36 @@ class WisataController extends Controller
         $wisata = Wisata::findOrFail($id);
         return view('crud.detail', compact('wisata'));
     }
+
+    public function uploadGambar(Request $request, $id)
+    {
+        // Validasi gambar
+        $request->validate([
+            'gambar_lain.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
+        ]);
+    
+        // Ambil data wisata berdasarkan ID
+        $wisata = Wisata::findOrFail($id);
+    
+        // Cek apakah gambar_lain sudah ada sebelumnya
+        $gambarLain = $wisata->gambar_lain ? json_decode($wisata->gambar_lain, true) : [];
+    
+        // Proses gambar yang diunggah
+        if ($request->hasFile('gambar_lain')) {
+            foreach ($request->file('gambar_lain') as $file) {
+                $namaFile = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/gambar_lain'), $namaFile);
+                $gambarLain[] = $namaFile;  // Tambahkan nama file ke array
+            }
+        }
+    
+        // Update kolom gambar_lain
+        $wisata->gambar_lain = json_encode($gambarLain);
+        $wisata->save();
+    
+        return redirect()->back()->with('success', 'Gambar berhasil diunggah!');
+    }
+
 
     
 }

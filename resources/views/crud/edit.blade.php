@@ -8,16 +8,25 @@
     <h1>Edit Data Wisata</h1>
 
     @if(session('success'))
-    
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "berhasilll",
+            text: "Something went wrong!",
+            footer: '<a href="#">Why do I have this issue?</a>'
+        });
+    </script>
     @endif
 
     @if(session('failed'))
-        <div class="alert alert-danger">
-            {{ session('failed') }}
-        </div>
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "gagalll",
+            text: "Something went wrong!",
+            footer: '<a href="#">Why do I have this issue?</a>'
+        });
+    </script>
     @endif
 
     <form id="formWisata" action="{{ route('crud.update', $wisata->id) }}" method="POST" enctype="multipart/form-data">
@@ -69,17 +78,70 @@
         <div class="mb-3">
             <label for="Gambar" class="form-label">Gambar:</label>
             <input type="file" class="form-control" id="Gambar" name="Gambar">
+            <br>
             <img src="{{ asset('uploads/' . $wisata->Gambar) }}" alt="{{ $wisata->Nama_Wisata }}" style="max-width: 100px; max-height: 100px;">
         </div>
         <div class="mb-3">
             <label for="gambar360" class="form-label">Gambar 360:</label>
             <input type="file" class="form-control" id="gambar360" name="gambar360">
+            <br>
             <img src="{{ asset('uploads/' . $wisata->gambar360) }}" alt="{{ $wisata->Nama_Wisata }}" style="max-width: 100px; max-height: 100px;">
         </div>
+
+                <!-- Tambah Gambar Section -->
+                <div class="tambah-gambar mt-5">
+                    <h4 class="fw-bold">Tambah Gambar</h4>
+                    <form action="{{ route('wisata.uploadGambar', $wisata->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="gambar_lain" class="form-label">Pilih Gambar</label>
+                            <input type="file" name="gambar_lain[]" id="gambar_lain" class="form-control" multiple required>
+                        </div>
+                    </form>
+                </div>
+
+        <div class="mb-3">
+            <label for="gambar_lain" class="form-label">Gambar diupload user</label>
+            <br>
+            <br>
+            <h5 ><b> Centang lalu simpan untuk menghapus gambar</b></h5>
+            @if($wisata->gambar_lain) {{-- Pastikan gambar lain tidak kosong --}}
+                <div class="mt-2">
+                    @foreach(json_decode($wisata->gambar_lain) as $key => $gambar)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="delete_gambar_lain[]" value="{{ $gambar }}" id="delete_gambar_lain_{{ $key }}">
+                            <label class="form-check-label" for="delete_gambar_lain_{{ $key }}">
+                                <img src="{{ asset('uploads/gambar_lain/' . $gambar) }}" alt="{{ $wisata->Nama_Wisata }}" style="max-width: 100px; max-height: 100px; margin-right: 5px;">
+                                <br>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+
+
+
         <br>
         <button type="button" class="btn btn-primary" onclick="submitForm()">Simpan</button>
     </form>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Custom JavaScript -->
@@ -105,33 +167,23 @@
     }
         
     mapboxgl.accessToken = 'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
+
     var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11', // Ganti dengan gaya peta yang Anda inginkan
-        center: [114.59666970396356, -3.3147664431834007], // Koordinat default
-        zoom: 12 // Zoom level default
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [114.59666970396356, -3.3147664431834007],
+        zoom: 12
     });
 
-    var marker = new mapboxgl.Marker({
-        draggable: true
-    })
-
+    var marker = new mapboxgl.Marker({ draggable: true })
+        .setLngLat([114.59666970396356, -3.3147664431834007]) // Koordinat marker
+        .addTo(map);
 
     function onDragEnd() {
         var lngLat = marker.getLngLat();
-        updateInputField(lngLat.lng, lngLat.lat);
-    }
-
-    function updateInputField(lng, lat) {
-        document.getElementById('lokasi').value = lat.toFixed(7) + ',' + lng.toFixed(7);
+        document.getElementById('lokasi').value = lngLat.lat + ', ' + lngLat.lng; // Memperbarui input lokasi dengan koordinat yang baru
     }
 
     marker.on('dragend', onDragEnd);
-
-    map.on('click', function(e) {
-        marker.setLngLat(e.lngLat).addTo(map);
-        onDragEnd();
-    });
 </script>
-
 @endsection

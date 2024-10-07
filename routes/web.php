@@ -39,7 +39,7 @@ Route::get('/wisata', function () {
 
 Route::get('wisata/map/{map}', [MapController::class, 'index'])->name('map.show');
 Route::get('wisata/view/{map}', [MapController::class, 'viewlokasi'])->name('map.view');
-
+Route::post('/wisata/{id}/uploadGambar', [MapController::class, 'uploadGambar'])->name('wisata.uploadGambar');
 
     
 

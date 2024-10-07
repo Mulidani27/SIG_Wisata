@@ -10,18 +10,10 @@
     <h1>Daftar Wisata</h1>
     <br>
     <a href="{{ route('crud.create') }}" class="btn btn-success">Tambah Wisata</a>
+    <br>
+    <br>
     
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
 
-    @if(session('failed'))
-        <div class="alert alert-danger">
-            {{ session('failed') }}
-        </div>
-    @endif
 
     <table id="tableWisata" class="table table-striped">
         <thead>
@@ -58,14 +50,25 @@
             @endforeach
         </tbody>
     </table>
+    
+ 
+    
 </div>
 @endsection
 
 @section('scripts')
-<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#tableWisata').DataTable();
     });
 </script>
+
+
+
+
+
 @endsection
