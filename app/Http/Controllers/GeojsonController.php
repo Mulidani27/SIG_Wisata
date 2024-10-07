@@ -34,7 +34,7 @@ class GeojsonController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'namaWilayah' => 'required|string|max:255',
+            'namaWilayah' => 'required|string',
             'geojson' => 'required|file|mimes:json,geojson',
         ]);
     
