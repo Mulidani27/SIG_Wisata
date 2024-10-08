@@ -24,7 +24,7 @@
         </div>
     </header>
 
-    <section class="py-5 mt-5">
+    <section class="py-5 mt-1">
         <div class="container py-5">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
@@ -59,9 +59,9 @@
         </div>
     </section>
     
-        <section id="kontak-kami" class="kontak-kami">
+        <section id="kontak-kami" class="kontak-kami mb-5" >
             <h2>Kontak Kami</h2>
-            <div class="container mt-5">
+            <div class="container mt-2">
                 <div class="row">
                     <div class="container mt-5">
                         <div class="row justify-content-center">
@@ -108,8 +108,8 @@
         <div class="container bg-primary-gradient py-5">
             <div class="row">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <p class="fw-bold text-success mb-2">Partner Kami</p>
-                    <h3 class="fw-bold">Logo Instansi Kami</h3>
+                    <h3 class="fw-bold text-success mb-2">Partner Kami</h3>
+            
                 </div>
             </div>
             <div class="py-5 p-lg-5">
@@ -117,28 +117,14 @@
                     <div class="col mb-5">
                         <div class="card shadow-sm">
                             <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
-                                <img src="path/to/logo1.png" alt="Logo 1" class="img-fluid" style="max-width: 100%; max-height: 100%;">
+                                <img src="{{ asset('assets/images/ULM PNG.png') }}" alt="ULM" class="img-fluid" style="max-width: 100%; max-height: 100%;">
                             </div>
                         </div>
                     </div>
                     <div class="col mb-5">
                         <div class="card shadow-sm">
                             <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
-                                <img src="path/to/logo2.png" alt="Logo 2" class="img-fluid" style="max-width: 100%; max-height: 100%;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
-                                <img src="path/to/logo3.png" alt="Logo 3" class="img-fluid" style="max-width: 100%; max-height: 100%;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col mb-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body d-flex justify-content-center align-items-center" style="height: 200px;">
-                                <img src="path/to/logo4.png" alt="Logo 4" class="img-fluid" style="max-width: 100%; max-height: 100%;">
+                                <img src="{{ asset('assets/images/banjarmasin.png') }}" alt="banjarmasin" class="img-fluid" style="max-width: 100%; max-height: 100%;">
                             </div>
                         </div>
                     </div>
@@ -147,7 +133,7 @@
         </div>
     </section>
 
-    <section class="py-5 mt-5">
+    <section class="py-5 mt-1">
         <div class="container py-5">
             <div class="row mb-5">
                 <div class="col-md-8 col-xl-6 text-center mx-auto">

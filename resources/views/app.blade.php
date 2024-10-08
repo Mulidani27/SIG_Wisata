@@ -110,8 +110,76 @@
             /* Ganti dengan path ikon Anda jika diperlukan */
         }
 
+        .weather-section {
+            position: fixed;
+            /* Menggunakan posisi tetap agar tetap di atas saat scrolling */
+            top: 270px;
+            /* Jarak dari atas */
+            left: 105px;
+            /* Jarak dari kanan */
+            z-index: 100;
+            /* Z-index tinggi untuk menempatkannya di atas elemen lain */
+            width: 300px;
+            /* Atur lebar sesuai kebutuhan */
+        }
 
 
+
+
+        .weather-info {
+            position: absolute;
+            /* Agar elemen ini bisa diposisikan di atas gambar */
+            top: 10px;
+            /* Jarak dari atas */
+            left: 10px;
+            /* Jarak dari kiri */
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Latar belakang transparan */
+            padding: 5px;
+            /* Padding di dalam elemen */
+            border-radius: 5px;
+            /* Sudut membulat */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            /* Bayangan */
+            font-size: 15px;
+            /* Ukuran font kecil */
+            z-index: 100 !important;
+            /* Pastikan di atas elemen lainnya */
+            display: none;
+            /* Sembunyikan secara default */
+        }
+
+        .image-container {
+            position: relative;
+            /* Membuat kontainer menjadi relative agar anak-anaknya dapat diposisikan absolut */
+        }
+
+        .weather-overlay {
+            position: absolute;
+            /* Memungkinkan elemen untuk diposisikan relatif terhadap kontainer */
+            top: 10px;
+            /* Jarak dari bagian atas kontainer */
+            left: 10px;
+            /* Jarak dari sisi kiri kontainer */
+            z-index: 10;
+            /* Pastikan elemen ini muncul di atas gambar */
+            padding: 3px;
+            /* Mengurangi padding lebih lanjut untuk memperkecil ukuran kotak */
+            border-radius: 4px;
+            /* Mengurangi border radius */
+            background-color: rgba(255, 255, 255, 0.8);
+            /* Menambahkan latar belakang dengan transparansi */
+            font-size: 0.8rem;
+            /* Mengurangi ukuran font untuk membuat kotak lebih kecil */
+        }
+
+
+
+
+
+        #weather-detail {
+            margin-top: 1rem;
+        }
 
         /* Style untuk garis pemisah antar kecamatan */
         .kecamatan-divider {
@@ -596,8 +664,10 @@
             transform: scale(1.1);
             /* Efek hover untuk logo */
         }
+
         .equal-height {
-            height: 150px; /* Atur tinggi yang diinginkan */
+            height: 150px;
+            /* Atur tinggi yang diinginkan */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -716,38 +786,43 @@
             <div class="row justify-content-center">
                 <div class="col-auto">
                     <a href="https://www.facebook.com/YourPage" target="_blank" class="d-block mb-3">
-                        <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt="Facebook" style="width: 40px; height: 40px;">
+                        <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt="Facebook"
+                            style="width: 40px; height: 40px;">
                         <span>Facebook</span>
                     </a>
                 </div>
                 <div class="col-auto">
                     <a href="https://twitter.com/YourProfile" target="_blank" class="d-block mb-3">
-                        <img src="https://img.icons8.com/?size=100&id=13963&format=png&color=000000" alt="Twitter" style="width: 40px; height: 40px;">
+                        <img src="https://img.icons8.com/?size=100&id=13963&format=png&color=000000" alt="Twitter"
+                            style="width: 40px; height: 40px;">
                         <span>Twitter</span>
                     </a>
                 </div>
                 <div class="col-auto">
                     <a href="https://www.instagram.com/YourProfile" target="_blank" class="d-block mb-3">
-                        <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt="Instagram" style="width: 40px; height: 40px;">
+                        <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt="Instagram"
+                            style="width: 40px; height: 40px;">
                         <span>Instagram</span>
                     </a>
                 </div>
                 <div class="col-auto">
                     <a href="https://www.youtube.com/YourChannel" target="_blank" class="d-block mb-3">
-                        <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt="YouTube" style="width: 40px; height: 40px;">
+                        <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt="YouTube"
+                            style="width: 40px; height: 40px;">
                         <span>YouTube</span>
                     </a>
                 </div>
                 <div class="col-auto">
                     <a href="https://wa.me/YourNumber" target="_blank" class="d-block mb-3">
-                        <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000" alt="WhatsApp" style="width: 40px; height: 40px;">
+                        <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000" alt="WhatsApp"
+                            style="width: 40px; height: 40px;">
                         <span>WhatsApp</span>
                     </a>
                 </div>
             </div>
         </div>
     </footer>
-    
+
 
     <!-- End Footer -->
 

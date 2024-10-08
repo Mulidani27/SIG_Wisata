@@ -3,12 +3,19 @@
 @section('title', 'Data Wisata')
 
 @section('content')
+    <!-- Bagian Cuaca -->
 
     <br>
     <div class="container-fluid d-flex justify-content-center">
 
 
         <div id="map">
+
+            <div class="weather-section mt-4">
+                <div id="weather-content2" class="p-3 bg-light rounded shadow-sm">
+                    <p>Sedang memuat informasi cuaca...</p>
+                </div>
+            </div>
 
             <div class="search-container">
                 <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
@@ -121,6 +128,67 @@
             center: [114.5914681, -3.3154437],
             zoom: 14.5,
         });
+
+
+        // Fungsi untuk mengambil data cuaca dari API OpenWeather
+        function fetchWeatherData(city) {
+            const apiKey = '0b5e6022248eba21d970062bf9c08b75';
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+            return fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cod === 200) {
+                        return data; // Mengembalikan data cuaca jika sukses
+                    } else {
+                        console.error('Error fetching weather data:', data.message);
+                        return null;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+
+        
+        function translateWeatherDescription(description) {
+    const translationMap = {
+        "clear sky": "Langit Cerah",
+        "few clouds": "Beberapa Awan",
+        "scattered clouds": "Awan Tersebar",
+        "broken clouds": "Awan Pecah",
+        "shower rain": "Hujan Rintik",
+        "rain": "Hujan",
+        "thunderstorm": "Guntur",
+        "snow": "Salju",
+        "mist": "Kabut",
+        "overcast clouds": "Awan Mendung",
+        // Tambahkan terjemahan lainnya sesuai kebutuhan
+    };
+    
+    return translationMap[description] || description; // Jika tidak ditemukan, kembalikan deskripsi asli
+}
+
+fetchWeatherData('Banjarmasin').then(weatherData => {
+    if (weatherData) {
+        const weatherContent = document.getElementById('weather-content2');
+        const translatedDescription = translateWeatherDescription(weatherData.weather[0].description); // Menggunakan deskripsi yang diterjemahkan
+        weatherContent.innerHTML = `
+            <div class="d-flex align-items-center mb-2">
+                <img src="https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" alt="Cuaca" class="me-3">
+                <div>
+                    <h5>${translatedDescription}</h5> <!-- Menggunakan translatedDescription di sini -->
+                    <p class="mb-0">Suhu: ${weatherData.main.temp} °C</p>
+                    <p class="mb-0">Kecepatan Angin: ${weatherData.wind.speed} m/s</p>
+                    <p class="mb-0">Kelembapan: ${weatherData.main.humidity}%</p>
+                </div>
+            </div>
+        `;
+    } else {
+        const weatherContent = document.getElementById('weather-content2');
+        weatherContent.innerHTML = '<p>Gagal memuat informasi cuaca.</p>';
+    }
+});
+
 
 
         // Batas wilayah Banjarmasin yang diizinkan
@@ -387,6 +455,7 @@
     <div class="carousel-inner">
         <!-- Gambar Utama -->
         <div class="carousel-item active position-relative">
+
             <!-- Rata-rata rating di pojok kanan atas gambar -->
             <div class="rating-overlay position-absolute top-0 end-0 m-2 bg-light p-2 rounded">
                 <span class="text-warning">
@@ -395,6 +464,13 @@
                     @endfor
                 </span>
                 <small class="text-muted">{{ number_format($wisata->averageRating, 1) }} / 5</small>
+            </div>
+
+            <!-- Informasi cuaca di pojok kiri atas gambar -->
+            <div class="weather-overlay position-absolute top-0 start-0 m-2">
+                <div id="weather-content">
+                    <p>Sedang memuat informasi cuaca...</p>
+                </div>
             </div>
 
             <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
@@ -491,7 +567,46 @@
     @endforeach
 </div>
 
+
     `;
+    
+    function translateWeatherDescription(description) {
+        const translationMap = {
+            "clear sky": "Langit Cerah",
+            "few clouds": "Beberapa Awan",
+            "scattered clouds": "Awan Tersebar",
+            "broken clouds": "Awan Pecah",
+            "shower rain": "Hujan Rintik",
+            "rain": "Hujan",
+            "thunderstorm": "Guntur",
+            "snow": "Salju",
+            "mist": "Kabut",
+            "overcast clouds": "Awan Mendung",
+            // Tambahkan terjemahan lainnya sesuai kebutuhan
+        };
+        
+        return translationMap[description] || description; // Jika tidak ditemukan, kembalikan deskripsi asli
+    }
+
+    fetchWeatherData('Banjarmasin').then(weatherData => {
+        if (weatherData) {
+            const weatherContent = document.getElementById('weather-content');
+            const translatedDescription = translateWeatherDescription(weatherData.weather[0].description);
+            weatherContent.innerHTML = `
+                <div class="d-flex align-items-center mb-2">
+                    <img src="https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" alt="Cuaca" class="me-3">
+                    <div>
+                        <h6>${translatedDescription}</h6>
+                        <p class="mb-0">Suhu: ${weatherData.main.temp} °C</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            const weatherContent = document.getElementById('weather-content');
+            weatherContent.innerHTML = '<p>Gagal memuat informasi cuaca.</p>';
+        }
+    });
+    
                 var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
                 offcanvas.show();
             });
