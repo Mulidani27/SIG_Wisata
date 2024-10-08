@@ -111,18 +111,18 @@
         }
 
         .weather-section {
-            position: fixed;
+            position: absolute;
             /* Menggunakan posisi tetap agar tetap di atas saat scrolling */
-            top: 270px;
+            top: 170px;
             /* Jarak dari atas */
-            left: 105px;
+            left: 50px;
             /* Jarak dari kanan */
             z-index: 100;
             /* Z-index tinggi untuk menempatkannya di atas elemen lain */
             width: 300px;
             /* Atur lebar sesuai kebutuhan */
         }
-
+  
 
 
 

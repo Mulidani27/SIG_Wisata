@@ -83,6 +83,10 @@
             <label for="gambar360" class="form-label">Gambar 360:</label>
             <input type="file" class="form-control" id="gambar360" name="gambar360">
         </div>
+        <div class="mb-3">
+            <label for="gambar_lain" class="form-label">Pilih Gambar Lain</label>
+            <input type="file" name="gambar_lain[]" id="gambar_lain" class="form-control" multiple required>
+        </div>
         <br>
         <br>
         <button type="button" onclick="submitForm()" class="btn btn-primary">Simpan</button>
