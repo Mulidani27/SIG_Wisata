@@ -403,6 +403,173 @@
         .btn-filter:hover {
             background-color: #f0f0f0;
         }
+
+        #toggleCard {
+            width: 300px;
+            /* Batasi lebar agar elemen terlihat lebih proporsional */
+            padding: 15px;
+            /* Berikan padding di dalam container */
+            background-color: #ffffff;
+            /* Tambahkan warna background yang jelas */
+            border-radius: 8px;
+            /* Tambahkan sudut melengkung untuk tampilan yang lebih baik */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Berikan shadow agar lebih menarik */
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+            /* Berikan jarak antar checkbox */
+        }
+
+        h5 {
+            margin-bottom: 8px;
+            /* Tambahkan jarak antar judul kecamatan dan checkbox */
+        }
+
+        .controlmap {
+            margin: 10px;
+            /* Tambahkan margin luar agar tidak terlalu mepet dengan elemen lain */
+        }
+
+        h4,
+        h5,
+        label {
+            font-weight: bold;
+            /* Perjelas teks dengan bold */
+        }
+
+        .form-check-label {
+            margin-left: 5px;
+            /* Jarak antara checkbox dan teks label */
+        }
+
+        .text-center {
+            margin-top: 20px;
+            /* Tambahkan jarak atas untuk elemen "Pilih Mode Peta" */
+        }
+
+        .btn {
+            margin: 5px;
+            /* Berikan jarak antar tombol */
+        }
+
+        #toggleCard {
+            width: 320px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h4,
+        h5 {
+            font-weight: bold;
+            color: #343a40;
+            margin-bottom: 12px;
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-label {
+            margin-left: 10px;
+            font-size: 1.1rem;
+            color: #495057;
+        }
+
+        .form-check-input {
+            width: 24px;
+            height: 24px;
+        }
+
+        .text-center .btn {
+            border-radius: 20px;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            margin-top: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .text-center .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .text-center .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .text-center .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Custom Toggle Switch for Labels */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 26px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked+.slider {
+            background-color: #28a745;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Circle Bullet for Kecamatan List */
+        .form-check-input {
+            appearance: none;
+            background-color: #fff;
+            border: 2px solid #ced4da;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
     </style>
 </head>
 
@@ -413,7 +580,7 @@
             Swal.fire({
                 icon: "success",
                 title: "Berhasil",
-                text: "({session('success')}}",
+                text: "{{ session('success') }}",
                 footer: '<a href="#">Why do I have this issue?</a>'
             });
         </script>
@@ -424,7 +591,7 @@
             Swal.fire({
                 icon: "error",
                 title: "gagalll",
-                text: "({session('failed')}}",
+                text: "{{ session('failed') }}",
                 footer: '<a href="#">Why do I have this issue?</a>'
             });
         </script>
@@ -445,34 +612,40 @@
             </button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item mx-1 "  >
-                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                    <li class="nav-item mx-1 ">
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                            href="{{ route('dashboard') }}">
                             <i class="fas fa-home"></i> Home
                         </a>
                     </li>
                     <li class="nav-item mx-1 ">
-                        <a class="nav-link {{ request()->routeIs('map.show', 'normal') ? 'active' : '' }}" href="{{ route('map.show', 'normal') }}">
+                        <a class="nav-link {{ request()->routeIs('map.show', 'normal') ? 'active' : '' }}"
+                            href="{{ route('map.show', 'normal') }}">
                             <i class="fas fa-map"></i> Peta
                         </a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link {{ request()->routeIs('card.index') ? 'active' : '' }}" href="{{ route('card.index', ['map' => 'normal']) }}">
+                        <a class="nav-link {{ request()->routeIs('card.index') ? 'active' : '' }}"
+                            href="{{ route('card.index', ['map' => 'normal']) }}">
                             <i class="fas fa-database"></i> Data Wisata
                         </a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link {{ request()->routeIs('statistik') ? 'active' : '' }}" href="{{ route('statistik') }}">
+                        <a class="nav-link {{ request()->routeIs('statistik') ? 'active' : '' }}"
+                            href="{{ route('statistik') }}">
                             <i class="fas fa-chart-bar"></i> Statistik Wisata
                         </a>
                     </li>
                     @if (Auth::guard('admin')->check())
                         <li class="nav-item mx-1">
-                            <a class="nav-link {{ request()->routeIs('data.show') ? 'active' : '' }}" href="{{ route('data.show') }}">
+                            <a class="nav-link {{ request()->routeIs('data.show') ? 'active' : '' }}"
+                                href="{{ route('data.show') }}">
                                 <i class="fas fa-edit"></i> Ubah Data
                             </a>
                         </li>
                         <li class="nav-item mx-1">
-                            <a class="nav-link {{ request()->routeIs('geojson.index') ? 'active' : '' }}" href="{{ route('geojson.index') }}">
+                            <a class="nav-link {{ request()->routeIs('geojson.index') ? 'active' : '' }}"
+                                href="{{ route('geojson.index') }}">
                                 <i class="fas fa-draw-polygon"></i> Kelola Batas Wilayah
                             </a>
                         </li>
@@ -490,7 +663,7 @@
                     @endguest
                 </ul>
             </div>
-            
+
 
         </div>
     </nav>

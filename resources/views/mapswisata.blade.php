@@ -64,7 +64,7 @@
                             <div class="mb-2">
                                 <h5>{{ $kecamatan }}</h5>
                                 @foreach ($geojsons as $geojson)
-                                    <div class="form-check" style="margin-left: 20px;">
+                                    <div class="form-check form-switch" style="margin-left: 20px;">
                                         <input type="checkbox" id="layer-{{ $geojson->id }}"
                                             class="form-check-input layer-checkbox"
                                             data-geojson="{{ asset('uploads/' . $geojson->geojson) }}">
@@ -77,16 +77,11 @@
                     </div>
 
                     <!-- Checkbox untuk menampilkan wisata dan label -->
-                    {{-- <div class="mb-4">
-                        <div class="form-check">
-                            <input type="checkbox" id="toggleMarkersAndLabelsCheckbox" class="form-check-input" checked>
-                            <label for="toggleMarkersAndLabelsCheckbox" class="form-check-label"
-                                style="font-size: 1.1rem;">Tampilkan Wisata</label>
-                        </div> --}}
-                    <div class="form-check">
+                    <div class="form-check form-switch mb-4">
                         <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input" checked>
-                        <label for="toggleLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">Tampilkan
-                            Label Nama</label>
+                        <label for="toggleLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">
+                            Tampilkan Label Nama
+                        </label>
                     </div>
                 </div>
 
@@ -98,20 +93,20 @@
                     <a href="{{ route('map.show', 'normal') }}" class="btn btn-info btn-sm mx-2">Normal</a>
                 </div>
             </div>
+
+
         </div>
 
-    </div>
-
-    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-        aria-labelledby="offcanvasWithBothOptionsLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Informasi Wisata</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+            aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Informasi Wisata</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <p>Memuat informasi...</p>
+            </div>
         </div>
-        <div class="offcanvas-body">
-            <p>Memuat informasi...</p>
-        </div>
-    </div>
     </div>
     <script>
         mapboxgl.accessToken =
@@ -181,7 +176,7 @@
                 lng: 114.62408562486996,
                 lat: -3.327262400469273
             }, // Banjarmasin Timur
-            'layer-13': {
+            'layer-15': {
                 lng: 114.59382795069247,
                 lat: -3.2920977438419676
             }, // Banjarmasin Utara
@@ -387,37 +382,56 @@
 
                 document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
                 document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-        <!-- Carousel untuk gambar utama dan gambar_lain -->
-        <div id="combined-images" class="mb-3 carousel slide" data-bs-ride="carousel">
-            
-            <div class="carousel-inner">
-                <!-- Gambar Utama -->
-                <div class="carousel-item active">
-                    <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
-                </div>
-
-                <!-- Gambar Lain -->
-                @if ($wisata->gambar_lain)
-                    @php
-                        $gambarLain = json_decode($wisata->gambar_lain);
-                    @endphp
-                    @foreach ($gambarLain as $key => $gambar)
-                        <div class="carousel-item">
-                            <img src="{{ asset('uploads/gambar_lain') }}/{{ $gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
-                        </div>
-                    @endforeach
-                @endif
+                <!-- Carousel untuk gambar utama dan gambar_lain -->
+                <div id="combined-images" class="mb-3 carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Gambar Utama -->
+        <div class="carousel-item active position-relative">
+            <!-- Rata-rata rating di pojok kanan atas gambar -->
+            <div class="rating-overlay position-absolute top-0 end-0 m-2 bg-light p-2 rounded">
+                <span class="text-warning">
+                    @for ($i = 0; $i < floor($wisata->averageRating); $i++)
+                        &#9733;
+                    @endfor
+                </span>
+                <small class="text-muted">{{ number_format($wisata->averageRating, 1) }} / 5</small>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#combined-images" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#combined-images" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+
+            <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
         </div>
 
+        <!-- Gambar Lain -->
+        @if ($wisata->gambar_lain)
+            @php
+                $gambarLain = json_decode($wisata->gambar_lain);
+            @endphp
+            @foreach ($gambarLain as $key => $gambar)
+                <div class="carousel-item position-relative">
+                    <!-- Rata-rata rating di pojok kanan atas gambar lain -->
+                    <div class="rating-overlay position-absolute top-0 end-0 m-2 bg-light p-2 rounded">
+                        <span class="text-warning">
+                            @for ($i = 0; $i < floor($wisata->averageRating); $i++)
+                                &#9733;
+                            @endfor
+                        </span>
+                        <small class="text-muted">{{ number_format($wisata->averageRating, 1) }} / 5</small>
+                    </div>
+
+                    <img src="{{ asset('uploads/gambar_lain') }}/{{ $gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
+                </div>
+            @endforeach
+        @endif
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#combined-images" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#combined-images" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+ 
         <div class="details">
             <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
             <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
@@ -432,8 +446,7 @@
                 <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
                 <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
             </div>
-        </div>
-        
+        </div>     
         <div class="komentar-rating mt-5">
     <h4 class="fw-bold">Komentar dan Rating</h4>
     <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
@@ -463,9 +476,7 @@
         </div>
         <button type="submit" class="btn btn-success">Kirim Komentar</button>
     </form>
-
     
-
     <div class="daftar-komentar mt-4">
     <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
     @foreach ($wisata->komentars as $komentar)
@@ -488,16 +499,16 @@
             @if (session('id_wisata'))
                 @if (session('id_wisata') == $wisata->id)
                     var id = '{{ session('id_wisata') }}'
-                    
 
-                
+
+
                     Swal.fire({
                         icon: "success",
                         title: "Berhasil",
                         text: "Berhasil Komentar dan Rating",
-                        
+
                     });
- 
+
                     document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
                     document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
                             <!-- Carousel untuk gambar utama dan gambar_lain -->
@@ -676,36 +687,36 @@
 
 
         function promptForCoordinates(destination) {
-    Swal.fire({
-        title: 'Pilih Titik Awal',
-        text: 'Klik pada peta untuk memilih titik awal perjalanan.',
-        icon: 'info',
-        confirmButtonText: 'Oke'
-    }).then(() => {
-        // Zoom ke level yang lebih detail untuk akurasi lebih baik
-        map.flyTo({
-            center: map.getCenter(),
-            zoom: 15 // Atur zoom level yang lebih dekat
-        });
-
-        // Menambahkan event listener klik pada peta setelah user menutup alert
-        map.once('click', function(e) {
-            const start = [e.lngLat.lng, e.lngLat.lat]; // Mendapatkan koordinat dari klik pengguna
-            const end = JSON.parse(destination); // Tujuan dari parameter destination
-
-            // Menampilkan koordinat yang dipilih menggunakan SweetAlert2
             Swal.fire({
-                title: 'Titik Awal Dipilih',
-                html: `Latitude: <b>${e.lngLat.lat}</b><br>Longitude: <b>${e.lngLat.lng}</b>`,
-                icon: 'success',
-                confirmButtonText: 'Lanjutkan'
+                title: 'Pilih Titik Awal',
+                text: 'Klik pada peta untuk memilih titik awal perjalanan.',
+                icon: 'info',
+                confirmButtonText: 'Oke'
             }).then(() => {
-                // Panggil fungsi getRoute dengan koordinat yang dipilih
-                getRoute(start, end);
+                // Zoom ke level yang lebih detail untuk akurasi lebih baik
+                map.flyTo({
+                    center: map.getCenter(),
+                    zoom: 15 // Atur zoom level yang lebih dekat
+                });
+
+                // Menambahkan event listener klik pada peta setelah user menutup alert
+                map.once('click', function(e) {
+                    const start = [e.lngLat.lng, e.lngLat.lat]; // Mendapatkan koordinat dari klik pengguna
+                    const end = JSON.parse(destination); // Tujuan dari parameter destination
+
+                    // Menampilkan koordinat yang dipilih menggunakan SweetAlert2
+                    Swal.fire({
+                        title: 'Titik Awal Dipilih',
+                        html: `Latitude: <b>${e.lngLat.lat}</b><br>Longitude: <b>${e.lngLat.lng}</b>`,
+                        icon: 'success',
+                        confirmButtonText: 'Lanjutkan'
+                    }).then(() => {
+                        // Panggil fungsi getRoute dengan koordinat yang dipilih
+                        getRoute(start, end);
+                    });
+                });
             });
-        });
-    });
-}
+        }
 
 
 

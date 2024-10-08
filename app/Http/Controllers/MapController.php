@@ -10,9 +10,13 @@ class MapController extends Controller
 {
     public function index($map)
     {
+        // Mengambil semua wisata dan memuat relasi komentars
         $wisata = Wisata::with('komentars')->get();
-        $geojsons = Geojson::all(); 
     
+        // Mengambil semua geojson
+        $geojsons = Geojson::all(); 
+        
+        // Kelurahan berdasarkan kecamatan
         $kelurahan = [ 
             'Banjarmasin Barat' => ['Basirih', 'Belitung Selatan', 'Belitung Utara', 'Kuin Cerucuk', 'Kuin Selatan', 'Pelambuan', 'Telaga Biru', 'Telawang', 'Teluk Tiram'],
             'Banjarmasin Selatan' => ['Basirih Selatan', 'Kelayan Barat', 'Kelayan Dalam', 'Kelayan Tengah', 'Kelayan Timur', 'Kelayan Selatan', 'Mantuil', 'Murung Raya', 'Pekauman', 'Pemurus Baru', 'Pemurus Dalam', 'Tanjung Pagar'],
@@ -29,11 +33,16 @@ class MapController extends Controller
                 }
             }
         });
-        // dd($wisata);
     
+        // Hitung rata-rata rating untuk setiap wisata
+        foreach ($wisata as $item) {
+            $item->averageRating = $item->komentars()->avg('rating');
+        }
+    
+        // Kirimkan data wisata dan geojsons ke view
         return view('mapswisata', compact('wisata', 'map', 'geojsons', 'kelurahan', 'geojsonGrouped'));
     }
-
+    
     
 
 

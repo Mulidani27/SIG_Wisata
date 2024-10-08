@@ -35,8 +35,10 @@ class KomentarController extends Controller
         // Mengambil komentar berdasarkan ID Wisata
         $komentars = Komentar::where('id_wisata', $id_wisata)->get();
 
-        // Menampilkan view dengan komentar
-        return view('wisata.comments', compact('komentars'));
+        // Menghitung rata-rata rating
+        $averageRating = Komentar::where('id_wisata', $id_wisata)->avg('rating');
+
+        // Menampilkan view dengan komentar dan rata-rata rating
+        return view('wisata.comments', compact('komentars', 'averageRating'));
     }
 }
-
