@@ -483,7 +483,13 @@
                     </span>
                     <small class="text-muted">{{ number_format($wisata->averageRating, 1) }} / 5</small>
                 </div>
-
+                <!-- Informasi cuaca di pojok kiri atas gambar -->
+                <div class="weather-overlay position-absolute top-0 start-0 m-2">
+                    
+                    <div id="weather-content">
+                        <p>Sedang memuat informasi cuaca...</p>
+                    </div>    
+                </div>
 
                 <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
             </div>

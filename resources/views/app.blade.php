@@ -159,11 +159,11 @@
             /* Jarak dari sisi kiri kontainer */
             z-index: 10;
             /* Pastikan elemen ini muncul di atas gambar */
-            padding: 3px;
+            padding: 4px;
             /* Mengurangi padding lebih lanjut untuk memperkecil ukuran kotak */
             border-radius: 4px;
             /* Mengurangi border radius */
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(181, 179, 179, 0.8);
             /* Menambahkan latar belakang dengan transparansi */
             font-size: 0.8rem;
             /* Mengurangi ukuran font untuk membuat kotak lebih kecil */
