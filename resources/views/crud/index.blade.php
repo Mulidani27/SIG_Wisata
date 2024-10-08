@@ -39,13 +39,21 @@
                 <td>{!! Str::limit($wisataItem->Detail, 50) !!}</td>
                 <td>{{ $wisataItem->kecamatan }}</td>
                 <td>
-                    <a href="{{ route('crud.edit', $wisataItem->id) }}" class="btn btn-primary">Edit</a>
+                    <!-- Tombol Edit dengan ikon -->
+                    <a href="{{ route('crud.edit', $wisataItem->id) }}" class="btn  btn-primary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                
+                    <!-- Tombol Delete dengan ikon -->
                     <form action="{{ route('crud.destroy', $wisataItem->id) }}" method="POST" style="display: inline-block">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </form>
                 </td>
+                
             </tr>
             @endforeach
         </tbody>
