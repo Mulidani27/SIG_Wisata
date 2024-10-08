@@ -5,32 +5,32 @@
     <meta charset="utf-8">
     <title>Animate a point along a route</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <!-- Mapbox CSS -->
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('') }}assets/bootstrap/css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS (versi terbaru) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS (versi terbaru) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+
+    <!-- Mapbox JS -->
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+    <!-- Turf.js -->
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Link CSS Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Link JS Bootstrap (Sebelum penutupan tag body) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <!-- Axios JS -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+
+    <!-- Pannellum CSS -->
     <link rel="stylesheet" href="https://cdn.pannellum.org/2.5/pannellum.css">
+
+    <!-- SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
@@ -124,7 +124,7 @@
             width: 300px;
             /* Atur lebar sesuai kebutuhan */
         }
-  
+
         .weather-info {
             position: absolute;
             /* Agar elemen ini bisa diposisikan di atas gambar */
@@ -176,10 +176,12 @@
         #weather-detail {
             margin-top: 1rem;
         }
+
         .image-container {
             position: relative;
             /* Membuat kontainer menjadi relative agar anak-anaknya dapat diposisikan absolut */
         }
+
         /* Style untuk garis pemisah antar kecamatan */
         .kecamatan-divider {
             border-top: 1px solid #ccc;
@@ -682,7 +684,7 @@
                 icon: "success",
                 title: "Berhasil",
                 text: "{{ session('success') }}",
-               
+
             });
         </script>
     @endif
@@ -693,7 +695,7 @@
                 icon: "error",
                 title: "gagalll",
                 text: "{{ session('failed') }}",
-               
+
             });
         </script>
     @endif
@@ -711,6 +713,7 @@
                 aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item mx-1 p-1 ">
@@ -768,6 +771,7 @@
 
         </div>
     </nav>
+    
 
 
     <div class="">
@@ -828,18 +832,8 @@
     <!-- Additional scripts -->
     <script src="{{ asset('') }}assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ asset('') }}assets/js/script.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggler = document.querySelector('.navbar-toggler');
-            const navbarCollapse = document.querySelector('#navcol-1');
 
-            toggler.addEventListener('click', function() {
-                navbarCollapse.classList.toggle('show');
-            });
-        });
-    </script>
     @yield('scripts')
-
 
 
 </body>
