@@ -784,35 +784,35 @@
             <p class="mb-0">Copyright © 2024 Mulidani</p>
             <div class="row justify-content-center">
                 <div class="col-auto">
-                    <a href="https://www.facebook.com/YourPage" target="_blank" class="d-block mb-3">
+                    <a href="https://web.facebook.com/mulidani.dani.3" target="_blank" class="d-block mb-3">
                         <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=000000" alt="Facebook"
                             style="width: 40px; height: 40px;">
                         <span>Facebook</span>
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="https://twitter.com/YourProfile" target="_blank" class="d-block mb-3">
+                    <a href="https://x.com/Mulidani4" target="_blank" class="d-block mb-3">
                         <img src="https://img.icons8.com/?size=100&id=13963&format=png&color=000000" alt="Twitter"
                             style="width: 40px; height: 40px;">
                         <span>Twitter</span>
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="https://www.instagram.com/YourProfile" target="_blank" class="d-block mb-3">
+                    <a href="https://www.instagram.com/md_dani30/" target="_blank" class="d-block mb-3">
                         <img src="https://img.icons8.com/?size=100&id=32323&format=png&color=000000" alt="Instagram"
                             style="width: 40px; height: 40px;">
                         <span>Instagram</span>
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="https://www.youtube.com/YourChannel" target="_blank" class="d-block mb-3">
+                    <a href="https://www.youtube.com/@mulidani8753" target="_blank" class="d-block mb-3">
                         <img src="https://img.icons8.com/?size=100&id=19318&format=png&color=000000" alt="YouTube"
                             style="width: 40px; height: 40px;">
                         <span>YouTube</span>
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="https://wa.me/YourNumber" target="_blank" class="d-block mb-3">
+                    <a href="https://wa.me/085753206159" target="_blank" class="d-block mb-3">
                         <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=000000" alt="WhatsApp"
                             style="width: 40px; height: 40px;">
                         <span>WhatsApp</span>
