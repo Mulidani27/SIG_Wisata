@@ -713,38 +713,38 @@
             </button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item mx-1 ">
+                    <li class="nav-item mx-1 p-1 ">
                         <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
                             href="{{ route('dashboard') }}">
                             <i class="fas fa-home"></i> Home
                         </a>
                     </li>
-                    <li class="nav-item mx-1 ">
+                    <li class="nav-item mx-1 p-1 ">
                         <a class="nav-link {{ request()->routeIs('map.show', 'normal') ? 'active' : '' }}"
                             href="{{ route('map.show', 'normal') }}">
                             <i class="fas fa-map"></i> Peta
                         </a>
                     </li>
-                    <li class="nav-item mx-1">
+                    <li class="nav-item mx-1 p-1">
                         <a class="nav-link {{ request()->routeIs('card.index') ? 'active' : '' }}"
                             href="{{ route('card.index', ['map' => 'normal']) }}">
                             <i class="fas fa-database"></i> Data Wisata
                         </a>
                     </li>
-                    <li class="nav-item mx-1">
+                    <li class="nav-item mx-1 p-1">
                         <a class="nav-link {{ request()->routeIs('statistik') ? 'active' : '' }}"
                             href="{{ route('statistik') }}">
                             <i class="fas fa-chart-bar"></i> Statistik Wisata
                         </a>
                     </li>
                     @if (Auth::guard('admin')->check())
-                        <li class="nav-item mx-1">
+                        <li class="nav-item mx-1 p-1">
                             <a class="nav-link {{ request()->routeIs('data.show') ? 'active' : '' }}"
                                 href="{{ route('data.show') }}">
                                 <i class="fas fa-edit"></i> Ubah Data
                             </a>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item mx-1 p-1">
                             <a class="nav-link {{ request()->routeIs('geojson.index') ? 'active' : '' }}"
                                 href="{{ route('geojson.index') }}">
                                 <i class="fas fa-draw-polygon"></i> Kelola Batas Wilayah
