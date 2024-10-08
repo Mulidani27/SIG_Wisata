@@ -682,7 +682,7 @@
                 icon: "success",
                 title: "Berhasil",
                 text: "{{ session('success') }}",
-                footer: '<a href="#">Why do I have this issue?</a>'
+               
             });
         </script>
     @endif
@@ -693,7 +693,7 @@
                 icon: "error",
                 title: "gagalll",
                 text: "{{ session('failed') }}",
-                footer: '<a href="#">Why do I have this issue?</a>'
+               
             });
         </script>
     @endif
