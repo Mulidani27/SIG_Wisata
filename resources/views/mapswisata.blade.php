@@ -18,12 +18,12 @@
 
 
 
-
-                <div class="weather-section mt-4">
+                <div class="weather-section mt-4 d-none d-md-block">
                     <div id="weather-content2" class="p-3 bg-light rounded shadow-sm">
                         <p>Sedang memuat informasi cuaca...</p>
                     </div>
                 </div>
+                
 
 
                 <div id="filter-buttons">

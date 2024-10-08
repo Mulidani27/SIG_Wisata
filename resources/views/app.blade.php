@@ -123,9 +123,6 @@
             /* Atur lebar sesuai kebutuhan */
         }
   
-
-
-
         .weather-info {
             position: absolute;
             /* Agar elemen ini bisa diposisikan di atas gambar */
@@ -149,10 +146,7 @@
             /* Sembunyikan secara default */
         }
 
-        .image-container {
-            position: relative;
-            /* Membuat kontainer menjadi relative agar anak-anaknya dapat diposisikan absolut */
-        }
+
 
         .weather-overlay {
             position: absolute;
@@ -180,7 +174,10 @@
         #weather-detail {
             margin-top: 1rem;
         }
-
+        .image-container {
+            position: relative;
+            /* Membuat kontainer menjadi relative agar anak-anaknya dapat diposisikan absolut */
+        }
         /* Style untuk garis pemisah antar kecamatan */
         .kecamatan-divider {
             border-top: 1px solid #ccc;
