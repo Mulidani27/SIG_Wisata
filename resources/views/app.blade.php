@@ -758,7 +758,7 @@
                         </form>
                     @endif
                     @guest('admin')
-                        <a class="btn btn-primary shadow" role="button" href="{{ route('admin.login') }}">
+                        <a class="btn btn-primary shadow" role="button" href="{{ route('Admin.login') }}">
                             <i class="fas fa-sign-in-alt"></i> Masuk
                         </a>
                     @endguest
