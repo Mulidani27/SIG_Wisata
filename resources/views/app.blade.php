@@ -169,6 +169,14 @@
             /* Mengurangi ukuran font untuk membuat kotak lebih kecil */
         }
 
+        /* Sembunyikan informasi cuaca di desktop */
+        @media (min-width: 992px) {
+            .weather-overlay {
+                display: none;
+            }
+        }
+
+
 
 
 
@@ -771,7 +779,7 @@
 
         </div>
     </nav>
-    
+
 
 
     <div class="">

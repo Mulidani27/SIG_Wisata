@@ -55,6 +55,8 @@ Route::middleware('auth:admin')->group(function() {
     Route::patch('wisata/{crud}/update', [WisataController::class, 'update'])->name('crud.update');
     Route::delete('wisata/{crud}', [WisataController::class, 'destroy'])->name('crud.destroy');
     Route::get('wisata/{crud}', [WisataController::class, 'show'])->name('crud.show');
+    Route::post('/wisata/{id}/delete-single-gambar-lain', [WisataController::class, 'deleteSingleGambarLain'])->name('wisata.deleteSingleGambarLain');
+
 });
 
 
