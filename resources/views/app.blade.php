@@ -246,8 +246,8 @@
             font-size: 12px;
             border-radius: 4px;
             padding: 2px 6px;
-            top: 50px;
-            right: 50px;
+            top: 40px;
+            right: 40px;
             background-color: white;
             padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -404,7 +404,7 @@
                 display: inline-block;
                 margin-bottom: 10px;
                 right: 10px;
-                top: 80px;
+                top: 150px;
             }
 
 
@@ -416,6 +416,22 @@
                 z-index: 1;
                 width: 250px;
             }
+
+            .controlmap {
+
+                position: absolute;
+                font-size: 12px;
+                border-radius: 4px;
+                padding: 2px 6px;
+                top: 140px;
+                right: 1px;
+                background-color: white;
+                padding: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                z-index: 500;
+
+            }
+
         }
 
         /* Tombol minimize atau hide panel */
@@ -448,6 +464,45 @@
                 display: none;
             }
         }
+
+
+        @media screen and (max-width: 768px) {
+
+            #filter-buttons {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                /* Memungkinkan elemen untuk membungkus ke baris berikutnya */
+                gap: 3px !important;
+                margin-bottom: 15px !important;
+            }
+
+            .btn-filter {
+                position: relative !important;
+                padding: 3px 10px !important;
+                background-color: white !important;
+                border: 1px solid #ccc !important;
+                border-radius: 25px !important;
+                cursor: pointer !important;
+                transition: background-color 0.3s ease !important;
+                left: 10px !important;
+                top: 70px !important;
+                z-index: 1000 !important;
+                font-size: 10px !important;
+                /* Ukuran font lebih kecil */
+            }
+
+            .btn-filter:hover {
+                background-color: #f0f0f0 !important;
+            }
+
+            #filter-buttons {
+                display: flex !important;
+                gap: 3px !important;
+                margin-bottom: 15px !important;
+            }
+
+        }
+
 
 
         .btn-filter.active {

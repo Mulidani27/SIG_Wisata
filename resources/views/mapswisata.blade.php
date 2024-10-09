@@ -27,14 +27,30 @@
 
 
                 <div id="filter-buttons">
-                    <button class="btn-filter " data-category="olahraga">Olahraga</button>
-                    <button class="btn-filter" data-category="religi">Religi</button>
-                    <button class="btn-filter" data-category="agro">Agro</button>
-                    <button class="btn-filter" data-category="gua">Gua</button>
-                    <button class="btn-filter" data-category="belanja">Belanja</button>
-                    <button class="btn-filter" data-category="ekologi">Ekologi</button>
-                    <button class="btn-filter" data-category="kuliner">Kuliner</button>
-                    <button class="btn-filter" data-category="all">Semua</button>
+                    <button class="btn-filter" data-category="olahraga">
+                        <i class="fas fa-futbol "></i> Olahraga
+                    </button>
+                    <button class="btn-filter" data-category="religi">
+                        <i class="fas fa-mosque"></i> Religi
+                    </button>
+                    <button class="btn-filter" data-category="agro">
+                        <i class="fas fa-tractor"></i> Agro
+                    </button>
+                    <button class="btn-filter" data-category="gua">
+                        <i class="fas fa-mountain"></i> Gua
+                    </button>
+                    <button class="btn-filter" data-category="belanja">
+                        <i class="fas fa-shopping-cart"></i> Belanja
+                    </button>
+                    <button class="btn-filter" data-category="ekologi">
+                        <i class="fas fa-leaf"></i> Ekologi
+                    </button>
+                    <button class="btn-filter" data-category="kuliner">
+                        <i class="fas fa-utensils"></i> Kuliner
+                    </button>
+                    <button class="btn-filter" data-category="all">
+                        <i class="fas fa-list"></i> Semua
+                    </button>
                 </div>
 
 
@@ -489,8 +505,7 @@
                     <div id="weather-content">
                         <p>Sedang memuat informasi cuaca...</p>
                     </div>    
-                </div>
-
+                </div>  
                 <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
             </div>
 
