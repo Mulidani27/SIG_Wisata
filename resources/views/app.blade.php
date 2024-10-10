@@ -810,7 +810,7 @@
                         <li class="nav-item mx-1 p-1">
                             <a class="nav-link {{ request()->routeIs('data.show') ? 'active' : '' }}"
                                 href="{{ route('data.show') }}">
-                                <i class="fas fa-edit"></i> Ubah Data
+                                <i class="fas fa-edit"></i> Kelola Data Wisata
                             </a>
                         </li>
                         <li class="nav-item mx-1 p-1">
