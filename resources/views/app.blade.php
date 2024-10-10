@@ -385,6 +385,41 @@
 
   
 
+        /* Tombol minimize atau hide panel */
+        /* Sembunyikan tombol secara default */
+        #toggleDirections {
+            display: none;
+            /* Tombol disembunyikan */
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #3887be;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 11;
+        }
+
+
+        /* Panel yang disembunyikan (slide-down keluar layar) */
+        .hidden-panel {
+            transform: translateY(100%);
+            /* Geser ke luar layar */
+        }
+
+
+        @media screen and (max-width: 844px){
+            .weather-overlay {
+                display: none;
+            }
+        }
+
+
+        @media screen and (max-width: 1193px) {
+
+            
             #directionsList li {
                 font-size: 0.9rem;
                 padding: 8px 12px;
@@ -422,41 +457,12 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 z-index: 500;
 
-            }
+            } */
 
     
 
-        /* Tombol minimize atau hide panel */
-        /* Sembunyikan tombol secara default */
-        #toggleDirections {
-            display: none;
-            /* Tombol disembunyikan */
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background-color: #3887be;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 11;
-        }
 
 
-        /* Panel yang disembunyikan (slide-down keluar layar) */
-        .hidden-panel {
-            transform: translateY(100%);
-            /* Geser ke luar layar */
-        }
-
-        /* Sembunyikan kontrol zoom di tampilan mobile (layar di bawah 768px) */
-
-        @media screen and (max-width: 1193px) {
-
-            .weather-overlay {
-                display: none;
-            }
             #directionsPanel {
                 max-height: 30vh;
                 /* Sesuaikan ketinggian */
