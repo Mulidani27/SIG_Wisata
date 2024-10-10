@@ -388,12 +388,7 @@
             /* Warna default tombol lainnya */
         }
 
-        /* Pada layar lebih kecil (HP) */
-        @media screen and (max-width: 768px) {
-            #directionsPanel {
-                max-height: 30vh;
-                /* Sesuaikan ketinggian */
-            }
+  
 
             #directionsList li {
                 font-size: 0.9rem;
@@ -434,7 +429,7 @@
 
             }
 
-        }
+    
 
         /* Tombol minimize atau hide panel */
         /* Sembunyikan tombol secara default */
@@ -461,14 +456,21 @@
         }
 
         /* Sembunyikan kontrol zoom di tampilan mobile (layar di bawah 768px) */
-        @media (max-width: 768px) {
+
+        @media screen and (max-width: 1193px) {
+            
+            
+            .weather-overlay {
+                display: none;
+            }
+            #directionsPanel {
+                max-height: 30vh;
+                /* Sesuaikan ketinggian */
+            }
+
             .zoom-controls {
                 display: none;
             }
-        }
-
-
-        @media screen and (max-width: 768px) {
 
             #filter-buttons {
                 display: flex !important;
