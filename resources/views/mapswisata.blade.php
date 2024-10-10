@@ -470,7 +470,7 @@
                             icon.src = "{{ asset('assets/images/Kuliner.png') }}";
                             break;
                         default:
-                            icon.src = "{{ asset('assets/images/kuliner.png') }}";
+                            icon.src = "{{ asset('assets/images/Kuliner.png') }}";
                     }
 
                     el.appendChild(icon);
