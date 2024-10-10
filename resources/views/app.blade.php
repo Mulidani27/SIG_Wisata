@@ -771,7 +771,7 @@
         id="mainNav">
         <div class="container"> <a class="navbar-brand d-flex align-items-center" href="/">
                 <span
-                    class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon">
+                    class="bs-icon-sm bs-icon-circle bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" width="40" height="40">
                 </span>
                 <span>SIG Wisata Banjarmasin</span>
