@@ -171,12 +171,7 @@
             /* Mengurangi ukuran font untuk membuat kotak lebih kecil */
         }
 
-        /* Sembunyikan informasi cuaca di desktop */
-        @media (min-width: 992px) {
-            .weather-overlay {
-                display: none;
-            }
-        }
+
 
 
 
@@ -458,7 +453,6 @@
         /* Sembunyikan kontrol zoom di tampilan mobile (layar di bawah 768px) */
 
         @media screen and (max-width: 1193px) {
-            
             
             .weather-overlay {
                 display: none;
