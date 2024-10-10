@@ -453,7 +453,7 @@
         /* Sembunyikan kontrol zoom di tampilan mobile (layar di bawah 768px) */
 
         @media screen and (max-width: 1193px) {
-            
+
             .weather-overlay {
                 display: none;
             }
@@ -777,10 +777,9 @@
 
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item mx-1 p-1 ">
-                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
-                            href="{{ route('dashboard') }}">
-                            <i class="fas fa-home"></i> Home
+                    <li class="nav-item mx-1 p-1">
+                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                            <i class="fas fa-home"></i> Tentang Kami    
                         </a>
                     </li>
                     <li class="nav-item mx-1 p-1 ">

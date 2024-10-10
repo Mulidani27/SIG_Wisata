@@ -21,9 +21,13 @@ use App\Http\Controllers\GeojsonController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/tentang-kami', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/', function () {
+    return redirect()->route('map.show', ['map' => 'nama_map_default']); // Ganti 'nama_map_default' dengan nilai default yang kamu inginkan
+})->name('peta');
 
 Route::get('/wisataa', function () {
     return view('mapswisata');
