@@ -183,6 +183,7 @@
                     "snow": "Salju",
                     "mist": "Kabut",
                     "overcast clouds": "Awan Mendung",
+                    "light rain": "Hujan Ringan",
                     // Tambahkan terjemahan lainnya sesuai kebutuhan
                 };
 
@@ -615,6 +616,7 @@
                             "snow": "Salju",
                             "mist": "Kabut",
                             "overcast clouds": "Awan Mendung",
+                            "light rain": "Hujan Ringan",
                             // Tambahkan terjemahan lainnya sesuai kebutuhan
                         };
 

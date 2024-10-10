@@ -410,7 +410,7 @@
         }
 
 
-        @media screen and (max-width: 844px){
+        @media screen and (min-width: 768px){
             .weather-overlay {
                 display: none;
             }
