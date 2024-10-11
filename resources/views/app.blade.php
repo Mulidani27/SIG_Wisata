@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Animate a point along a route</title>
+    <title>SIG Wisata Kota Banjarmasin</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <!-- Mapbox CSS -->
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
