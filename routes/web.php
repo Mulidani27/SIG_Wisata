@@ -26,7 +26,7 @@ Route::get('/tentang-kami', function () {
 })->name('dashboard');
 
 Route::get('/', function () {
-    return redirect()->route('map.show', ['map' => 'nama_map_default']); // Ganti 'nama_map_default' dengan nilai default yang kamu inginkan
+    return redirect()->route('map.show', ['map' => 'normal']); // Ganti 'nama_map_default' dengan nilai default yang kamu inginkan
 })->name('peta');
 
 Route::get('/wisataa', function () {
