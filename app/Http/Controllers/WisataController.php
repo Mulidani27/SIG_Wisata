@@ -51,7 +51,7 @@ class WisataController extends Controller
 
         if ($request->hasFile('gambar360')) {
             $gambar360File = $request->file('gambar360');
-            $gambar360Name = Str::random(10) . '.' . $gambar360File->getClientOriginalExtension();
+            $gambar360Name = Str::random(length: 10) . '.' . $gambar360File->getClientOriginalExtension();
             $gambar360File->move(public_path('uploads'), $gambar360Name);
             $data['gambar360'] = $gambar360Name;
         }

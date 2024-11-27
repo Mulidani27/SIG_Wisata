@@ -905,9 +905,9 @@
                                     'line-cap': 'round'
                                 },
                                 paint: {
-                                    'line-color': '#3887be',
+                                    'line-color': '#ff0000',
                                     'line-width': 5,
-                                    'line-opacity': 0.75
+                                    'line-opacity': 1
                                 }
                             });
                         }
