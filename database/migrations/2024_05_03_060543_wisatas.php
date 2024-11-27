@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Kecamatan;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->string('Nama_Wisata');
             $table->string('lokasi');
             $table->text('Alamat');
-            $table->string('kecamatan');
+            $table->foreignId('kecamatan')->constrained("kecamatan");
             $table->text('Detail');
             $table->enum('Jenis_Wisata', ['olahraga', 'religi', 'agro', 'gua', 'belanja', 'ekologi', 'kuliner']);
             $table->string('Gambar');

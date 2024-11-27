@@ -6,18 +6,26 @@ use Illuminate\Http\Request;
 use App\Models\Wisata;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use App\Models\Kecamatan;
+
 
 class WisataController extends Controller
 {
     public function index()
     {
         $wisata = Wisata::all();
-        return view('crud.index', compact('wisata'));
+        // dd($wisata);
+        return view('crud.index', compact('wisata' ));
+
     }
 
     public function create()
     {
-        return view('crud.create');
+        $kecamatans = Kecamatan::all();
+        return view('crud.create', compact('kecamatans'));
+
+        
+        
     }
 
     public function store(Request $request)
@@ -79,12 +87,18 @@ class WisataController extends Controller
             return back()->withInput()->with('failed', 'Gagal menambahkan data. Silakan coba lagi');
         }
     }
-
     public function edit($id)
     {
+        // Ambil data wisata berdasarkan ID
         $wisata = Wisata::findOrFail($id);
-        return view('crud.edit', compact('wisata'));
+    
+        // Ambil semua data kecamatan
+        $kecamatans = Kecamatan::all();
+    
+        // Kirim data wisata dan kecamatan ke view
+        return view('crud.edit', compact('wisata', 'kecamatans'));
     }
+    
 
     public function update(Request $request, $id)
     {

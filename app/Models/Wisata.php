@@ -9,6 +9,12 @@ class Wisata extends Model
 {
     use HasFactory;
 
+    public function kecamatan()
+{
+    return $this->belongsTo(Kecamatan::class);
+}
+
+
     public function komentars()
     {
         return $this->hasMany(Komentar::class, 'id_wisata');
@@ -20,7 +26,7 @@ class Wisata extends Model
         'Nama_Wisata',
         'lokasi',
         'Alamat',
-        'kecamatan', 
+        'kecamatan_id', 
         'Detail',
         'Jenis_Wisata',
         'Gambar',

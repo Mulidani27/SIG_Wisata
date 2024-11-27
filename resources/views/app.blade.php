@@ -766,21 +766,18 @@
             });
         </script>
     @endif
-
-    <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3" style="background-color: #15B392;"
-        id="mainNav">
-        <div class="container"> <a class="navbar-brand d-flex align-items-center" href="/">
-                <span
-                    class="bs-icon-sm bs-icon-circle bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
+    <nav class="navbar navbar-expand-md sticky-top navbar-shrink py-3" style="background-color: #15B392;" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <span class="bs-icon-sm bs-icon-circle bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
                     <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" width="40" height="40">
                 </span>
                 <span>SIG Wisata Banjarmasin</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-1"
-                aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navcol-1" aria-controls="navcol-1" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+    
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item mx-1 p-1">
@@ -788,36 +785,43 @@
                             <i class="fas fa-home"></i> Tentang Kami    
                         </a>
                     </li>
-                    <li class="nav-item mx-1 p-1 ">
-                        <a class="nav-link {{ request()->routeIs('map.show', 'normal') ? 'active' : '' }}"
-                            href="{{ route('map.show', 'normal') }}">
+                    <li class="nav-item mx-1 p-1">
+                        <a class="nav-link {{ request()->routeIs('map.show', 'normal') ? 'active' : '' }}" href="{{ route('map.show', 'normal') }}">
                             <i class="fas fa-map"></i> Peta
                         </a>
                     </li>
                     <li class="nav-item mx-1 p-1">
-                        <a class="nav-link {{ request()->routeIs('card.index') ? 'active' : '' }}"
-                            href="{{ route('card.index', ['map' => 'normal']) }}">
+                        <a class="nav-link {{ request()->routeIs('card.index') ? 'active' : '' }}" href="{{ route('card.index', ['map' => 'normal']) }}">
                             <i class="fas fa-database"></i> Data Wisata
                         </a>
                     </li>
                     <li class="nav-item mx-1 p-1">
-                        <a class="nav-link {{ request()->routeIs('statistik') ? 'active' : '' }}"
-                            href="{{ route('statistik') }}">
+                        <a class="nav-link {{ request()->routeIs('statistik') ? 'active' : '' }}" href="{{ route('statistik') }}">
                             <i class="fas fa-chart-bar"></i> Statistik Wisata
                         </a>
                     </li>
+    
+                    <!-- Navbar Kelola Kecamatan -->
                     @if (Auth::guard('admin')->check())
-                        <li class="nav-item mx-1 p-1">
-                            <a class="nav-link {{ request()->routeIs('data.show') ? 'active' : '' }}"
-                                href="{{ route('data.show') }}">
-                                <i class="fas fa-edit"></i> Kelola Data Wisata
+                        <!-- Dropdown untuk Kelola Kecamatan dan Kelola Data -->
+                        <li class="nav-item dropdown mx-1 p-1">
+                            <a class="nav-link dropdown-toggle {{ request()->routeIs('kecamatan.index', 'data.show', 'geojson.index') ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-cogs"></i> Kelola Data
                             </a>
-                        </li>
-                        <li class="nav-item mx-1 p-1">
-                            <a class="nav-link {{ request()->routeIs('geojson.index') ? 'active' : '' }}"
-                                href="{{ route('geojson.index') }}">
-                                <i class="fas fa-draw-polygon"></i> Kelola Batas Wilayah
-                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <!-- Kelola Kecamatan -->
+                                <li><a class="dropdown-item {{ request()->routeIs('kecamatan.index') ? 'active' : '' }}" href="{{ route('kecamatan.index') }}">
+                                    <i class="fas fa-city"></i> Kelola Kecamatan
+                                </a></li>
+                                <!-- Kelola Data Wisata -->
+                                <li><a class="dropdown-item {{ request()->routeIs('data.show') ? 'active' : '' }}" href="{{ route('data.show') }}">
+                                    <i class="fas fa-database"></i> Data Wisata
+                                </a></li>
+                                <!-- Kelola Batas Wilayah -->
+                                <li><a class="dropdown-item {{ request()->routeIs('geojson.index') ? 'active' : '' }}" href="{{ route('geojson.index') }}">
+                                    <i class="fas fa-draw-polygon"></i> Batas Wilayah
+                                </a></li>
+                            </ul>
                         </li>
                         <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
                             @csrf
@@ -826,6 +830,7 @@
                             </button>
                         </form>
                     @endif
+                    
                     @guest('admin')
                         <a class="btn btn-primary shadow" role="button" href="{{ route('admin.login') }}">
                             <i class="fas fa-sign-in-alt"></i> Masuk
@@ -833,10 +838,10 @@
                     @endguest
                 </ul>
             </div>
-
-
         </div>
     </nav>
+    
+    
 
 
 

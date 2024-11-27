@@ -41,4 +41,30 @@ class KomentarController extends Controller
         // Menampilkan view dengan komentar dan rata-rata rating
         return view('wisata.comments', compact('komentars', 'averageRating'));
     }
+
+
+    public function destroy($id)
+    {
+        // Temukan komentar berdasarkan ID
+        $komentar = Komentar::findOrFail($id);
+    
+        // Simpan ID wisata untuk mengarahkan kembali setelah penghapusan
+        $wisataId = $komentar->id_wisata;
+    
+        // Hapus komentar
+        $komentar->delete();
+    
+        // Redirect kembali ke halaman komentar wisata yang bersangkutan
+        return redirect()->route('komentar.manage', ['id' => $wisataId])->with('success', 'Komentar berhasil dihapus');
+    }
+    
+
+
+    public function manage($id)
+{
+    $wisata = Wisata::findOrFail($id);
+    $komentars = Komentar::where('id_wisata', $id)->get();
+    return view('komentar.manage', compact('wisata', 'komentars'));
+}
+
 }

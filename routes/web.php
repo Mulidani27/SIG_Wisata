@@ -9,7 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StatistikController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\GeojsonController;
-
+use App\Http\Controllers\KecamatanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,6 +71,9 @@ Route::get('/wisata', [CardWisata::class, 'index'])->name('wisata.index');
 
 Route::post('/wisata/{id_wisata}/komentars', [KomentarController::class, 'store'])->name('komentars.store');
 Route::get('/wisata/{id_wisata}/komentars', [KomentarController::class, 'index'])->name('komentars.index');
+Route::get('kelola/wisata/{id}/komentar', [KomentarController::class, 'manage'])->name('komentar.manage');
+
+Route::delete('komentar/{id}/destroy', [KomentarController::class, 'destroy'])->name('komentar.destroy');
 
 
 
@@ -89,6 +92,10 @@ Route::middleware('auth:admin')->group(function() {
 Route::get('/geojson', [GeojsonController::class, 'index'])->name('geojson.index');
 Route::post('/geojson/upload', [GeojsonController::class, 'upload'])->name('geojson.upload');
 Route::delete('/geojson/delete/{id}', [GeojsonController::class, 'delete'])->name('geojson.delete');
+});
+
+Route::middleware('auth:admin')->group(function() {
+Route::resource('kecamatan', KecamatanController::class);
 });
 
 

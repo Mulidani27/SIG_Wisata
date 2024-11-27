@@ -12,8 +12,6 @@
     <a href="{{ route('crud.create') }}" class="btn btn-success">Tambah Wisata</a>
     <br>
     <br>
-    
-
 
     <table id="tableWisata" class="table table-striped">
         <thead>
@@ -37,7 +35,7 @@
                 <td>{{ Str::limit($wisataItem->Alamat, 30) }}</td>
                 <td>{{ Str::limit($wisataItem->Jenis_Wisata, 20) }}</td>
                 <td>{!! Str::limit($wisataItem->Detail, 50) !!}</td>
-                <td>{{ $wisataItem->kecamatan }}</td>
+                <td>{{ $wisataItem->kecamatan["nama_kecamatan"] }}</td>
                 <td>
                     <!-- Tombol Edit dengan ikon -->
                     <a href="{{ route('crud.edit', $wisataItem->id) }}" class="btn  btn-primary">
@@ -45,22 +43,48 @@
                     </a>
                 
                     <!-- Tombol Delete dengan ikon -->
-                    <form action="{{ route('crud.destroy', $wisataItem->id) }}" method="POST" style="display: inline-block">
+
+                    
+                    <form action="{{ route('crud.destroy', $wisataItem->id) }}" method="POST" style="display:inline-block;" id="delete-form-{{ $wisataItem->id }}">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $wisataItem->id }})">
                             <i class="fas fa-trash"></i>
                         </button>
                     </form>
+                    
+                    <script>
+                        function confirmDelete(id) {
+                            Swal.fire({
+                                title: 'Yakin ingin menghapus?',
+                                text: 'Data yang dihapus tidak dapat dikembalikan!',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonText: 'Ya, hapus!',
+                                cancelButtonText: 'Batal',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Jika konfirmasi, submit form
+                                    document.getElementById('delete-form-' + id).submit();
+                                }
+                            });
+                        }
+                    </script>
+                    
+
+
+
+                    <!-- Tombol Kelola Komentar -->
+                    <a href="{{ route('komentar.manage', $wisataItem->id) }}" class="btn btn-info">
+                        <i class="fas fa-comments"></i> Kelola Komentar
+                    </a>
                 </td>
                 
             </tr>
             @endforeach
         </tbody>
     </table>
-    
- 
-    
 </div>
 @endsection
 
@@ -74,9 +98,4 @@
         $('#tableWisata').DataTable();
     });
 </script>
-
-
-
-
-
 @endsection

@@ -16,12 +16,17 @@
     </div>
 
     @php
-        $groupedWisata = $wisata->groupBy('kecamatan'); // Mengelompokkan berdasarkan kolom kecamatan
+        $groupedWisata = $wisata->groupBy('kecamatan_id'); // Mengelompokkan berdasarkan kecamatan_id
     @endphp
 
-    @foreach($groupedWisata as $kecamatan => $wisataGroup)
+    @foreach($groupedWisata as $kecamatanId => $wisataGroup)
+        @php
+            // Menemukan nama kecamatan berdasarkan kecamatan_id
+            $kecamatan = $wisataGroup->first()->kecamatan; // Mendapatkan kecamatan dari wisata pertama di grup
+        @endphp
+
         <div class="kecamatan-divider">
-            <h1 style="text-align: center">{{ $kecamatan }}</h1>
+            <h1 style="text-align: center">{{ $kecamatan->nama_kecamatan }}</h1>
             <br>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 @foreach($wisataGroup as $index => $wisataItem)

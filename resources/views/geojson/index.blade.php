@@ -45,11 +45,33 @@
                             </a>
                         </td>
                         <td>
-                            <form action="{{ route('geojson.delete', $geojson->id) }}" method="POST">
+                            <form action="{{ route('geojson.delete', $geojson->id) }}" method="POST" style="display:inline-block;" id="delete-form-{{ $geojson->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $geojson->id }})">
+                                    Hapus
+                                </button>
                             </form>
+                            
+                            <script>
+                                function confirmDelete(id) {
+                                    Swal.fire({
+                                        title: 'Yakin ingin menghapus?',
+                                        text: 'Data ini akan dihapus secara permanen!',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonText: 'Ya, hapus!',
+                                        cancelButtonText: 'Batal',
+                                        reverseButtons: true
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Jika konfirmasi, submit form
+                                            document.getElementById('delete-form-' + id).submit();
+                                        }
+                                    });
+                                }
+                            </script>
+                            
                         </td>
                     </tr>
                 @endforeach

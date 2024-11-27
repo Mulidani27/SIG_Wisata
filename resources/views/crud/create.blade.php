@@ -50,12 +50,12 @@
         </div>
         <div class="mb-3">
             <label for="kecamatan" class="form-label">Kecamatan:</label>
-            <select class="form-select" id="kecamatan" name="kecamatan">
-                <option value="Banjarmasin Utara" {{ old('kecamatan') == 'Banjarmasin Utara' ? 'selected' : '' }}>Banjarmasin Utara</option>
-                <option value="Banjarmasin Tengah" {{ old('kecamatan') == 'Banjarmasin Tengah' ? 'selected' : '' }}>Banjarmasin Tengah</option>
-                <option value="Banjarmasin Barat" {{ old('kecamatan') == 'Banjarmasin Barat' ? 'selected' : '' }}>Banjarmasin Barat</option>
-                <option value="Banjarmasin Timur" {{ old('kecamatan') == 'Banjarmasin Timur' ? 'selected' : '' }}>Banjarmasin Timur</option>
-                <option value="Banjarmasin Selatan" {{ old('kecamatan') == 'Banjarmasin Selatan' ? 'selected' : '' }}>Banjarmasin Selatan</option>
+            <select class="form-select" id="kecamatan" name="kecamatan_id">
+                @foreach ($kecamatans as $kecamatan)
+                    <option value="{{ $kecamatan->id }}" {{ old('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>
+                        {{ $kecamatan->nama_kecamatan }}
+                    </option>
+                @endforeach
             </select>
         </div>
         <div class="mb-3">

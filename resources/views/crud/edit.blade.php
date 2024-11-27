@@ -54,24 +54,16 @@
             </div>
             <div class="mb-3">
                 <label for="kecamatan" class="form-label">Kecamatan:</label>
-                <select class="form-select" id="kecamatan" name="kecamatan">
-                    <option value="Banjarmasin Utara"
-                        {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Utara' ? 'selected' : '' }}>Banjarmasin
-                        Utara</option>
-                    <option value="Banjarmasin Tengah"
-                        {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Tengah' ? 'selected' : '' }}>Banjarmasin
-                        Tengah</option>
-                    <option value="Banjarmasin Barat"
-                        {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Barat' ? 'selected' : '' }}>Banjarmasin
-                        Barat</option>
-                    <option value="Banjarmasin Timur"
-                        {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Timur' ? 'selected' : '' }}>Banjarmasin
-                        Timur</option>
-                    <option value="Banjarmasin Selatan"
-                        {{ old('kecamatan', $wisata->kecamatan) == 'Banjarmasin Selatan' ? 'selected' : '' }}>Banjarmasin
-                        Selatan</option>
+                <select class="form-select" id="kecamatan" name="kecamatan_id">
+                    @foreach ($kecamatans as $kecamatan)
+                        <option value="{{ $kecamatan->id }}" 
+                            {{ (old('kecamatan_id', $wisata->kecamatan_id) == $kecamatan->id) ? 'selected' : '' }}>
+                            {{ $kecamatan->nama_kecamatan }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
+            
             <div class="mb-3">
                 <label for="Detail" class="form-label">Detail:</label>
                 <textarea class="form-control" id="Detail" name="Detail">{{ $wisata->Detail }}</textarea>
