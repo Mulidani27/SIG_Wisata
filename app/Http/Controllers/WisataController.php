@@ -32,7 +32,7 @@ class WisataController extends Controller
     {
         $validatedData = Validator::make($request->all(), [
             'Nama_Wisata' => 'nullable',
-            'lokasi' => 'nullable',
+            'latitut_longitut' => 'nullable',
             'Alamat' => 'nullable',
             'kecamatan' => 'nullable',
             'Detail' => 'nullable',
@@ -106,7 +106,7 @@ class WisataController extends Controller
     
         $validatedData = Validator::make($request->all(), [
             'Nama_Wisata' => 'nullable',
-            'lokasi' => 'nullable',
+            'latitut_longitut' => 'nullable',
             'Alamat' => 'nullable',
             'kecamatan' => 'nullable',
             'Detail' => 'nullable',

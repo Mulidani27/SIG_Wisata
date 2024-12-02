@@ -399,7 +399,7 @@
                 const el{{ $loop->index }} = createCustomMarker('{{ $wisata->Jenis_Wisata }}');
 
                 const marker{{ $loop->index }} = new mapboxgl.Marker(el{{ $loop->index }})
-                    .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+                    .setLngLat(JSON.parse("{{ $wisata->latitut_longitut }}"))
                     .addTo(map); // Menambahkan marker ke peta dengan elemen kustom
 
                 markers.push({
@@ -417,7 +417,7 @@
                 const label{{ $loop->index }} = new mapboxgl.Marker(labelDiv{{ $loop->index }}, {
                         offset: [0, -30]
                     })
-                    .setLngLat(JSON.parse("{{ $wisata->lokasi }}"))
+                    .setLngLat(JSON.parse("{{ $wisata->latitut_longitut }}"))
                     .addTo(map); // Menambahkan label ke peta secara default
 
                 labelsNama.push({
@@ -554,7 +554,7 @@
                 <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
                 <div class="mt-3">
                     <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
-                    <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
+                    <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->latitut_longitut }}')">Dapatkan Rute</button>
                 </div>
             </div>     
             <div class="komentar-rating mt-5">
@@ -706,7 +706,7 @@
                                     <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
                                     <div class="mt-3">
                                         <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
-                                        <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->lokasi }}')">Dapatkan Rute</button>
+                                        <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->latitut_longitut }}')">Dapatkan Rute</button>
                                     </div>
                                 </div>
                                 

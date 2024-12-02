@@ -10,6 +10,7 @@ use App\Http\Controllers\StatistikController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\GeojsonController;
 use App\Http\Controllers\KecamatanController;
+use App\Http\Controllers\KotaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,5 +100,10 @@ Route::resource('kecamatan', KecamatanController::class);
 });
 
 
+
+
+
+
+Route::resource('kota', KotaController::class)->parameters(['kota' => 'kota']);
 
 
