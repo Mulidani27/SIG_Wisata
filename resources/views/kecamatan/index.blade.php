@@ -10,6 +10,11 @@
                 <th>No</th>
                 <th>Nama Kecamatan</th>
                 <th>Kantor Kecamatan</th>
+                <th>Batas Timur</th>
+                <th>Batas Barat</th>
+                <th>Batas Selatan</th>
+                <th>Batas Utara</th>
+                <th>Kota</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -19,6 +24,11 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $kecamatan->nama_kecamatan }}</td>
                 <td>{{ $kecamatan->kantor_kecamatan }}</td>
+                <td>{{ $kecamatan->batas_timur }}</td>
+                <td>{{ $kecamatan->batas_barat }}</td>
+                <td>{{ $kecamatan->batas_selatan }}</td>
+                <td>{{ $kecamatan->batas_utara }}</td>
+                <td>{{ $kecamatan->kota ? $kecamatan->kota->kota : 'Tidak ada kota' }}</td>
                 <td>
                     <a href="{{ route('kecamatan.edit', $kecamatan->id) }}" class="btn btn-warning btn-sm">Edit</a>
                     <form action="{{ route('kecamatan.destroy', $kecamatan->id) }}" method="POST" style="display:inline-block;" id="delete-form-{{ $kecamatan->id }}">

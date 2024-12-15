@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Wisata;
 use App\Models\Geojson;
 use App\Models\Komentar;
+use App\Models\Kecamatan;
 
 class MapController extends Controller
 {
@@ -15,6 +16,8 @@ class MapController extends Controller
     
         // Mengambil semua geojson
         $geojsons = Geojson::all(); 
+
+        $kecamatan = Kecamatan::all(['nama_kecamatan', 'kantor_kecamatan']);
         
         // Kelurahan berdasarkan kecamatan
         $kelurahan = [ 
@@ -38,9 +41,11 @@ class MapController extends Controller
         foreach ($wisata as $item) {
             $item->averageRating = $item->komentars()->avg('rating');
         }
+
+        // dd($kecamatan);
     
         // Kirimkan data wisata dan geojsons ke view
-        return view('mapswisata', compact('wisata', 'map', 'geojsons', 'kelurahan', 'geojsonGrouped'));
+        return view('mapswisata', compact('wisata', 'map', 'kecamatan', 'geojsons', 'kelurahan', 'geojsonGrouped'));
     }
     
     

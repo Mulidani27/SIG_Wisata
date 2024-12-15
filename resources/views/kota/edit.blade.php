@@ -18,10 +18,7 @@
     @method('PUT')
 
     <div class="mb-3">
-        <label for="kota" class="form-label">Nama Kota</label>
-        <input type="text" class="form-control" id="kota" name="kota" value="{{ old('kota', $kota->kota) }}" required>
-    </div>
-        
+
         <div class="mb-3">
             <label for="kota" class="form-label">Nama Kota</label>
             <input type="text" class="form-control" id="kota" name="kota" value="{{ old('kota', $kota->kota) }}" required>

@@ -77,7 +77,7 @@
 
                     <!-- Tombol Kelola Komentar -->
                     <a href="{{ route('komentar.manage', $wisataItem->id) }}" class="btn btn-info">
-                        <i class="fas fa-comments"></i> Kelola Komentar
+                        <i class="fas fa-comments"></i> 
                     </a>
                 </td>
                 

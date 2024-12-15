@@ -4,20 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Kecamatan;
 use Illuminate\Http\Request;
-
+use App\Models\Kota;
 class KecamatanController extends Controller
 {
     // Read (Index)
     public function index()
     {
         $kecamatans = Kecamatan::all();
-        return view('kecamatan.index', compact('kecamatans'));
+        $kotas = Kota::all();
+        return view('kecamatan.index', compact('kecamatans','kotas'));
     }
 
 
     public function create()
 {
-    return view('kecamatan.create');
+
+    $kotas = Kota::all();
+
+    return view('kecamatan.create',compact('kotas'));
 }
 
 public function store(Request $request)
@@ -25,6 +29,7 @@ public function store(Request $request)
     $request->validate([
         'nama_kecamatan' => 'required|string|max:255',
         'kantor_kecamatan' => 'required|string|max:255',
+        
     ]);
 
     Kecamatan::create($request->all());
@@ -35,10 +40,17 @@ public function store(Request $request)
 
     // Edit & Update
     public function edit($id)
-    {
-        $kecamatan = Kecamatan::findOrFail($id);
-        return view('kecamatan.edit', compact('kecamatan'));
-    }
+{
+    // Ambil data kecamatan berdasarkan ID
+    $kecamatan = Kecamatan::findOrFail($id);
+
+    // Ambil semua data kota untuk dipilih di dropdown
+    $kotas = Kota::all();
+
+    // Kembalikan data ke view 'edit' dengan mengirimkan variabel kecamatan dan kotas
+    return view('kecamatan.edit', compact('kecamatan', 'kotas'));
+}
+
 
     public function update(Request $request, $id)
     {

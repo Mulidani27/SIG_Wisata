@@ -23,7 +23,7 @@
                         <p>Sedang memuat informasi cuaca...</p>
                     </div>
                 </div>
-                
+
 
 
                 <div id="filter-buttons">
@@ -87,7 +87,17 @@
                     <div class="container mt-5">
                         <h4 class="mb-4">Peta Batas Wilayah</h4>
 
+
+
+
                         <div class="mb-4">
+                            <!-- Tombol Banjarmasin -->
+                            <div class="form-check form-switch mb-3">
+                                <input type="checkbox" id="toggle-banjarmasin" class="form-check-input">
+                                <label for="toggle-banjarmasin" class="form-check-label"
+                                    style="font-size: 1.2rem;">Kota Banjarmasin</label>
+                            </div>
+
                             @foreach ($geojsonGrouped as $kecamatan => $geojsons)
                                 <div class="mb-2">
                                     <h5>{{ $kecamatan }}</h5>
@@ -106,16 +116,21 @@
 
                         <!-- Checkbox untuk menampilkan wisata dan label -->
                         <div class="form-check form-switch mb-4">
-                            <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input" checked>
+                            <input type="checkbox" id="toggleLabelsCheckbox" class="form-check-input">
                             <label for="toggleLabelsCheckbox" class="form-check-label" style="font-size: 1.1rem;">
                                 Tampilkan Label Nama
                             </label>
+                            <input type="checkbox" id="toggleGridCheckbox" class="form-check-input">
+                            <label for="toggleGridCheckbox" class="form-check-label" style="font-size: 1.1rem;">
+                                Tampilkan Grid
+                            </label>
                         </div>
+ 
+                        
                     </div>
 
                     <!-- Pilih Mode Peta -->
-                    <br>
-                    <h4 class="mb-3">Pilih Mode Peta:</h4>
+                         <h4 class="mb-3">Pilih Mode Peta:</h4>
                     <div class="text-center">
                         <a href="{{ route('map.show', 'satelite') }}" class="btn btn-primary btn-sm mx-2">Satelite</a>
                         <a href="{{ route('map.show', 'normal') }}" class="btn btn-info btn-sm mx-2">Normal</a>
@@ -147,7 +162,7 @@
                     style: 'mapbox://styles/mapbox/streets-v12',
                 @endif
                 center: [114.5914681, -3.3154437],
-                zoom: 14.5,
+                zoom: 13.5,
             });
 
 
@@ -171,6 +186,7 @@
 
 
 
+
             function translateWeatherDescription(description) {
                 const translationMap = {
                     "clear sky": "Langit Cerah",
@@ -184,6 +200,7 @@
                     "mist": "Kabut",
                     "overcast clouds": "Awan Mendung",
                     "light rain": "Hujan Ringan",
+                    "moderate rain":"Hujan Sedang",
                     // Tambahkan terjemahan lainnya sesuai kebutuhan
                 };
 
@@ -259,7 +276,7 @@
                     lng: 114.58672915941145,
                     lat: -3.347363346824667
                 }, // Banjarmasin Selatan
-                'layer-4': {
+                'layer-19': {
                     lng: 114.59008075528719,
                     lat: -3.318283048531195
                 }, // Banjarmasin Tengah
@@ -277,15 +294,14 @@
                 } // Banjarmasin Kota
             };
 
-            // Fungsi untuk mendapatkan warna acak
-            function getRandomColor() {
-                var letters = '0123456789ABCDEF';
-                var color = '#';
-                for (var i = 0; i < 6; i++) {
-                    color += letters[Math.floor(Math.random() * 16)];
-                }
-                return color;
-            }
+            // Warna yang ditentukan untuk setiap kecamatan
+            const kecamatanColors = {
+                'layer-2': '#6f85ca', // Banjarmasin Barat
+                'layer-3': '#e1a5d3', // Banjarmasin Selatan    
+                'layer-19': '#71c983', // Banjarmasin Tengah
+                'layer-5': '#f2b982', // Banjarmasin Timur
+                'layer-15': '#e56097', // Banjarmasin Utara
+            };
 
             function addGeojsonLayer(url, layerId) {
                 fetch(url)
@@ -303,6 +319,10 @@
                             data: data
                         });
 
+                        // Mendapatkan warna untuk kecamatan ini
+                        const fillColor = kecamatanColors[layerId] ||
+                            '#CCCCCC'; // Default warna abu-abu jika tidak ditemukan
+
                         // Menambahkan layer batas wilayah (fill layer)
                         map.addLayer({
                             'id': layerId,
@@ -310,15 +330,14 @@
                             'source': layerId,
                             'layout': {},
                             'paint': {
-                                'fill-color': getRandomColor(), // Warna acak untuk setiap kecamatan
-                                'fill-opacity': 0.4
+                                'fill-color': fillColor, // Gunakan warna yang ditentukan
+                                'fill-opacity': 0.6
                             }
                         });
 
                         // Event listener untuk menampilkan nama kecamatan saat diklik
                         map.on('click', layerId, function(e) {
                             const feature = e.features[0];
-                            console.log(feature); // Cek properti dari GeoJSON
                             const kecamatan = feature.properties
                                 .kecamatan; // Ambil nama kecamatan dari GeoJSON properties
 
@@ -353,7 +372,7 @@
                             // Fokus peta ke titik tengah yang ditentukan
                             map.flyTo({
                                 center: [center.lng, center.lat],
-                                zoom: 14, // Ubah nilai zoom sesuai kebutuhan
+                                zoom: 13, // Ubah nilai zoom sesuai kebutuhan
                                 essential: true // Hanya lakukan animasi jika perlu
                             });
                         } else {
@@ -383,6 +402,64 @@
                     }
                 });
             });
+
+            // Menambahkan marker manual dengan nama variabel baru
+            var markerskantorkecamatan = [{
+                    nama_wisata: "Kantor Kecamatan Banjarmasin Utara",
+                    latitude: -3.280207242379046,  
+                    longitude: 114.57750494667056
+                },
+                {
+                    nama_wisata: "Kantor Kecamatan Banjarmasin Selatan",
+                    latitude: -3.3442656581092454,  
+                    longitude: 114.58571371850768
+                },
+                {
+                    nama_wisata: "Kantor Kecamatan Banjarmasin Timur",
+                    latitude: -3.322667848827676, 
+                    longitude: 114.61029953260183
+                },
+                {
+                    nama_wisata: "Kantor Kecamatan Banjarmasin Barat",
+                    latitude: -3.3191091686396357,  
+                    longitude: 114.56489204182883
+                },
+                {
+                    nama_wisata: "Kantor Kecamatan Banjarmasin Tengah",
+                    latitude: -3.3146915047402086,   
+                    longitude: 114.58720018560051
+                },
+                {
+                    nama_wisata: "Kantor Kota Banjarmasin",
+                    latitude: -3.327199013488544,   
+                    longitude: 114.58840957935058
+                },
+
+               
+            ];
+
+        // Menambahkan marker berdasarkan data manual (variabel markerskantorkecamatan)
+        markerskantorkecamatan.forEach(function(marker) {
+            new mapboxgl.Marker({
+                element: createCustomMarker2() // Menambahkan ikon kustom
+            })
+                .setLngLat([marker.longitude, marker.latitude]) // koordinat marker
+                .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h5>' + marker.nama_wisata + '</h5><p>'))
+                .addTo(map);
+        });
+
+        // Fungsi untuk membuat elemen marker dengan gambar kustom
+        function createCustomMarker2() {
+            var img = document.createElement('img');
+            img.src = '/assets/images/kantor.png'; // Ikon kantor pemerintahan
+            img.style.width = '30px'; // Atur ukuran gambar
+            img.style.height = '30px';
+            // img.style.borderRadius = '100%'; // Membuat gambar berbentuk lingkaran, opsional
+            return img;
+        }
+
+
+
 
             const markers = [];
             const markersNama = [];
@@ -1016,7 +1093,7 @@
                 // Loop melalui semua marker dan label untuk menyembunyikan atau menampilkan berdasarkan pencarian
                 labelsNama.forEach((item, index) => {
                     const wisataName = item.name
-                .toLowerCase(); // Mengambil nama wisata dari variabel labelsNama
+                        .toLowerCase(); // Mengambil nama wisata dari variabel labelsNama
 
                     if (wisataName.includes(query)) {
                         // Menampilkan label jika cocok dengan pencarian
@@ -1134,6 +1211,158 @@
                     });
                 });
             });
+
+
+
+            document.getElementById('toggle-banjarmasin').addEventListener('click', function() {
+                // Ambil semua checkbox
+                const checkboxes = document.querySelectorAll('.layer-checkbox');
+
+                // Tentukan apakah semua checkbox harus diaktifkan atau dinonaktifkan
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+
+                // Set status semua checkbox
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = !allChecked;
+                    checkbox.dispatchEvent(new Event('change')); // Memastikan event 'change' dipicu
+                });
+            });
+
+
+ // Fungsi untuk mengonversi desimal ke DMS (derajat, menit, detik)
+function toDMS(coordinate, isLatitude) {
+    const absolute = Math.abs(coordinate);
+    const degrees = Math.floor(absolute);
+    const minutesNotTruncated = (absolute - degrees) * 60;
+    const minutes = Math.floor(minutesNotTruncated);
+    const seconds = Math.floor((minutesNotTruncated - minutes) * 60);
+    const direction = isLatitude
+        ? coordinate >= 0 ? 'N' : 'S'
+        : coordinate >= 0 ? 'E' : 'W';
+    return `${degrees}°${minutes}'${seconds}" ${direction}`;
+}
+
+const latMin = -3.4;   // Batas bawah (latitude)
+const latMax = -3.26;   // Batas atas (latitude)
+const lngMin = 114.51667;  // Batas kiri (longitude)
+const lngMax = 114.66667;  // Batas kanan (longitude)
+
+// batas wilayah di website pemerintah
+// Batas bawah (Lintang Selatan): -3.27945
+// Batas atas (Lintang Selatan): -3.38167
+// Batas kiri (Bujur Timur): 114.52778
+// Batas kanan (Bujur Timur): 114.66528
+
+// Ukuran grid dalam derajat (1 menit = 1/60 derajat)
+const gridSize = 1 / 60; 
+
+// Membuat fitur grid dan koordinat di titik pertemuan
+const gridGeoJson = {
+    "type": "FeatureCollection",
+    "features": []
+};
+
+const intersectionLabelsGeoJson = {
+    "type": "FeatureCollection",
+    "features": []
+};
+
+for (let lng = lngMin; lng <= lngMax; lng += gridSize) {
+    for (let lat = latMin; lat <= latMax; lat += gridSize) {
+        // Menambahkan grid
+        if (lng + gridSize <= lngMax && lat + gridSize <= latMax) {
+            gridGeoJson.features.push({
+                "type": "Feature",
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [lng, lat],
+                            [lng + gridSize, lat],
+                            [lng + gridSize, lat + gridSize],
+                            [lng, lat + gridSize],
+                            [lng, lat]
+                        ]
+                    ]
+                }
+            });
+        }
+
+        // Menambahkan label koordinat di titik pertemuan
+        intersectionLabelsGeoJson.features.push({
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lng, lat]
+            },
+            "properties": {
+                "label": `${toDMS(lat, true)} ${toDMS(lng, false)}`
+            }
+        });
+    }
+}
+
+// Tambahkan grid dan label ke peta
+map.on('load', () => {
+    // Grid layer
+    map.addSource('grid', {
+        "type": "geojson",
+        "data": gridGeoJson
+    });
+
+    map.addLayer({
+        "id": "grid",
+        "type": "line",
+        "source": "grid",
+        "paint": {
+            "line-color": "#ff0000",
+            "line-width": 1
+        }
+    });
+
+    // Label koordinat di titik pertemuan
+    map.addSource('intersectionLabels', {
+        "type": "geojson",
+        "data": intersectionLabelsGeoJson
+    });
+
+    map.addLayer({
+        "id": "intersectionLabels",
+        "type": "symbol",
+        "source": "intersectionLabels",
+        "layout": {
+            "text-field": ["get", "label"],
+            "text-size": 10,
+            "text-anchor": "top"
+        },
+        "paint": {
+            "text-color": "#000000"
+        }
+    });
+
+    // Sembunyikan grid dan label secara default
+    map.setLayoutProperty('grid', 'visibility', 'none');
+    map.setLayoutProperty('intersectionLabels', 'visibility', 'none');
+});
+
+// Tombol untuk toggle grid dan label
+document.getElementById('toggleGridCheckbox').addEventListener('change', function () {
+    const gridVisibility = map.getLayoutProperty('grid', 'visibility');
+    const labelVisibility = map.getLayoutProperty('intersectionLabels', 'visibility');
+
+    if (this.checked) {
+        // Menampilkan grid dan label
+        map.setLayoutProperty('grid', 'visibility', 'visible');
+        map.setLayoutProperty('intersectionLabels', 'visibility', 'visible');
+    } else {
+        // Menyembunyikan grid dan label
+        map.setLayoutProperty('grid', 'visibility', 'none');
+        map.setLayoutProperty('intersectionLabels', 'visibility', 'none');
+    }
+});
+
+
+            
         </script>
 
 

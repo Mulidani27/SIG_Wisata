@@ -443,6 +443,7 @@
                 z-index: 1;
                 width: 250px;
             }
+            
 
             .controlmap {
 
