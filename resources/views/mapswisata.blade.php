@@ -152,18 +152,18 @@
             </div>
         </div>
         <script>
-            mapboxgl.accessToken =
-                'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
-            const map = new mapboxgl.Map({
-                container: 'map',
-                @if ($map == 'satelite')
-                    style: 'mapbox://styles/dani2705/clvudqd9601zv01ocb0jbdlif',
-                @else
-                    style: 'mapbox://styles/mapbox/streets-v12',
-                @endif
-                center: [114.5914681, -3.3154437],
-                zoom: 13.5,
-            });
+                mapboxgl.accessToken =
+                    'pk.eyJ1IjoieW9naWUzNTM2IiwiYSI6ImNsbGl5aWk1azFpb24zcXBrM2J6d2ZtemsifQ.Qsp6yejel2SIY6LWKweTBA';
+                const map = new mapboxgl.Map({
+                    container: 'map',
+                    @if ($map == 'satelite')
+                        style: 'mapbox://styles/dani2705/clvudqd9601zv01ocb0jbdlif',
+                    @else
+                        style: 'mapbox://styles/mapbox/streets-v12',
+                    @endif
+                    center: [114.5914681, -3.3154437],
+                    zoom: 13.5,
+                });
 
 
             // Fungsi untuk mengambil data cuaca dari API OpenWeather
