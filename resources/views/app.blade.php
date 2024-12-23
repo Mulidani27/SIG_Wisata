@@ -45,6 +45,8 @@
             position: relative;
             height: 85vh;
             width: 95%;
+    scroll-behavior: smooth;
+
 
         }
 
@@ -431,9 +433,9 @@
 
 
         .mataangin {
-            position: relative;
+            position: absolute;
             /* Agar elemen lainnya tetap berada di layer default */
-            margin-top: 480px;
+            margin-top: 470px;
             /* Menjaga jarak agar tidak terlalu dekat dengan gambar kompas */
             margin-left: 1350px;
             
