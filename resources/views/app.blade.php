@@ -414,6 +414,29 @@
             .weather-overlay {
                 display: none;
             }
+            
+            .mataangin {
+            position: relative;
+            /* Agar elemen lainnya tetap berada di layer default */
+            margin-top: 50px;
+            /* Menjaga jarak agar tidak terlalu dekat dengan gambar kompas */
+            margin-left: 100px;
+            
+        }
+        }
+
+        .mataangin {
+            z-index: 1000 !important;
+        }
+
+
+        .mataangin {
+            position: relative;
+            /* Agar elemen lainnya tetap berada di layer default */
+            margin-top: 480px;
+            /* Menjaga jarak agar tidak terlalu dekat dengan gambar kompas */
+            margin-left: 1350px;
+            
         }
 
 
@@ -443,7 +466,7 @@
                 z-index: 1;
                 width: 250px;
             }
-            
+
 
             .controlmap {
 

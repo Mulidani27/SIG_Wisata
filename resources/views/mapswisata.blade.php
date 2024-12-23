@@ -16,6 +16,8 @@
                     <input type="text" id="searchInput" class="form-control" placeholder="Cari wisata...">
                 </div>
 
+               
+
 
 
                 <div class="weather-section mt-4 d-none d-md-block">
@@ -78,14 +80,24 @@
                     <ol id="directionsList"></ol>
                 </div>
 
+    
+                
+                <div class="mataangin">
+                    <img src="{{ asset('assets/images/cardinal-point.png') }}" alt="Kompas Arah Mata Angin" style="width: 50px; height: 50px;">
+                </div>
+                
+
                 <div class="toggle-button controlsembunyi card card-body">
                     <img src="{{ asset('assets/images/logo_sembunyi.png') }}" alt="Toggle Card" id="toggleButton"
                         style="width: 20px; height: 100%; cursor: pointer;">
                 </div>
 
+
+
                 <div class="controlmap card card-body hidden" id="toggleCard">
                     <div class="container mt-5">
                         <h4 class="mb-4">Peta Batas Wilayah</h4>
+                       
 
 
 
@@ -982,7 +994,7 @@
                                     'line-cap': 'round'
                                 },
                                 paint: {
-                                    'line-color': '#ff0000',
+                                    'line-color': '#0000ff',
                                     'line-width': 5,
                                     'line-opacity': 1
                                 }
