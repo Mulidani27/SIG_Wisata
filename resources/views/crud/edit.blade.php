@@ -38,12 +38,13 @@
                     value="{{ $wisata->Nama_Wisata }}">
             </div>
             <div class="mb-3">
-                <label for="lokasi" class="form-label">Koordinat:</label>
-                <input type="text" class="form-control" id="lokasi" name="lokasi"
+                <label for="latitut_longitut" class="form-label">Koordinat:</label>
+                <input type="text" class="form-control" id="latitut_longitut" name="latitut_longitut"
                     placeholder="Tambahkan jika ingin merubah lokasi">
                 <small id="lokasiHelp" class="form-text text-muted">Masukkan Koordinat dalam format [latitude, longitude].
                     Misal: -3.3147664431834007, 114.59666970396356</small>
             </div>
+
             <div class="mb-3">
                 <label for="map">Pilih Lokasi pada Peta:</label>
                 <div id="map" style="height: 400px;"></div>
@@ -207,7 +208,7 @@
     <!-- Custom JavaScript -->
     <script>
         function submitForm() {
-            var lokasiInput = document.getElementById('lokasi').value
+            var lokasiInput = document.getElementById('latitut_longitut').value
         .trim(); // Mendapatkan nilai input lokasi dan menghapus spasi di awal dan akhir
             if (lokasiInput) { // Memeriksa apakah lokasi tidak kosong
                 var lokasiArray = lokasiInput.split(',').map(
@@ -217,15 +218,15 @@
                     var sortedLokasiArray = [lokasiArray[1], lokasiArray[0]]; // Mengurutkan nilai koordinat dengan benar
                     var formattedLokasi = '[' + sortedLokasiArray.join(', ') +
                     ']'; // Mengubah nilai lokasi menjadi string dengan pemisah koma dan spasi, ditambah tanda kurung siku
-                    document.getElementById('lokasi').value = formattedLokasi; // Memperbarui nilai input lokasi
+                    document.getElementById('latitut_longitut').value = formattedLokasi; // Memperbarui nilai input lokasi
                 } else {
                     alert('Format lokasi tidak valid. Pastikan formatnya adalah [latitude, longitude].');
                     return false; // Jangan submit form jika lokasi tidak valid
                 }
             } else {
                 // Lokasi kosong, tetap gunakan nilai sebelumnya
-                var previousLocation = '{{ $wisata->lokasi }}'; // Ambil data lokasi sebelumnya dari blade
-                document.getElementById('lokasi').value = previousLocation; // Gunakan nilai lokasi sebelumnya
+                var previousLocation = '{{ $wisata->latitut_longitut }}'; // Ambil data lokasi sebelumnya dari blade
+                document.getElementById('latitut_longitut').value = previousLocation; // Gunakan nilai lokasi sebelumnya
             }
             document.getElementById('formWisata').submit(); // Mengirimkan form
         }
@@ -248,7 +249,7 @@
 
         function onDragEnd() {
             var lngLat = marker.getLngLat();
-            document.getElementById('lokasi').value = lngLat.lat + ', ' + lngLat
+            document.getElementById('latitut_longitut').value = lngLat.lat + ', ' + lngLat
             .lng; // Memperbarui input lokasi dengan koordinat yang baru
         }
 

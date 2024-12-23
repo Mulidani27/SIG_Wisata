@@ -139,24 +139,7 @@ class WisataController extends Controller
             $data['gambar360'] = $gambar360Name;
         }
     
-        // // Handle deleting gambar lain
-        // if ($request->has('delete_gambar_lain')) {
-        //     $gambarLain = json_decode($wisata->gambar_lain, true) ?? [];
-        //     foreach ($request->delete_gambar_lain as $gambar) {
-        //         $path = public_path('uploads/gambar_lain/' . $gambar);
-        //         if (file_exists($path)) {
-        //             unlink($path); // Menghapus gambar dari folder
-        //         }
-        //     }
 
-        //     // Update gambar_lain setelah menghapus
-        //     $gambarLain = array_diff($gambarLain, $request->delete_gambar_lain);
-        //     $data['gambar_lain'] = json_encode(array_values($gambarLain)); // Menyimpan gambar_lain yang tersisa
-        // }
-
-        // dd($request);
-
-        // Handle gambar_lain upload
         if ($request->hasFile('gambar_lain')) {
             $gambarLain = $request->file('gambar_lain');
             $uploadedImages = [];

@@ -36,8 +36,8 @@
             <input type="text" class="form-control" id="Nama_Wisata" name="Nama_Wisata" value="{{ old('Nama_Wisata') }}">
         </div>
         <div class="mb-3">
-            <label for="lokasi" class="form-label">Koordinat:</label>
-            <input type="text" class="form-control" id="lokasi" name="lokasi" value="{{ old('lokasi') }}">
+            <label for="latitut_longitut" class="form-label">Koordinat:</label>
+            <input type="text" class="form-control" id="latitut_longitut" name="latitut_longitut" value="{{ old('latitut_longitut') }}">
             <small id="lokasiHelp" class="form-text text-muted">Masukkan Koordinat dalam format [latitude, longitude]. Misal: -3.3147664431834007, 114.59666970396356</small>
         </div>
         <div class="mb-3">
@@ -98,9 +98,9 @@
 <!-- Custom JavaScript -->
 <script>
     function submitForm() {
-        var lokasiInput = document.getElementById('lokasi').value;
+        var lokasiInput = document.getElementById('latitut_longitut').value;
         var lokasiArray = lokasiInput.split(',').map(parseFloat).reverse();
-        document.getElementById('lokasi').value = JSON.stringify(lokasiArray);
+        document.getElementById('latitut_longitut').value = JSON.stringify(lokasiArray);
         document.getElementById('formWisata').submit();
     }
 
@@ -124,7 +124,7 @@
     }
 
     function updateInputField(lng, lat) {
-        document.getElementById('lokasi').value = lat.toFixed(7) + ',' + lng.toFixed(7);
+        document.getElementById('latitut_longitut').value = lat.toFixed(7) + ',' + lng.toFixed(7);
     }
 
     marker.on('dragend', onDragEnd);
