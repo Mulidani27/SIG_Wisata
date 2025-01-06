@@ -37,7 +37,8 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
-    <!-- jQuery -->
+   
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
 
 
     <style>
@@ -45,7 +46,7 @@
             position: relative;
             height: 85vh;
             width: 95%;
-    scroll-behavior: smooth;
+            scroll-behavior: smooth;
 
 
         }
@@ -416,15 +417,15 @@
             .weather-overlay {
                 display: none;
             }
-            
+
             .mataangin {
-            position: relative;
-            /* Agar elemen lainnya tetap berada di layer default */
-            margin-top: 50px;
-            /* Menjaga jarak agar tidak terlalu dekat dengan gambar kompas */
-            margin-left: 100px;
-            
-        }
+                position: relative;
+                /* Agar elemen lainnya tetap berada di layer default */
+                margin-top: 50px;
+                /* Menjaga jarak agar tidak terlalu dekat dengan gambar kompas */
+                margin-left: 100px;
+
+            }
         }
 
         .mataangin {
@@ -438,7 +439,7 @@
             margin-top: 470px;
             /* Menjaga jarak agar tidak terlalu dekat dengan gambar kompas */
             margin-left: 1350px;
-            
+
         }
 
 

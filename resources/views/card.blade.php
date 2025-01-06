@@ -35,9 +35,9 @@
                             <img src="{{ asset('uploads/' . $wisataItem->Gambar) }}" class="gambarcard" alt="{{ $wisataItem->Nama_Wisata }}">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $wisataItem->Nama_Wisata }}</h5>
-                                <p class="card-text" id="shortDetail{{ $loop->parent->index }}-{{ $index }}">{{ \Illuminate\Support\Str::words($wisataItem->Detail, 10) }}...</p>
-                                <p class="card-text" id="fullDetail{{ $loop->parent->index }}-{{ $index }}" style="display: none;">{{ $wisataItem->Detail }}</p>
-                                <a href="javascript:void(0)" class="toggle-link" id="toggleButton{{ $loop->parent->index }}-{{ $index }}" onclick="toggleDetail('{{ $loop->parent->index }}-{{ $index }}')">Lihat Selengkapnya</a>
+                                {{-- <p class="card-text" id="shortDetail{{ $loop->parent->index }}-{{ $index }}">{{ \Illuminate\Support\Str::words($wisataItem->Detail, 10) }}...</p> --}}
+                                <p class="card-text" id="fullDetail{{ $loop->parent->index }}-{{ $index }}" >{!! $wisataItem->Detail !!}</p>
+                                {{-- <a href="javascript:void(0)" class="toggle-link" id="toggleButton{{ $loop->parent->index }}-{{ $index }}" onclick="toggleDetail('{{ $loop->parent->index }}-{{ $index }}')">Lihat Selengkapnya</a> --}}
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Alamat: {{ $wisataItem->Alamat }}</li>
@@ -54,7 +54,7 @@
         </div>
     
     @endforeach
-
+{{-- 
     <script>
         function toggleDetail(id) {
             const shortDetail = document.getElementById('shortDetail' + id);
@@ -71,7 +71,7 @@
                 toggleButton.textContent = 'Sembunyikan';
             }
         }
-    </script>
+    </script> --}}
 
 </div> 
 @endsection

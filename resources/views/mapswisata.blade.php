@@ -3,12 +3,14 @@
     @section('title', 'Data Wisata')
 
     @section('content')
+        <br>
         <!-- Bagian Cuaca -->
 
+        <H3 style="text-align: center">SIG Pemetaan Wisata di Kota Banjarmasin</H3>
         <br>
         <div class="container-fluid d-flex justify-content-center">
 
-
+            
             <div id="map">
 
 
@@ -636,11 +638,10 @@
                 <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
                 <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
                 <p id="detail-text" class="text-justify">
-                    {{ Str::limit($wisata->Detail, 150) }}
-                    <span id="dots">...</span>
-                    <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
+
+                    <span id="more" style="display: none;">{!! $wisata->Detail !!}</span>
                 </p>
-                <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
+            
                 <div class="mt-3">
                     <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
                     <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->latitut_longitut }}')">Dapatkan Rute</button>
@@ -751,101 +752,7 @@
                         });
 
                         document.getElementById('offcanvasWithBothOptionsLabel').innerText = "{{ $wisata->Nama_Wisata }}";
-                        document.querySelector('#offcanvasWithBothOptions .offcanvas-body').innerHTML = `
-                                <!-- Carousel untuk gambar utama dan gambar_lain -->
-                                <div id="combined-images" class="mb-3 carousel slide" data-bs-ride="carousel">
-                                    
-                                    <div class="carousel-inner">
-                                        <!-- Gambar Utama -->
-                                        <div class="carousel-item active">
-                                            <img src="{{ asset('uploads') }}/{{ $wisata->Gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
-                                        </div>
-
-                                        <!-- Gambar Lain -->
-                                        @if ($wisata->gambar_lain)
-                                            @php
-                                                $gambarLain = json_decode($wisata->gambar_lain);
-                                            @endphp
-                                            @foreach ($gambarLain as $key => $gambar)
-                                                <div class="carousel-item">
-                                                    <img src="{{ asset('uploads/gambar_lain') }}/{{ $gambar }}" class="d-block w-100" alt="{{ $wisata->Nama_Wisata }}">
-                                                </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                    <button class="carousel-control-prev" type="button" data-bs-target="#combined-images" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button" data-bs-target="#combined-images" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                </div>
-
-                                <div class="details">
-                                    <h2 class="fw-bold">{{ $wisata->Nama_Wisata }}</h2>
-                                    <h5 class="text-muted">Jenis Wisata: {{ $wisata->Jenis_Wisata }}</h5>
-                                    <h6 class="text-muted">Alamat: {{ $wisata->Alamat }}</h6>
-                                    <p id="detail-text" class="text-justify">
-                                        {{ Str::limit($wisata->Detail, 150) }}
-                                        <span id="dots">...</span>
-                                        <span id="more" style="display: none;">{{ $wisata->Detail }}</span>
-                                    </p>
-                                    <button onclick="toggleDetail()" id="toggleDetailButton" class="btn btn-link p-0">Tampilkan lebih banyak</button>
-                                    <div class="mt-3">
-                                        <a class="btn btn-primary" href="{{ route('map.view', $wisata->id) }}" role="button">Lihat Gambar 360</a>
-                                        <button class="btn btn-secondary mt-2" onclick="promptForStartingPoint('{{ $wisata->latitut_longitut }}')">Dapatkan Rute</button>
-                                    </div>
-                                </div>
-                                
-                                <div class="komentar-rating mt-5">
-                            <h4 class="fw-bold">Komentar dan Rating</h4>
-                            <form action="{{ route('komentars.store', $wisata->id) }}" method="POST" class="mb-4">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" name="nama" id="nama" class="form-control" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="rating" class="form-label">Rating</label>
-                                    <div class="star-rating">
-                                        <input type="radio" name="rating" id="star-5" value="5" required>
-                                        <label for="star-5" class="star">&#9733;</label>
-                                        <input type="radio" name="rating" id="star-4" value="4">
-                                        <label for="star-4" class="star">&#9733;</label>
-                                        <input type="radio" name="rating" id="star-3" value="3">
-                                        <label for="star-3" class="star">&#9733;</label>
-                                        <input type="radio" name="rating" id="star-2" value="2">
-                                        <label for="star-2" class="star">&#9733;</label>
-                                        <input type="radio" name="rating" id="star-1" value="1">
-                                        <label for="star-1" class="star">&#9733;</label>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="komentar" class="form-label">Komentar</label>
-                                    <textarea name="komentar" id="komentar" class="form-control" rows="3" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-success">Kirim Komentar</button>
-                            </form>
-
-                            
-
-                            <div class="daftar-komentar mt-4">
-                            <h5 class="fw-bold mb-3">Komentar Pengguna</h5>
-                            @foreach ($wisata->komentars as $komentar)
-                                <div class="komentar-item mb-3 p-3 border rounded shadow-sm">
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <strong>{{ $komentar->nama }}</strong>
-                                        <span class="text-muted ms-2">{{ str_repeat('⭐', $komentar->rating) }} </span>
-                                    </div>
-                                    <p class="mb-1">{{ $komentar->komentar }}</p>
-                                    <small class="text-muted">{{ $komentar->created_at->diffForHumans() }}</small>
-                                </div>
-                            @endforeach
-                        </div>
-
-                            `;
+                        
                         var offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasWithBothOptions'));
                         offcanvas.show();
                     @endif

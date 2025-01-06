@@ -58,6 +58,10 @@
                 @endforeach
             </select>
         </div>
+        {{-- <div class="mb-3">
+            <label for="Detail" class="form-label">Detail:</label>
+            <textarea class="form-control" id="Detail" name="Detail">{{ old('Detail') }}</textarea>
+        </div> --}}
         <div class="mb-3">
             <label for="Detail" class="form-label">Detail:</label>
             <textarea class="form-control" id="Detail" name="Detail">{{ old('Detail') }}</textarea>
@@ -133,6 +137,8 @@
         marker.setLngLat(e.lngLat).addTo(map);
         onDragEnd();
     });
+
+    CKEDITOR.replace('Detail');
 </script>
 
 @endsection

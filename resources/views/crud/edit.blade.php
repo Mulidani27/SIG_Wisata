@@ -65,6 +65,10 @@
                 </select>
             </div>
             
+            {{-- <div class="mb-3">
+                <label for="Detail" class="form-label">Detail:</label>
+                <textarea class="form-control" id="Detail" name="Detail">{{ $wisata->Detail }}</textarea>
+            </div> --}}
             <div class="mb-3">
                 <label for="Detail" class="form-label">Detail:</label>
                 <textarea class="form-control" id="Detail" name="Detail">{{ $wisata->Detail }}</textarea>
@@ -254,5 +258,6 @@
         }
 
         marker.on('dragend', onDragEnd);
+        CKEDITOR.replace('Detail');
     </script>
 @endsection
